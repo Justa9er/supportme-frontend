@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>supportME! Admin Dashboard - Team Management</title>
+  <style>
+    body {
+      margin:0;
+      background:#F4F6F8;
+      font-family:'Open Sans', sans-serif;
+      color:#1F2937;
+      width:1600px;
+      height:950px;
+      overflow:hidden;
+      box-sizing:border-box;
+    }
+    .dashboard {
+      display:flex;
+      height:100%;
+      border:2px solid #0021F7;
+      box-sizing:border-box;
+    }
+    /* Sidebar */
+    .sidebar {
+      width:185px;
+      background:#F4F6F8;
+      border-right:2px solid #E6ECF2;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .sidebar-label {
+       display: block;
+       font-family: 'Agency FB', sans-serif;
+       font-size: 12px;
+       color: #0021F7;
+       margin-top: 12px;
+       margin-bottom: 4px;
+       padding: 0 10px;
+    }
+    .sidebar-input {
+       width: calc(100% - 20px);
+       padding: 6px 8px;
+       font-family: 'Open Sans', sans-serif;
+       font-size: 13px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      background: #F4F6F8;
+       color: #1F2937;
+       margin: 0 10px;
+    }
+    .logo-box {
+      height:125px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-bottom:2px solid #E6ECF2;
+    }
+    .branding {
+      height:152px;
+      border-top:2px solid #E6ECF2;
+      font-size:10px;
+      padding:6px;
+      display:flex;
+      flex-direction:column;
+      text-align:center;
+    }
+    .logo-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .branding img { 
+      height:30px; 
+      width: 30px;
+    }
+    .bottom-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .branding .line { border-top:1px solid #91959E; margin: 4px 0; }
+    .branding .links { font-size:8px; }
+    .menu { flex:1; padding:10px; }
+    .menu-item {
+      position:relative;
+      margin:12px 0;
+      font-family:'Open Sans', sans-serif;
+      color:#0021F7;
+      font-size:14px;
+      font-weight: bold;
+      text-transform:uppercase;
+      cursor: pointer;
+    }
+    .menu-item:hover { color: #3157B8; }
+    .menu-item.active { background: #E6ECF2; padding: 4px; border-radius: 4px; }
+    .menu-item::after {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #F50000;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: super;
+    }
+    .placeholders { margin-top:40px; font-size:12px; }
+    .main {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      gap:10px;
+      width:1405px;
+      box-sizing:border-box;
+    }
+    .header {
+      background:#5EDC1F;
+      border:2px solid #0021F7;
+      height:57px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:'Agency FB', sans-serif;
+      font-size:36px;
+      color:#0021F7;
+      font-weight: bold;
+      text-transform:uppercase;
+      position:relative;
+    }
+    .customer-number {
+      position:absolute;
+      right:70px;
+      top:15px;
+      font-family:'Agency FB', sans-serif;
+      font-size: 12px;
+    }
+    .plan-badge {
+      position:absolute;
+      right:10px;
+      top:5px;
+      width:37px;
+      height:47px;
+    }
+    .time-banner {
+      height:67px;
+      background:#F4F6F8;
+      border:2px solid #0021F7;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 20px;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight: bold;
+    }
+    .time-banner .right { display:flex; flex-direction:column; align-items:flex-end; }
+    .time-banner .top { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+    .time-banner button {
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+      padding:6px 14px;
+      margin-left:8px;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      background:#0021F7;
+      color:#fff;
+    }
+    .time-banner button:hover { background:#3157B8; }
+    .alert {
+      height:37px;
+      border:2px solid #0021F7;
+      background:#F4F6F8;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 10px;
+      font-size:14px;
+    }
+    .content { 
+      flex:1; 
+      border:2px solid #0021F7; 
+      background:#fff; 
+      padding: 5px;
+      overflow-y: auto;
+    }
+    
+    /* Team Management Specific Styles */
+    .team-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: #F4F6F8;
+      border: 1px solid #E6ECF2;
+      border-radius: 6px;
+    }
+    
+    .team-title {
+      font-family: 'Agency FB', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: #0021F7;
+      margin: 0;
+    }
+    
+    .plan-limits {
+      display: flex;
+      gap: 15px;
+      font-size: 14px;
+      color: #1F2937;
+    }
+    
+    .limit-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: white;
+      border: 1px solid #E6ECF2;
+      border-radius: 12px;
+    }
+    
+    .limit-current {
+      background: #0021F7;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    
+    .limit-max {
+      color: #6B7280;
+      font-size: 12px;
+    }
+    
+    .team-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 15px;
+      background: #5EDC1F;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    
+    .control-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .control-btn {
+      background: #0021F7;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .control-btn:hover {
+      background: #3157B8;
+    }
+    
+    .control-btn.secondary {
+      background: #91959E;
+    }
+    
+    .control-btn.secondary:hover {
+      background: #6B7280;
+    }
+    
+    .control-btn:disabled {
+      background: #D1D5DB;
+      cursor: not-allowed;
+    }
+    
+    .filter-select {
+      padding: 4px 8px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      font-size: 12px;
+      background: white;
+    }
+    
+    .team-table {
+      flex: 1;
+      overflow-y: auto;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      background: white;
+    }
+    
+    .team-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    
+    .team-table th {
+      background: #F4F6F8;
+      padding: 10px;
+      text-align: left;
+      font-weight: bold;
+      color: #0021F7;
+      border-bottom: 2px solid #E6ECF2;
+      position: sticky;
+      top: 0;
+    }
+    
+    .team-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #E6ECF2;
+    }
+    
+    .team-table tr:hover {
+      background: #F9FAFB;
+    }
+    
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .status-active { background: #D1FAE5; color: #065F46; }
+    .status-pending { background: #FEF3C7; color: #92400E; }
+    .status-suspended { background: #FEE2E2; color: #991B1B; }
+    .status-offline { background: #F3F4F6; color: #374151; }
+    
+    .access-level {
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    .access-admin { background: #DC2626; color: white; }
+    .access-manager { background: #F59E0B; color: white; }
+    .access-agent { background: #10B981; color: white; }
+    .access-viewer { background: #6B7280; color: white; }
+    
+    .action-btns {
+      display: flex;
+      gap: 4px;
+    }
+    
+    .action-btn {
+      background: none;
+      border: 1px solid #E6ECF2;
+      padding: 2px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 10px;
+      color: #1F2937;
+      transition: all 0.2s;
+    }
+    
+    .action-btn:hover {
+      border-color: #0021F7;
+      color: #0021F7;
+    }
+    
+    .action-btn.edit {
+      background: #0021F7;
+      color: white;
+      border-color: #0021F7;
+    }
+    
+    .action-btn.edit:hover {
+      background: #3157B8;
+    }
+    
+    .action-btn.danger {
+      border-color: #DC2626;
+      color: #DC2626;
+    }
+    
+    .action-btn.danger:hover {
+      background: #DC2626;
+      color: white;
+    }
+    
+    .add-member-form {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 2px solid #0021F7;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 1000;
+      width: 400px;
+    }
+    
+    .form-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+    }
+    
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #E6ECF2;
+    }
+    
+    .form-title {
+      font-family: 'Agency FB', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0021F7;
+      margin: 0;
+    }
+    
+    .close-form {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #6B7280;
+    }
+    
+    .form-field {
+      margin-bottom: 12px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 12px;
+      color: #0021F7;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    
+    .form-select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      font-size: 12px;
+      background: white;
+      box-sizing: border-box;
+    }
+    
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #E6ECF2;
+    }
+    
+    .form-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .form-btn.primary {
+      background: #0021F7;
+      color: white;
+    }
+    
+    .form-btn.primary:hover {
+      background: #3157B8;
+    }
+    
+    .form-btn.secondary {
+      background: #91959E;
+      color: white;
+    }
+    
+    .form-btn.secondary:hover {
+      background: #6B7280;
+    }
+    
+    .footer {
+      height:149px;
+      display:flex;
+      border:2px solid #0021F7;
+      width:calc(100% - 4px);
+      box-sizing:border-box;
+    }
+    .team {
+      width:33%;
+      padding:6px;
+      background:#5EDC1F;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+    }
+    .team .cols { display:flex; justify-content:space-between; border-bottom:1px solid #91959E; margin-bottom:4px; }
+    .chat { flex:1; background:#5EDC1F; display:flex; flex-direction:column; padding:6px; }
+    .chat-window { flex:1; background:#fff; border:1px solid #91959E; margin-bottom:6px; }
+    .chat-inputs { display:flex; gap:4px; }
+    .chat-inputs input { border:1px solid #91959E; padding:2px 4px; font-size:14px; }
+    .chat-inputs button {
+      background:#0021F7; color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <div class="sidebar">
+    <div>
+      <div class="logo-box">
+      <img class="app-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/logos/app-logo.png" alt="SupportME Logo">
+      </div>
+      <div class="menu">
+        <div class="menu-item">Tickets</div>
+        <div class="menu-item">Notes</div>
+        <div class="menu-item">Tags</div>
+        <div class="menu-item">Chat</div>
+        <div class="menu-item">SMS/MMS</div>
+        <div class="menu-item">Voicemail</div>
+        <div class="menu-item">VoIP Phone</div>
+        <div class="menu-item active">Team</div>
+        <div class="menu-item">Settings</div>
+        <div class="menu-item">App Controls</div>
+        <div class="menu-item">Get Help</div>
+      </div>  
+      <div style="margin-top: 2em;">
+        <label for="businessPhone" class="sidebar-label">Your Business Phone Number:</label>
+        <input type="text" id="businessPhone" class="sidebar-input" placeholder="000-000-0000">
+        <label for="billingDate" class="sidebar-label">Next Billing Date:</label>
+        <input type="text" id="billingDate" class="sidebar-input" placeholder="00/00/0000">
+      </div>
+    </div>
+    <div class="branding">
+    <div class="logo-container">
+  <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/logos/ringzu-logo.png" alt="RingzU Logo">
+</div>
+
+      <div class="bottom-content">
+        <hr class="line">
+        <div>© 2025 RingzU Telecom Corp.</div>
+        <div>supportME! is built on the <a href="https://www.ringzu.com" target="_blank" style="color:#0021F7; text-decoration:none;">
+          <strong>RingzU Telecom Imagination Platform™</strong></a></div>
+        <div class="links">
+          <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:#0021F7; text-decoration:none;">Privacy</a> | 
+          <a href="https://www.getsupportme.com/TOS" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:#0021F7; text-decoration:none;">Billing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+   <div class="header">
+  CUSTOMER SUPPORT ADMIN DASHBOARD
+  <div class="customer-number"></div>
+  <!-- Badge image starts blank, will be filled dynamically -->
+  <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
+</div>
+    <div class="time-banner">
+      <div>supportME! official server time: <span id="dateTime"></span></div>
+      <div class="right">
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
+        <div>
+          <button onclick="window.open('https://www.getsupportme.com/billing','_blank')">UPGRADE TODAY</button>
+          <button onclick="window.open('https://www.getsupportme.com/new-ticket','_blank')">+ NEW TICKET</button>
+        </div>
+      </div>
+    </div>
+    <div class="alert">
+      <span>
+       <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/icons/alert-icon.png" 
+     alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
+        supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
+      </span>
+      <span style="cursor: pointer;" onclick="this.parentElement.parentElement.style.display='none'">X</span>
+    </div>
+    <div class="content">
+      <div class="team-container">
+        <div class="team-header">
+          <h2 class="team-title">Team Management</h2>
+          <div class="plan-limits">
+            <div class="limit-item">
+              <span>Users:</span>
+              <span class="limit-current" id="currentUsers">3</span>
+              <span class="limit-max">/ <span id="maxUsers">5</span></span>
+            </div>
+            <div class="limit-item">
+              <span>Plan:</span>
+              <span style="color: #0021F7; font-weight: bold;" id="currentPlan">Professional</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="team-controls">
+          <div class="control-group">
+            <button class="control-btn" onclick="showAddMemberForm()" id="addMemberBtn">+ Add Team Member</button>
+            <button class="control-btn secondary" onclick="exportTeamList()">Export List</button>
+            <button class="control-btn secondary" onclick="sendInvites()">Send Pending Invites</button>
+          </div>
+          <div class="control-group">
+            <select class="filter-select" onchange="filterTeam(this.value)">
+              <option value="all">All Members</option>
+              <option value="active">Active Only</option>
+              <option value="pending">Pending Only</option>
+              <option value="suspended">Suspended Only</option>
+            </select>
+            <button class="control-btn" onclick="refreshTeamList()">🔄 Refresh</button>
+          </div>
+        </div>
+        
+        <div class="team-table">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 60px;">ID</th>
+                <th style="width: 150px;">Name</th>
+                <th style="width: 180px;">Email</th>
+                <th style="width: 80px;">Access Level</th>
+                <th style="width: 90px;">Status</th>
+                <th style="width: 100px;">Last Login</th>
+                <th style="width: 80px;">Created</th>
+                <th style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teamTableBody">
+              <!-- Team members will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
+      <div class="team" style="width:33%;">
+        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
+        <div>[List]</div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
+          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
+        </div>
+        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
+          <input type="text" id="chatIdInput" placeholder="Chat ID" style="width:120px; padding:6px; font-size:12px;">
+          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
+          <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+            SEND MSG
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Member Form -->
+<div class="form-overlay" id="formOverlay" onclick="hideAddMemberForm()"></div>
+<div class="add-member-form" id="addMemberForm">
+  <div class="form-header">
+    <h3 class="form-title" id="formTitle">Add Team Member</h3>
+    <button class="close-form" onclick="hideAddMemberForm()">×</button>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Full Name *</label>
+    <input type="text" class="form-input" id="memberName" placeholder="Enter full name">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Email Address *</label>
+    <input type="email" class="form-input" id="memberEmail" placeholder="Enter email address">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Phone Number</label>
+    <input type="tel" class="form-input" id="memberPhone" placeholder="(555) 000-0000">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Access Level *</label>
+    <select class="form-select" id="memberAccessLevel">
+      <option value="">Select Access Level</option>
+      <option value="viewer">Viewer - Read Only Access</option>
+      <option value="agent">Agent - Handle Tickets & Chat</option>
+      <option value="manager">Manager - Team Oversight</option>
+      <option value="admin">Admin - Full Access</option>
+    </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Department</label>
+    <select class="form-select" id="memberDepartment">
+      <option value="">Select Department</option>
+      <option value="support">Customer Support</option>
+      <option value="sales">Sales</option>
+      <option value="technical">Technical</option>
+      <option value="management">Management</option>
+    </select>
+  </div>
+  <div class="form-actions">
+    <button class="form-btn secondary" onclick="hideAddMemberForm()">Cancel</button>
+    <button class="form-btn primary" onclick="saveMember()" id="saveMemberBtn">Add Member</button>
+  </div>
+</div>
+<script>
+async function loadCustomerInfo() {
+  try {
+    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const data = await response.json();
+
+    // Update number in header
+    const numberEl = document.querySelector(".customer-number");
+    if (numberEl && data.masked_id) {
+      numberEl.textContent = data.masked_id;
+    }
+
+    // Update plan badge
+    const badgeEl = document.querySelector(".plan-badge");
+    if (badgeEl && data.badge_url) {
+      badgeEl.src = data.badge_url;
+    }
+  } catch (err) {
+    console.error("Error loading customer info:", err);
+  }
+}
+
+loadCustomerInfo();
+</script>
+
+<script>
+async function loadPlanBadge() {
+  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
+  try {
+    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+    document.getElementById("planBadge").src = data.badge_url;
+    document.querySelector(".customer-number").textContent = data.customer_number;
+  } catch (err) {
+    console.error("Error loading badge:", err);
+  }
+}
+
+loadPlanBadge();
+</script>
+<script>
+  async function updateHeader() {
+    try {
+      const tenantId = "YOUR_TENANT_ID"; // replace with actual
+      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+      const data = await response.json();
+
+      if (data.error) throw new Error(data.error);
+
+      // Avatar
+      const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
+      document.getElementById("avatarImg").src = avatarUrl;
+
+      // Welcome text
+      const siteName = data.site_name || "";
+      document.getElementById("welcomeName").innerText = siteName || "User";
+    } catch (err) {
+      console.error("Header update failed:", err);
+    }
+  }
+
+  updateHeader();
+</script>
+
+<script>
+/* ────────── SERVER TIME (24-hour Pacific) ────────── */
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm  = String(now.getMonth()+1).padStart(2,"0");
+    const dd  = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh  = String(now.getHours()).padStart(2,"0");
+    const mi  = String(now.getMinutes()).padStart(2,"0");
+    const ss  = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
+
+/* ────────── TEAM CHAT PLACEHOLDER ────────── */
+document.getElementById("sendButton").addEventListener("click",()=>{
+  const chatId = document.getElementById("chatIdInput").value;
+  const msg = document.getElementById("chatMessageInput").value;
+  if(msg.trim()){
+    const inbox = document.getElementById("chatInbox");
+    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
+    document.getElementById("chatMessageInput").value = "";
+  }
+});
+
+/* ────────── TEAM MANAGEMENT FUNCTIONALITY ────────── */
+
+// Plan configurations
+const planLimits = {
+  'Basic': { maxUsers: 2, features: ['tickets', 'chat'] },
+  'Professional': { maxUsers: 5, features: ['tickets', 'chat', 'voicemail', 'sms'] },
+  'Enterprise': { maxUsers: 15, features: ['tickets', 'chat', 'voicemail', 'sms', 'voip'] },
+  'Premium': { maxUsers: 50, features: ['tickets', 'chat', 'voicemail', 'sms', 'voip', 'analytics'] }
+};
+
+// Sample team data (will be replaced with API data)
+let teamMembers = [
+  {
+    id: 'TM001',
+    name: 'John Smith',
+    email: 'john.smith@company.com',
+    phone: '(555) 123-4567',
+    accessLevel: 'admin',
+    status: 'active',
+    department: 'management',
+    lastLogin: '2025-09-09 14:30',
+    created: '2025-01-15',
+    loginCount: 147
+  },
+  {
+    id: 'TM002',
+    name: 'Sarah Johnson',
+    email: 'sarah.johnson@company.com',
+    phone: '(555) 987-6543',
+    accessLevel: 'manager',
+    status: 'active',
+    department: 'support',
+    lastLogin: '2025-09-09 13:45',
+    created: '2025-02-01',
+    loginCount: 89
+  },
+  {
+    id: 'TM003',
+    name: 'Mike Davis',
+    email: 'mike.davis@company.com',
+    phone: '(555) 456-7890',
+    accessLevel: 'agent',
+    status: 'active',
+    department: 'support',
+    lastLogin: '2025-09-09 11:20',
+    created: '2025-03-10',
+    loginCount: 45
+  },
+  {
+    id: 'TM004',
+    name: 'Emily Chen',
+    email: 'emily.chen@company.com',
+    phone: '(555) 321-9876',
+    accessLevel: 'agent',
+    status: 'pending',
+    department: 'support',
+    lastLogin: 'Never',
+    created: '2025-09-08',
+    loginCount: 0
+  },
+  {
+    id: 'TM005',
+    name: 'Robert Wilson',
+    email: 'robert.wilson@company.com',
+    phone: '(555) 654-3210',
+    accessLevel: 'viewer',
+    status: 'suspended',
+    department: 'sales',
+    lastLogin: '2025-08-15 09:30',
+    created: '2025-04-20',
+    loginCount: 23
+  }
+];
+
+let currentPlan = 'Professional';
+let maxUsers = planLimits[currentPlan].maxUsers;
+let currentFilter = 'all';
+let editingMemberId = null;
+
+function renderTeamTable(filter = 'all') {
+  const tbody = document.getElementById('teamTableBody');
+  let filteredMembers = teamMembers;
+  
+  // Apply filter
+  if (filter !== 'all') {
+    filteredMembers = teamMembers.filter(member => member.status === filter);
+  }
+  
+  tbody.innerHTML = '';
+  
+  filteredMembers.forEach(member => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${member.id}</td>
+      <td><strong>${member.name}</strong></td>
+      <td>${member.email}</td>
+      <td><span class="access-level access-${member.accessLevel}">${member.accessLevel}</span></td>
+      <td><span class="status-indicator status-${member.status}">● ${member.status}</span></td>
+      <td>${member.lastLogin}</td>
+      <td>${member.created}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-btn edit" onclick="editMember('${member.id}')">✏ Edit</button>
+          <button class="action-btn" onclick="resetPassword('${member.id}')">🔑 Reset</button>
+          ${member.status === 'suspended' ? 
+            `<button class="action-btn" onclick="activateMember('${member.id}')">✓ Activate</button>` :
+            `<button class="action-btn" onclick="suspendMember('${member.id}')">⏸ Suspend</button>`
+          }
+          <button class="action-btn danger" onclick="deleteMember('${member.id}')">🗑 Delete</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+  
+  updateUserCounts();
+}
+
+function updateUserCounts() {
+  const activeUsers = teamMembers.filter(m => m.status === 'active').length;
+  document.getElementById('currentUsers').textContent = activeUsers;
+  document.getElementById('maxUsers').textContent = maxUsers;
+  document.getElementById('currentPlan').textContent = currentPlan;
+  
+  // Enable/disable add button based on user limit
+  const addBtn = document.getElementById('addMemberBtn');
+  if (teamMembers.length >= maxUsers) {
+    addBtn.disabled = true;
+    addBtn.textContent = '⚠ User Limit Reached';
+    addBtn.title = `Your ${currentPlan} plan allows up to ${maxUsers} users. Upgrade to add more.`;
+  } else {
+    addBtn.disabled = false;
+    addBtn.textContent = '+ Add Team Member';
+    addBtn.title = '';
+  }
+}
+
+function filterTeam(filter) {
+  currentFilter = filter;
+  renderTeamTable(filter);
+}
+
+function refreshTeamList() {
+  // In actual implementation, this would fetch fresh data from API
+  alert('Refreshing team list... (Will connect to supportME! API)');
+  renderTeamTable(currentFilter);
+}
+
+function showAddMemberForm() {
+  if (teamMembers.length >= maxUsers) {
+    alert(`Your ${currentPlan} plan allows up to ${maxUsers} users. Please upgrade to add more team members.`);
+    return;
+  }
+  
+  editingMemberId = null;
+  document.getElementById('formTitle').textContent = 'Add Team Member';
+  document.getElementById('saveMemberBtn').textContent = 'Add Member';
+  clearForm();
+  document.getElementById('formOverlay').style.display = 'block';
+  document.getElementById('addMemberForm').style.display = 'block';
+}
+
+function editMember(memberId) {
+  const member = teamMembers.find(m => m.id === memberId);
+  if (!member) return;
+  
+  editingMemberId = memberId;
+  document.getElementById('formTitle').textContent = 'Edit Team Member';
+  document.getElementById('saveMemberBtn').textContent = 'Update Member';
+  
+  // Populate form with member data
+  document.getElementById('memberName').value = member.name;
+  document.getElementById('memberEmail').value = member.email;
+  document.getElementById('memberPhone').value = member.phone;
+  document.getElementById('memberAccessLevel').value = member.accessLevel;
+  document.getElementById('memberDepartment').value = member.department;
+  
+  document.getElementById('formOverlay').style.display = 'block';
+  document.getElementById('addMemberForm').style.display = 'block';
+}
+
+function hideAddMemberForm() {
+  document.getElementById('formOverlay').style.display = 'none';
+  document.getElementById('addMemberForm').style.display = 'none';
+  editingMemberId = null;
+  clearForm();
+}
+
+function clearForm() {
+  document.getElementById('memberName').value = '';
+  document.getElementById('memberEmail').value = '';
+  document.getElementById('memberPhone').value = '';
+  document.getElementById('memberAccessLevel').value = '';
+  document.getElementById('memberDepartment').value = '';
+}
+
+function saveMember() {
+  const name = document.getElementById('memberName').value.trim();
+  const email = document.getElementById('memberEmail').value.trim();
+  const phone = document.getElementById('memberPhone').value.trim();
+  const accessLevel = document.getElementById('memberAccessLevel').value;
+  const department = document.getElementById('memberDepartment').value;
+  
+  // Validation
+  if (!name || !email || !accessLevel) {
+    alert('Please fill in all required fields (Name, Email, Access Level)');
+    return;
+  }
+  
+  if (!validateEmail(email)) {
+    alert('Please enter a valid email address');
+    return;
+  }
+  
+  // Check if email already exists (except when editing same member)
+  const emailExists = teamMembers.some(m => 
+    m.email.toLowerCase() === email.toLowerCase() && m.id !== editingMemberId
+  );
+  
+  if (emailExists) {
+    alert('A team member with this email address already exists');
+    return;
+  }
+  
+  if (editingMemberId) {
+    // Update existing member
+    const member = teamMembers.find(m => m.id === editingMemberId);
+    if (member) {
+      member.name = name;
+      member.email = email;
+      member.phone = phone;
+      member.accessLevel = accessLevel;
+      member.department = department;
+    }
+    alert(`Team member ${name} has been updated successfully.`);
+  } else {
+    // Add new member
+    if (teamMembers.length >= maxUsers) {
+      alert(`Cannot add member: ${currentPlan} plan limit of ${maxUsers} users reached.`);
+      return;
+    }
+    
+    const newMember = {
+      id: 'TM' + String(Date.now()).slice(-3).padStart(3, '0'),
+      name: name,
+      email: email,
+      phone: phone,
+      accessLevel: accessLevel,
+      status: 'pending',
+      department: department,
+      lastLogin: 'Never',
+      created: new Date().toISOString().split('T')[0],
+      loginCount: 0
+    };
+    
+    teamMembers.push(newMember);
+    alert(`Team member ${name} has been added. An invitation email will be sent to ${email}.`);
+  }
+  
+  hideAddMemberForm();
+  renderTeamTable(currentFilter);
+}
+
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function resetPassword(memberId) {
+  const member = teamMembers.find(m => m.id === memberId);
+  if (!member) return;
+  
+  if (confirm(`Send password reset email to ${member.email}?`)) {
+    // In actual implementation, this would trigger a password reset email via API
+    alert(`Password reset email sent to ${member.email}`);
+  }
+}
+
+function suspendMember(memberId) {
+  const member = teamMembers.find(m => m.id === memberId);
+  if (!member) return;
+  
+  if (member.accessLevel === 'admin' && teamMembers.filter(m => m.accessLevel === 'admin' && m.status === 'active').length === 1) {
+    alert('Cannot suspend the last active admin user.');
+    return;
+  }
+  
+  if (confirm(`Suspend ${member.name}? They will lose access immediately.`)) {
+    member.status = 'suspended';
+    renderTeamTable(currentFilter);
+    alert(`${member.name} has been suspended.`);
+  }
+}
+
+function activateMember(memberId) {
+  const member = teamMembers.find(m => m.id === memberId);
+  if (!member) return;
+  
+  member.status = 'active';
+  renderTeamTable(currentFilter);
+  alert(`${member.name} has been activated.`);
+}
+
+function deleteMember(memberId) {
+  const member = teamMembers.find(m => m.id === memberId);
+  if (!member) return;
+  
+  if (member.accessLevel === 'admin' && teamMembers.filter(m => m.accessLevel === 'admin').length === 1) {
+    alert('Cannot delete the last admin user.');
+    return;
+  }
+  
+  if (confirm(`PERMANENTLY DELETE ${member.name}?\n\nThis action cannot be undone. All their data and access will be removed.`)) {
+    teamMembers = teamMembers.filter(m => m.id !== memberId);
+    renderTeamTable(currentFilter);
+    alert(`${member.name} has been permanently deleted.`);
+  }
+}
+
+function exportTeamList() {
+  // In actual implementation, this would generate and download a CSV/Excel file
+  let csvContent = "ID,Name,Email,Phone,Access Level,Status,Department,Last Login,Created,Login Count\n";
+  
+  teamMembers.forEach(member => {
+    csvContent += `${member.id},"${member.name}","${member.email}","${member.phone}",${member.accessLevel},${member.status},${member.department},"${member.lastLogin}",${member.created},${member.loginCount}\n`;
+  });
+  
+  // Create downloadable file
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `supportME_team_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
+function sendInvites() {
+  const pendingMembers = teamMembers.filter(m => m.status === 'pending');
+  
+  if (pendingMembers.length === 0) {
+    alert('No pending invites to send.');
+    return;
+  }
+  
+  if (confirm(`Send invitation emails to ${pendingMembers.length} pending team member(s)?`)) {
+    // In actual implementation, this would send invitation emails via API
+    alert(`Invitation emails sent to ${pendingMembers.length} pending team members.`);
+  }
+}
+
+// Initialize team table on page load
+document.addEventListener('DOMContentLoaded', function() {
+  renderTeamTable();
+});
+
+/* ────────── PLAN MANAGEMENT INTEGRATION STUBS ────────── */
+
+// These functions will be implemented to connect with supportME! API
+function updatePlanLimits(newPlan) {
+  // API call to update plan and user limits
+  console.log(`API: Updating plan to ${newPlan}`);
+  currentPlan = newPlan;
+  maxUsers = planLimits[newPlan].maxUsers;
+  updateUserCounts();
+}
+
+function syncTeamWithAPI() {
+  // API call to sync team data with supportME! servers
+  console.log('API: Syncing team data with supportME! servers...');
+}
+
+function sendInviteEmail(memberId) {
+  // API call to send invitation email
+  console.log(`API: Sending invite email for member ${memberId}`);
+}
+
+function revokeAccess(memberId) {
+  // API call to immediately revoke user access
+  console.log(`API: Revoking access for member ${memberId}`);
+}
+
+function auditUserActivity(memberId) {
+  // API call to get user activity logs
+  console.log(`API: Getting activity audit for member ${memberId}`);
+}

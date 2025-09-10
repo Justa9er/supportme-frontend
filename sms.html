@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>supportME! Admin Dashboard</title>
+  <style>
+    body {
+      margin:0;
+      background:#F4F6F8;
+      font-family:'Open Sans', sans-serif;
+      color:#1F2937;
+      width:1600px;
+      height:950px;
+      overflow:hidden;
+      box-sizing:border-box;
+    }
+    .dashboard {
+      display:flex;
+      height:100%;
+      border:2px solid #0021F7;
+      box-sizing:border-box;
+    }
+    /* Sidebar */
+    .sidebar {
+      width:185px;
+      background:#F4F6F8;
+      border-right:2px solid #E6ECF2;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .sidebar-label {
+       display: block;
+       font-family: 'Agency FB', sans-serif;
+       font-size: 12px;
+       color: #0021F7; /* brand blue */
+       margin-top: 12px;
+       margin-bottom: 4px;
+       padding: 0 10px;
+    }
+    .sidebar-input {
+       width: calc(100% - 20px);
+       padding: 6px 8px;
+       font-family: 'Open Sans', sans-serif;
+       font-size: 13px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      background: #F4F6F8;
+       color: #1F2937;
+       margin: 0 10px;
+    }
+    .logo-box {
+      height:125px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-bottom:2px solid #E6ECF2;
+    }
+    .branding {
+      height:152px;
+      border-top:2px solid #E6ECF2;
+      font-size:10px;
+      padding:6px;
+      display:flex;
+      flex-direction:column;
+      text-align:center;
+    }
+    .logo-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .branding img { 
+      height:30px; 
+      width: 30px;
+    }
+    .bottom-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .branding .line { border-top:1px solid #91959E; margin: 4px 0; }
+    .branding .links { font-size:8px; }
+    .menu { flex:1; padding:10px; }
+    .menu-item {
+      position:relative;
+      margin:12px 0;
+      font-family:'Open Sans', sans-serif;
+      color:#0021F7;
+      font-size:14px;
+      font-weight: bold;
+      text-transform:uppercase;
+    }
+    .menu-item::after {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #F50000;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: super;
+    }
+    .placeholders { margin-top:40px; font-size:12px; }
+    .main {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      gap:10px;
+      width:1405px;
+      box-sizing:border-box;
+    }
+    .header {
+      background:#5EDC1F;
+      border:2px solid #0021F7;
+      height:57px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:'Agency FB', sans-serif;
+      font-size:36px;
+      color:#0021F7;
+      font-weight: bold;
+      text-transform:uppercase;
+      position:relative;
+    }
+    .customer-number {
+      position:absolute;
+      right:70px;
+      top:15px;
+      font-family:'Agency FB', sans-serif;
+      font-size: 12px;
+    }
+    .plan-badge {
+      position:absolute;
+      right:10px;
+      top:1px;
+      width:37px;
+      height:37px;
+    }
+    .time-banner {
+      height:67px;
+      background:#F4F6F8;
+      border:2px solid #0021F7;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 20px;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight: bold;
+    }
+    .time-banner .right { display:flex; flex-direction:column; align-items:flex-end; }
+    .time-banner .top { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+    .time-banner button {
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+      padding:6px 14px;
+      margin-left:8px;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      background:#0021F7;
+      color:#fff;
+    }
+    .time-banner button:hover { background:#3157B8; }
+    .alert {
+      height:37px;
+      border:2px solid #0021F7;
+      background:#F4F6F8;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 10px;
+      font-size:14px;
+    }
+    .content { flex:1; border:2px solid #0021F7; background:#fff; padding: 5px; }
+    .footer {
+      height:149px;
+      display:flex;
+      border:2px solid #0021F7;
+      width:calc(100% - 4px);
+      box-sizing:border-box;
+    }
+    .team {
+      width:33%;
+      padding:6px;
+      background:#5EDC1F;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+    }
+    .team .cols { display:flex; justify-content:space-between; border-bottom:1px solid #91959E; margin-bottom:4px; }
+    .chat { flex:1; background:#5EDC1F; display:flex; flex-direction:column; padding:6px; }
+    .chat-window { flex:1; background:#fff; border:1px solid #91959E; margin-bottom:6px; }
+    .chat-inputs { display:flex; gap:4px; }
+    .chat-inputs input { border:1px solid #91959E; padding:2px 4px; font-size:14px; }
+    .chat-inputs button {
+      background:#0021F7; color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer;
+    }
+
+    /* SMS/MMS Styles */
+    .sms-container {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border: 2px solid #0021F7;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .sms-header {
+      padding: 10px;
+      background: #0021F7;
+      color: #fff;
+      font-family: 'Agency FB', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 2px solid #0021F7;
+    }
+    .sms-body {
+      flex: 1;
+      display: flex;
+    }
+    .contacts-panel {
+      width: 300px;
+      background: #F4F6F8;
+      border-right: 2px solid #E6ECF2;
+      display: flex;
+      flex-direction: column;
+    }
+    .contacts-header {
+      padding: 10px;
+      background: #5EDC1F;
+      border-bottom: 1px solid #E6ECF2;
+      font-family: 'Agency FB', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .contact-search {
+      padding: 10px;
+      border-bottom: 1px solid #E6ECF2;
+    }
+    .contact-search input {
+      width: calc(100% - 12px);
+      padding: 8px 6px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .new-message-btn {
+      margin: 10px;
+      padding: 10px;
+      background: #0021F7;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Agency FB', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .new-message-btn:hover {
+      background: #3157B8;
+    }
+    .contacts-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .contact-item {
+      padding: 12px 10px;
+      border-bottom: 1px solid #E6ECF2;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .contact-item:hover {
+      background: #fff;
+    }
+    .contact-item.active {
+      background: #fff;
+      border-left: 3px solid #0021F7;
+    }
+    .contact-name {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .contact-phone {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .contact-last-message {
+      font-size: 11px;
+      color: #999;
+    }
+    .contact-unread {
+      float: right;
+      background: #F50000;
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    .chat-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      padding: 15px;
+      background: #F4F6F8;
+      border-bottom: 1px solid #E6ECF2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-customer-info {
+      font-weight: bold;
+    }
+    .chat-customer-phone {
+      font-size: 12px;
+      color: #666;
+    }
+    .templates-btn {
+      padding: 6px 12px;
+      background: #5EDC1F;
+      color: #0021F7;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Agency FB', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .templates-btn:hover {
+      background: #4bc91f;
+    }
+    .messages-area {
+      flex: 1;
+      background: #F4F6F8;
+      overflow-y: auto;
+      padding: 15px;
+    }
+    .message {
+      margin-bottom: 15px;
+      max-width: 70%;
+    }
+    .message.admin {
+      margin-left: auto;
+    }
+    .message.customer {
+      margin-right: auto;
+    }
+    .message-bubble {
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .message.admin .message-bubble {
+      background: #0021F7;
+      color: #fff;
+    }
+    .message.customer .message-bubble {
+      background: #fff;
+      color: #1F2937;
+      border: 1px solid #E6ECF2;
+    }
+    .message-time {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+      text-align: right;
+    }
+    .message.customer .message-time {
+      text-align: left;
+    }
+    .message-input-area {
+      padding: 15px;
+      background: #fff;
+      border-top: 1px solid #E6ECF2;
+    }
+    .message-input-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .message-input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #E6ECF2;
+      border-radius: 20px;
+      resize: none;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      min-height: 20px;
+      max-height: 100px;
+    }
+    .message-input:focus {
+      outline: none;
+      border-color: #0021F7;
+    }
+    .send-btn {
+      padding: 12px 20px;
+      background: #0021F7;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Agency FB', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .send-btn:hover {
+      background: #3157B8;
+    }
+    .send-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .char-counter {
+      font-size: 11px;
+      color: #666;
+      text-align: right;
+      margin-top: 4px;
+    }
+    .no-chat-selected {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #666;
+    }
+    .no-chat-selected h3 {
+      margin-bottom: 10px;
+      color: #0021F7;
+      font-family: 'Agency FB', sans-serif;
+      text-transform: uppercase;
+    }
+    
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 2px solid #0021F7;
+      max-width: 400px;
+      width: 90%;
+    }
+    .modal-header {
+      font-family: 'Agency FB', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #0021F7;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #E6ECF2;
+      padding-bottom: 10px;
+    }
+    .modal-body {
+      margin-bottom: 20px;
+    }
+    .modal-label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #0021F7;
+    }
+    .modal-input {
+      width: calc(100% - 12px);
+      padding: 8px 6px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    .modal-textarea {
+      width: calc(100% - 12px);
+      padding: 8px 6px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 60px;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .modal-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Agency FB', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .modal-btn.cancel {
+      background: #ccc;
+      color: #666;
+    }
+    .modal-btn.primary {
+      background: #0021F7;
+      color: #fff;
+    }
+    .modal-btn.primary:hover {
+      background: #3157B8;
+    }
+    .template-item {
+      padding: 10px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .template-item:hover {
+      background: #F4F6F8;
+    }
+    .template-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #0021F7;
+    }
+    .template-text {
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <div class="sidebar">
+    <div>
+      <div class="logo-box">
+        <img src="https://static.wixstatic.com/media/b1d15d_ea81d81ac7764fbea90ba00cbeca8c16~mv2.png" height="120">
+      </div>
+      <div class="menu">
+        <div class="menu-item">Tickets</div>
+        <div class="menu-item">Notes</div>
+        <div class="menu-item">Tags</div>
+        <div class="menu-item">Chat</div>
+        <div class="menu-item">SMS/MMS</div>
+        <div class="menu-item">Voicemail</div>
+        <div class="menu-item">VoIP Phone</div>
+        <div class="menu-item">Team</div>
+        <div class="menu-item">Settings</div>
+        <div class="menu-item">App Controls</div>
+        <div class="menu-item">Get Help</div>
+      </div>  
+      <div style="margin-top: 2em;">
+        <label for="businessPhone" class="sidebar-label">Your Business Phone Number:</label>
+        <input type="text" id="businessPhone" class="sidebar-input" placeholder="000-000-0000">
+        <label for="billingDate" class="sidebar-label">Next Billing Date:</label>
+        <input type="text" id="billingDate" class="sidebar-input" placeholder="00/00/0000">
+      </div>
+    </div>
+    <div class="branding">
+      <div class="logo-container">
+        <img src="https://static.wixstatic.com/media/b1d15d_80906b14554e4b0383ff00a4f4433250~mv2.png" alt="RingzU Logo">
+      </div>
+      <div class="bottom-content">
+        <hr class="line">
+        <div>© 2025 RingzU Telecom Corp.</div>
+        <div>supportME! is built on the <a href="https://www.ringzu.com" target="_blank" style="color:#0021F7; text-decoration:none;">
+          <strong>RingzU Telecom Imagination Platform™</strong></a></div>
+        <div class="links">
+          <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:#0021F7; text-decoration:none;">Privacy</a> | 
+          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:#0021F7; text-decoration:none;">Billing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+   <div class="header">
+  CUSTOMER SUPPORT ADMIN DASHBOARD
+  <div class="customer-number"></div>
+  <!-- Badge image starts blank, will be filled dynamically -->
+  <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
+</div>
+    <div class="time-banner">
+      <div>supportME! official server time: <span id="dateTime"></span></div>
+      <div class="right">
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
+        <div>
+          <button onclick="window.open('https://www.getsupportme.com/billing','_blank')">UPGRADE TODAY</button>
+          <button onclick="window.open('https://www.getsupportme.com/new-ticket','_blank')">+ NEW TICKET</button>
+        </div>
+      </div>
+    </div>
+    <div class="alert">
+      <span>
+        <img src="https://static.wixstatic.com/media/b1d15d_5a3c1bbb89254a5eb12554172de8e247~mv2.png" 
+             alt="alert icon" width="32" height="25" style="vertical-align: middle; margin-right: 6px;">
+        supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
+      </span>
+      <span>X</span>
+    </div>
+    
+    <!-- SMS/MMS Content Container (Replaces Ticket List) -->
+    <div class="content">
+      <div class="sms-container">
+        <div class="sms-header">SMS/MMS Customer Messaging - Pro Plan Feature
+        </div>
+        <div class="sms-body">
+          <!-- Contacts Panel -->
+          <div class="contacts-panel">
+            <div class="contacts-header">
+              Customer Contacts
+            </div>
+            <div class="contact-search">
+              <input type="text" id="contactSearch" placeholder="Search customers...">
+            </div>
+            <button class="new-message-btn" onclick="showNewMessageModal()">
+              + New Message
+            </button>
+            <div class="contacts-list">
+              <div class="contact-item active" onclick="selectContact(1)">
+                <div class="contact-name">John Smith</div>
+                <div class="contact-phone">+1 (555) 123-4567</div>
+                <div class="contact-last-message">Thanks for the quick response!</div>
+                <div class="contact-unread" style="display: none;">2</div>
+              </div>
+              <div class="contact-item" onclick="selectContact(2)">
+                <div class="contact-name">Sarah Johnson</div>
+                <div class="contact-phone">+1 (555) 987-6543</div>
+                <div class="contact-last-message">Got it, will check my email</div>
+                <div class="contact-unread">1</div>
+              </div>
+              <div class="contact-item" onclick="selectContact(3)">
+                <div class="contact-name">Mike Davis</div>
+                <div class="contact-phone">+1 (555) 456-7890</div>
+                <div class="contact-last-message">When will this be available?</div>
+                <div class="contact-unread">3</div>
+              </div>
+              <div class="contact-item" onclick="selectContact(4)">
+                <div class="contact-name">Lisa Wilson</div>
+                <div class="contact-phone">+1 (555) 234-5678</div>
+                <div class="contact-last-message">Perfect, thanks!</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chat Panel -->
+          <div class="chat-panel">
+            <div class="chat-header">
+              <div>
+                <div class="chat-tenant-info">John Smith</div>
+                <div class="chat-customer-phone">+1 (555) 123-4567</div>
+              </div>
+              <button class="templates-btn" onclick="showTemplatesModal()">
+                Templates
+              </button>
+            </div>
+            
+            <div class="messages-area" id="messagesArea">
+              <div class="message customer">
+                <div class="message-bubble">Hi, I have a question about my recent order</div>
+                <div class="message-time">10:30 AM</div>
+              </div>
+              <div class="message admin">
+                <div class="message-bubble">I can help you with that! What's your order number?</div>
+                <div class="message-time">10:32 AM ✓</div>
+              </div>
+              <div class="message customer">
+                <div class="message-bubble">It's #ORD-12345</div>
+                <div class="message-time">10:33 AM</div>
+              </div>
+              <div class="message admin">
+                <div class="message-bubble">I see your order is being prepared for shipment. You should receive tracking info within 24 hours.</div>
+                <div class="message-time">10:35 AM ✓</div>
+              </div>
+              <div class="message customer">
+                <div class="message-bubble">Thanks for the quick response!</div>
+                <div class="message-time">10:36 AM</div>
+              </div>
+            </div>
+            
+            <div class="message-input-area">
+              <div class="message-input-row">
+                <textarea class="message-input" id="messageInput" placeholder="Type your message to customer..." rows="1"></textarea>
+                <button class="send-btn" onclick="sendMessage()">Send</button>
+              </div>
+              <div class="char-counter">
+                <span id="charCount">0</span>/160 characters • <span id="smsCount">1</span> SMS
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
+      <div class="team" style="width:33%;">
+        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
+        <div>[List]</div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
+          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
+        </div>
+        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
+          <input type="text" id="chatIdInput" placeholder="Chat ID" style="width:120px; padding:6px; font-size:12px;">
+          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
+          <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+            SEND MSG
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Message Modal -->
+<div class="modal" id="newMessageModal">
+  <div class="modal-content">
+    <div class="modal-header">New Customer Message</div>
+    <div class="modal-body">
+      <label class="modal-label">Customer Phone Number:</label>
+      <input type="tel" class="modal-input" id="newPhone" placeholder="+1 (555) 123-4567">
+      
+      <label class="modal-label">Customer Name (Optional):</label>
+      <input type="text" class="modal-input" id="newName" placeholder="John Doe">
+      
+      <label class="modal-label">Message:</label>
+      <textarea class="modal-textarea" id="newMessage" placeholder="Type your message..."></textarea>
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" onclick="closeModal('newMessageModal')">Cancel</button>
+      <button class="modal-btn primary" onclick="createNewMessage()">Send Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- Templates Modal -->
+<div class="modal" id="templatesModal">
+  <div class="modal-content">
+    <div class="modal-header">Message Templates</div>
+    <div class="modal-body">
+      <div class="template-item" onclick="useTemplate('Your order #{{ORDER_ID}} is currently being processed and will ship within 2-3 business days.')">
+        <div class="template-name">Order Status</div>
+        <div class="template-text">Your order #{{ORDER_ID}} is currently being processed...</div>
+      </div>
+      <div class="template-item" onclick="useTemplate('Thank you for your payment! Your transaction has been processed successfully.')">
+        <div class="template-name">Payment Confirmation</div>
+        <div class="template-text">Thank you for your payment! Your transaction has been processed...</div>
+      </div>
+      <div class="template-item" onclick="useTemplate('Great news! Your order has shipped. Tracking: {{TRACKING_NUMBER}}')">
+        <div class="template-name">Shipping Update</div>
+        <div class="template-text">Great news! Your order has shipped. Tracking: {{TRACKING_NUMBER}}</div>
+      </div>
+    </div>
+<script>
+async function loadCustomerInfo() {
+  try {
+    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const data = await response.json();
+
+    // Update number in header
+    const numberEl = document.querySelector(".customer-number");
+    if (numberEl && data.masked_id) {
+      numberEl.textContent = data.masked_id;
+    }
+
+    // Update plan badge
+    const badgeEl = document.querySelector(".plan-badge");
+    if (badgeEl && data.badge_url) {
+      badgeEl.src = data.badge_url;
+    }
+  } catch (err) {
+    console.error("Error loading customer info:", err);
+  }
+}
+
+loadCustomerInfo();
+</script>
+
+<script>
+async function loadPlanBadge() {
+  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
+  try {
+    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+    document.getElementById("planBadge").src = data.badge_url;
+    document.querySelector(".customer-number").textContent = data.customer_number;
+  } catch (err) {
+    console.error("Error loading badge:", err);
+  }
+}
+
+loadPlanBadge();
+</script>
+  </body>
+</html>
