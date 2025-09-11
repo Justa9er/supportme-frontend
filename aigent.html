@@ -33,7 +33,7 @@
        display: block;
        font-family: 'Agency FB', sans-serif;
        font-size: 12px;
-       color: #0021F7;
+       color: #0021F7; /* brand blue */
        margin-top: 12px;
        margin-bottom: 4px;
        padding: 0 10px;
@@ -72,8 +72,15 @@
       justify-content: center;
       margin-bottom: 8px;
     }
-    .branding img { height:30px; width: 30px; }
-    .bottom-content { display: flex; flex-direction: column; gap: 4px; }
+    .branding img { 
+      height:30px; 
+      width: 30px;
+    }
+    .bottom-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
     .branding .line { border-top:1px solid #91959E; margin: 4px 0; }
     .branding .links { font-size:8px; }
     .menu { flex:1; padding:10px; }
@@ -96,6 +103,7 @@
       margin-left: 4px;
       vertical-align: super;
     }
+    .placeholders { margin-top:40px; font-size:12px; }
     .main {
       flex:1;
       display:flex;
@@ -170,7 +178,12 @@
       padding:0 10px;
       font-size:14px;
     }
-    .content { flex:1; border:2px solid #0021F7; background:#fff; padding: 5px; }
+    .content { 
+      border:2px solid #0021F7; 
+      background:#fff; 
+      padding: 5px;
+      overflow: hidden;
+    }
     .footer {
       height:149px;
       display:flex;
@@ -195,22 +208,128 @@
       background:#0021F7; color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer;
     }
 
-    /* AnswerTron styles */
+    /* FIXED: Grid alignment */
+    .grid-header {
+      background: linear-gradient(90deg, #5edc1f 0%, #0021F7 100%);
+      color: #0021F7;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 60px;
+      border-bottom: 1px solid #91959E;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    .grid-title {
+      font-family: 'Agency FB', 'Arial Black', sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      color: #0021F7;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+    }
+
+    .grid-container {
+      width: 100%;
+      margin: 0;
+      border: 1px solid #91959E;
+      border-radius: 8px;
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .activate-btn {
+      background: #c4f3ad;
+      border: 1px solid #91959E;
+      color: #1F2937;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .activate-btn:hover {
+      background: #3157b8;
+      color: #F4F6F8;
+    }
+
+    .add-docs-btn {
+      background: #5edc1f;
+      border: 1px solid #91959E;
+      color: #1F2937;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-left: 10px;
+    }
+
+    .add-docs-btn:hover {
+      background: #0021F7;
+      color: #F4F6F8;
+    }
+
+    .action-btn {
+      background: #F9FAFB;
+      border: 1px solid #91959E;
+      color: #1F2937;
+      padding: 2px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: #0021F7;
+      color: #F4F6F8;
+    }
+
+    /* FIXED: Answertron demo alignment */
+    .answertron-demo {
+      width: 100%;
+      height: 400px;
+      border: 1px solid #91959E;
+      border-radius: 0px;
+      overflow: hidden;
+      position: relative;
+      background: #f4f6f8;
+      margin-top: 10px;
+    }
+
+    /* Banner */
     .answertron-banner {
       display: block;
       width: 1366px;
-      height: 483px;
+      height: 543px;
       object-fit: cover;
     }
+
+    /* Chat Phase */
     .chat-phase {
-      width: 1366px;
-      height: 483px;
-      background: #0a0f2b url("brick-darkblue-bg.png") center/cover;
+      width: 100%;
+      height: 100%;
+      background: #0a0f2b linear-gradient(45deg, #0a0f2b 0%, #1a1f3b 100%);
       padding: 20px;
       color: #f0faff;
       font-family: 'Open Sans', sans-serif;
       box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.8s ease-in-out;
     }
+
+    /* Bubbles */
     .chat-bubble {
       margin: 12px 0;
       padding: 10px 14px;
@@ -221,35 +340,57 @@
       gap: 8px;
       font-size: 15px;
       box-shadow: 0 0 12px rgba(0, 255, 170, 0.5);
+      opacity: 0;
+      animation: fadeInBubble 1s ease-in-out forwards;
     }
+
+    .chat-bubble:nth-child(1) { animation-delay: 0.5s; }
+    .chat-bubble:nth-child(2) { animation-delay: 1.5s; }
+    .chat-bubble:nth-child(3) { animation-delay: 3s; }
+    .chat-bubble:nth-child(4) { animation-delay: 4s; }
+
+    @keyframes fadeInBubble {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .chat-bubble.customer {
       background: rgba(20, 20, 40, 0.9);
       border: 1px solid #5EDC1F;
       flex-direction: row;
+      margin-left: 0;
     }
     .chat-bubble.ai {
       background: rgba(0, 33, 247, 0.8);
       border: 1px solid #5EDC1F;
       flex-direction: row-reverse;
       text-align: right;
+      margin-left: auto;
     }
     .chat-bubble .avatar {
       border-radius: 50%;
       width: 32px;
       height: 32px;
       border: 2px solid #5EDC1F;
+      flex-shrink: 0;
     }
+
+    /* Scan line effect */
     .scan-line {
       font-family: "Courier New", monospace;
       font-size: 12px;
       color: #5EDC1F;
       margin-top: 6px;
+      opacity: 0.8;
     }
+
+    /* States */
     .hidden {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.8s ease-in-out;
     }
+
+    /* Flicker transition */
     .flicker {
       animation: flickerAnim 1.2s linear forwards;
     }
@@ -310,6 +451,7 @@
     <div class="header">
       CUSTOMER SUPPORT ADMIN DASHBOARD
       <div class="customer-number"></div>
+      <!-- Badge image starts blank, will be filled dynamically -->
       <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
     </div>
     <div class="time-banner">
@@ -324,52 +466,60 @@
     </div>
     <div class="alert">
       <span>
-        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/icons/alert-icon.png" alt="Alert" class="alert-icon" width="30" height="30" style="vertical-align: middle; margin-right: 6px;">
-        supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/icons/alert-icon.png" alt="Alert" class="alert-icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
+        supportME! deletes all cloud data upon payment failure or non-renewal of paid plan.
       </span>
       <span>X</span>
     </div>
     <div class="content">
-      <div class="notes-grid-container">
+      <div class="grid-container">
         <!-- Header with controls -->
         <div class="grid-header">
-          <h2 class="grid-title">AnswerTron 3000</h2>
+          <h2 class="grid-title">Answertron 3000</h2>
           <div class="grid-controls">
-            <button class="activate-btn" id="activateBtn">$ ActivateAi</button>
-            <button class="add-docs-btn" id="addNoteBtn">+Train Doc's</button>
+            <button class="activate-btn" id="activateBtn">ActivateAi</button>
+            <button class="add-docs-btn" id="addNoteBtn">Train Ai</button>
           </div>
         </div>
-
-        <!-- Phase 1: Banner -->
-        <div id="answertronIntro" class="intro-block">
-          <img src="answertron-banner.png" alt="AnswerTron 3000 Banner" class="answertron-banner">
-        </div>
-
-        <!-- Phase 2: Chat -->
-        <div id="answertronChat" class="chat-phase hidden">
-          <div class="chat-bubble customer">
-            <img src="https://i.pravatar.cc/40?img=12" class="avatar">
-            <span>Do you deliver on weekends?</span>
+        <!-- Answertron Demo Block -->
+        <div class="answertron-demo">
+          <!-- Phase 1: Banner -->
+          <div id="answertronIntro" class="intro-block">
+            <img src="https://via.placeholder.com/1200x400/0021F7/FFFFFF?text=AnswerTron+3000+Banner" 
+                 alt="AnswerTron 3000 Banner" 
+                 class="answertron-banner">
           </div>
-          <div class="chat-bubble ai">
-            <img src="https://i.pravatar.cc/40?img=55" class="avatar">
-            <span>Yep, we sure do! 🚚 Until 3pm Saturday.</span>
-            <div class="scan-line" id="scanLine1"></div>
-          </div>
-          <div class="chat-bubble customer">
-            <img src="https://i.pravatar.cc/40?img=12" class="avatar">
-            <span>How late are you open weekdays?</span>
-          </div>
-          <div class="chat-bubble ai">
-            <img src="https://i.pravatar.cc/40?img=55" class="avatar">
-            <span>Doors stay open till 9pm. Swing by anytime.</span>
-            <div class="scan-line" id="scanLine2"></div>
+          <!-- Phase 2: Chat -->
+          <div id="answertronChat" class="chat-phase hidden">
+            <div class="chat-bubble customer">
+              <img src="https://i.pravatar.cc/40?img=12" class="avatar">
+              <span>Do you deliver on weekends?</span>
+            </div>
+            <div class="chat-bubble ai">
+              <img src="https://i.pravatar.cc/40?img=55" class="avatar">
+              <div>
+                <span>Yep, we sure do! 🚚 Until 3pm Saturday.</span>
+                <div class="scan-line" id="scanLine1">FAQ accessed...</div>
+              </div>
+            </div>
+            <div class="chat-bubble customer">
+              <img src="https://i.pravatar.cc/40?img=12" class="avatar">
+              <span>How late are you open weekdays?</span>
+            </div>
+            <div class="chat-bubble ai">
+              <img src="https://i.pravatar.cc/40?img=55" class="avatar">
+              <div>
+                <span>Doors stay open till 9pm. Swing by anytime.</span>
+                <div class="scan-line" id="scanLine2">Knowledge base searched...</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer">
-      <div class="team">
+
+    <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
+      <div class="team" style="width:33%;">
         <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
         <div>[List]</div>
       </div>
@@ -390,81 +540,53 @@
 </div>
 
 <script>
-/* -------- Plan Badge / Customer Info -------- */
-async function loadPlanBadge() {
-  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0";
-  try {
-    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
-    const data = await response.json();
-    document.getElementById("planBadge").src = data.badge_url;
-    document.querySelector(".customer-number").textContent = data.customer_number;
-  } catch (err) { console.error("Error loading badge:", err); }
-}
-loadPlanBadge();
-
-async function loadCustomerInfo() {
-  try {
-    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
-    const data = await response.json();
-    const numberEl = document.querySelector(".customer-number");
-    if (numberEl && data.masked_id) numberEl.textContent = data.masked_id;
-    const badgeEl = document.querySelector(".plan-badge");
-    if (badgeEl && data.badge_url) badgeEl.src = data.badge_url;
-  } catch (err) { console.error("Error loading customer info:", err); }
-}
-loadCustomerInfo();
-
-/* -------- Server Time -------- */
-(function startServerClock(){
-  const tz = "America/Los_Angeles";
-  function updateServerTime() {
-    const now = new Date();
-    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
-    const mm  = String(now.getMonth()+1).padStart(2,"0");
-    const dd  = String(now.getDate()).padStart(2,"0");
-    const yyyy = now.getFullYear();
-    const hh  = String(now.getHours()).padStart(2,"0");
-    const mi  = String(now.getMinutes()).padStart(2,"0");
-    const ss  = String(now.getSeconds()).padStart(2,"0");
-    document.getElementById("dateTime").textContent =
-      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
-  }
-  updateServerTime();
-  setInterval(updateServerTime,1000);
-})();
-
-/* -------- Chat Demo Logic -------- */
+// Grab elements
 const intro = document.getElementById("answertronIntro");
-const chat  = document.getElementById("answertronChat");
+const chat = document.getElementById("answertronChat");
 
-function startScanLine(id) {
-  const scanMessages = [
+// Scan line animation - FIXED
+function startScanLine(id, messages) {
+  const scanMessages = messages || [
     "FAQ accessed...",
     "HelpDoc pg1 scanned...",
     "Knowledge base searched...",
     "Answer found!_"
   ];
   let idx = 0;
-  setInterval(() => {
+  const interval = setInterval(() => {
     const el = document.getElementById(id);
     if (el) {
       el.textContent = scanMessages[idx];
       idx = (idx + 1) % scanMessages.length;
+    } else {
+      clearInterval(interval); // Clean up if element doesn't exist
     }
   }, 1000);
+  return interval;
 }
-startScanLine("scanLine1");
-startScanLine("scanLine2");
 
+let scanInterval1, scanInterval2;
+
+// Transition logic - FIXED
 function showChat() {
   intro.classList.add("hidden");
   setTimeout(() => {
     chat.classList.remove("hidden");
     chat.classList.add("flicker");
-    setTimeout(() => chat.classList.remove("flicker"), 1200);
+    setTimeout(() => {
+      chat.classList.remove("flicker");
+      // Start scan lines when chat is visible
+      scanInterval1 = startScanLine("scanLine1", ["FAQ accessed...", "Searching policies...", "Match found!", "Response ready_"]);
+      scanInterval2 = startScanLine("scanLine2", ["Knowledge base...", "Parsing hours info...", "Data retrieved!", "Answer complete_"]);
+    }, 1200);
   }, 800);
 }
+
 function resetChat() {
+  // Clear scan line intervals
+  if (scanInterval1) clearInterval(scanInterval1);
+  if (scanInterval2) clearInterval(scanInterval2);
+  
   chat.classList.add("hidden");
   setTimeout(() => {
     intro.classList.remove("hidden");
@@ -472,13 +594,93 @@ function resetChat() {
     setTimeout(() => intro.classList.remove("flicker"), 1200);
   }, 800);
 }
+
+// Auto loop: 4s banner → 8s chat → repeat
 setTimeout(showChat, 4000);
 setInterval(() => {
   resetChat();
   setTimeout(showChat, 4000);
 }, 12000);
 
-/* -------- Team Chat Placeholder -------- */
+// Load plan badge
+async function loadPlanBadge() {
+  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0";
+  try {
+    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+    document.getElementById("planBadge").src = data.badge_url;
+    document.querySelector(".customer-number").textContent = data.customer_number;
+  } catch (err) {
+    console.error("Error loading badge:", err);
+  }
+}
+
+loadPlanBadge();
+
+// Load customer info
+async function loadCustomerInfo() {
+  try {
+    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const data = await response.json();
+
+    const numberEl = document.querySelector(".customer-number");
+    if (numberEl && data.masked_id) {
+      numberEl.textContent = data.masked_id;
+    }
+
+    const badgeEl = document.querySelector(".plan-badge");
+    if (badgeEl && data.badge_url) {
+      badgeEl.src = data.badge_url;
+    }
+  } catch (err) {
+    console.error("Error loading customer info:", err);
+  }
+}
+
+loadCustomerInfo();
+
+// Update header
+async function updateHeader() {
+  try {
+    const tenantId = "YOUR_TENANT_ID";
+    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+
+    if (data.error) throw new Error(data.error);
+
+    const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
+    const avatarImg = document.getElementById("avatarImg");
+    if (avatarImg) avatarImg.src = avatarUrl;
+
+    const siteName = data.site_name || "";
+    document.getElementById("welcomeName").innerText = siteName || "User";
+  } catch (err) {
+    console.error("Header update failed:", err);
+  }
+}
+
+updateHeader();
+
+// Server time clock
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm = String(now.getMonth()+1).padStart(2,"0");
+    const dd = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh = String(now.getHours()).padStart(2,"0");
+    const mi = String(now.getMinutes()).padStart(2,"0");
+    const ss = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
+
+// Team chat
 document.getElementById("sendButton").addEventListener("click",()=>{
   const chatId = document.getElementById("chatIdInput").value;
   const msg = document.getElementById("chatMessageInput").value;
