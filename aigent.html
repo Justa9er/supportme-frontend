@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>supportME! Admin Dashboard</title>
+  <style>
+    body {
+      margin:0;
+      background:#F4F6F8;
+      font-family:'Open Sans', sans-serif;
+      color:#1F2937;
+      width:1600px;
+      height:950px;
+      overflow:hidden;
+      box-sizing:border-box;
+    }
+    .dashboard {
+      display:flex;
+      height:100%;
+      border:2px solid #0021F7;
+      box-sizing:border-box;
+    }
+    /* Sidebar */
+    .sidebar {
+      width:185px;
+      background:#F4F6F8;
+      border-right:2px solid #E6ECF2;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .sidebar-label {
+       display: block;
+       font-family: 'Agency FB', sans-serif;
+       font-size: 12px;
+       color: #0021F7;
+       margin-top: 12px;
+       margin-bottom: 4px;
+       padding: 0 10px;
+    }
+    .sidebar-input {
+       width: calc(100% - 20px);
+       padding: 6px 8px;
+       font-family: 'Open Sans', sans-serif;
+       font-size: 13px;
+      border: 1px solid #E6ECF2;
+      border-radius: 4px;
+      background: #F4F6F8;
+       color: #1F2937;
+       margin: 0 10px;
+    }
+    .logo-box {
+      height:125px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-bottom:2px solid #E6ECF2;
+    }
+    .branding {
+      height:152px;
+      border-top:2px solid #E6ECF2;
+      font-size:10px;
+      padding:6px;
+      display:flex;
+      flex-direction:column;
+      text-align:center;
+    }
+    .logo-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .branding img { height:30px; width: 30px; }
+    .bottom-content { display: flex; flex-direction: column; gap: 4px; }
+    .branding .line { border-top:1px solid #91959E; margin: 4px 0; }
+    .branding .links { font-size:8px; }
+    .menu { flex:1; padding:10px; }
+    .menu-item {
+      position:relative;
+      margin:12px 0;
+      font-family:'Open Sans', sans-serif;
+      color:#0021F7;
+      font-size:14px;
+      font-weight: bold;
+      text-transform:uppercase;
+    }
+    .menu-item::after {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #F50000;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: super;
+    }
+    .main {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      gap:10px;
+      width:1405px;
+      box-sizing:border-box;
+    }
+    .header {
+      background:#5EDC1F;
+      border:2px solid #0021F7;
+      height:57px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:'Agency FB', sans-serif;
+      font-size:36px;
+      color:#0021F7;
+      font-weight: bold;
+      text-transform:uppercase;
+      position:relative;
+    }
+    .customer-number {
+      position:absolute;
+      right:70px;
+      top:15px;
+      font-family:'Agency FB', sans-serif;
+      font-size: 12px;
+    }
+    .plan-badge {
+      position:absolute;
+      right:10px;
+      top:5px;
+      width:37px;
+      height:47px;
+    }
+    .time-banner {
+      height:67px;
+      background:#F4F6F8;
+      border:2px solid #0021F7;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 20px;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight: bold;
+    }
+    .time-banner .right { display:flex; flex-direction:column; align-items:flex-end; }
+    .time-banner .top { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+    .time-banner button {
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+      padding:6px 14px;
+      margin-left:8px;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      background:#0021F7;
+      color:#fff;
+    }
+    .time-banner button:hover { background:#3157B8; }
+    .alert {
+      height:37px;
+      border:2px solid #0021F7;
+      background:#F4F6F8;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 10px;
+      font-size:14px;
+    }
+    .content { flex:1; border:2px solid #0021F7; background:#fff; padding: 5px; }
+    .footer {
+      height:149px;
+      display:flex;
+      border:2px solid #0021F7;
+      width:calc(100% - 4px);
+      box-sizing:border-box;
+    }
+    .team {
+      width:33%;
+      padding:6px;
+      background:#5EDC1F;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+    }
+    .team .cols { display:flex; justify-content:space-between; border-bottom:1px solid #91959E; margin-bottom:4px; }
+    .chat { flex:1; background:#5EDC1F; display:flex; flex-direction:column; padding:6px; }
+    .chat-window { flex:1; background:#fff; border:1px solid #91959E; margin-bottom:6px; }
+    .chat-inputs { display:flex; gap:4px; }
+    .chat-inputs input { border:1px solid #91959E; padding:2px 4px; font-size:14px; }
+    .chat-inputs button {
+      background:#0021F7; color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer;
+    }
+
+    /* AnswerTron styles */
+    .answertron-banner {
+      display: block;
+      width: 1366px;
+      height: 483px;
+      object-fit: cover;
+    }
+    .chat-phase {
+      width: 1366px;
+      height: 483px;
+      background: #0a0f2b url("brick-darkblue-bg.png") center/cover;
+      padding: 20px;
+      color: #f0faff;
+      font-family: 'Open Sans', sans-serif;
+      box-sizing: border-box;
+    }
+    .chat-bubble {
+      margin: 12px 0;
+      padding: 10px 14px;
+      border-radius: 16px;
+      max-width: 60%;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 15px;
+      box-shadow: 0 0 12px rgba(0, 255, 170, 0.5);
+    }
+    .chat-bubble.customer {
+      background: rgba(20, 20, 40, 0.9);
+      border: 1px solid #5EDC1F;
+      flex-direction: row;
+    }
+    .chat-bubble.ai {
+      background: rgba(0, 33, 247, 0.8);
+      border: 1px solid #5EDC1F;
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+    .chat-bubble .avatar {
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      border: 2px solid #5EDC1F;
+    }
+    .scan-line {
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      color: #5EDC1F;
+      margin-top: 6px;
+    }
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .flicker {
+      animation: flickerAnim 1.2s linear forwards;
+    }
+    @keyframes flickerAnim {
+      0%,10%,25%,40% { opacity: 0; }
+      5%,15%,30%,50%,70%,100% { opacity: 1; }
+      60% { opacity: 0.7; }
+      80% { opacity: 0.8; }
+      90% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <div class="sidebar">
+    <div>
+      <div class="logo-box">
+        <img class="app-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/logos/app-logo.png" alt="SupportME Logo">
+      </div>
+      <div class="menu">
+        <div class="menu-item">Tickets</div>
+        <div class="menu-item">Real AiGent</div>
+        <div class="menu-item">Tags</div>
+        <div class="menu-item">Chat</div>
+        <div class="menu-item">SMS/MMS</div>
+        <div class="menu-item">Voicemail</div>
+        <div class="menu-item">VoIP Phone</div>
+        <div class="menu-item">Team</div>
+        <div class="menu-item">Settings</div>
+        <div class="menu-item">App Controls</div>
+        <div class="menu-item">Get Help</div>
+      </div>  
+      <div style="margin-top: 2em;">
+        <label for="businessPhone" class="sidebar-label">Your Business Phone Number:</label>
+        <input type="text" id="businessPhone" class="sidebar-input" placeholder="000-000-0000">
+        <label for="billingDate" class="sidebar-label">Next Billing Date:</label>
+        <input type="text" id="billingDate" class="sidebar-input" placeholder="00/00/0000">
+      </div>
+    </div>
+    <div class="branding">
+      <div class="logo-container">
+        <img class="ringzu-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/logos/ringzu-logo.png" alt="RingzU Telecom Logo">
+      </div>
+      <div class="bottom-content">
+        <hr class="line">
+        <div>© 2025 RingzU Telecom Corp.</div>
+        <div>supportME! is built on the <a href="https://www.ringzu.com" target="_blank" style="color:#0021F7; text-decoration:none;">
+          <strong>RingzU Telecom Imagination Platform™</strong></a></div>
+        <div class="links">
+          <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:#0021F7; text-decoration:none;">Privacy</a> | 
+          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:#0021F7; text-decoration:none;">Billing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="header">
+      CUSTOMER SUPPORT ADMIN DASHBOARD
+      <div class="customer-number"></div>
+      <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
+    </div>
+    <div class="time-banner">
+      <div>supportME! official server time: <span id="dateTime"></span></div>
+      <div class="right">
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
+        <div>
+          <button onclick="window.open('https://www.getsupportme.com/billing','_blank')">UPGRADE TODAY</button>
+          <button onclick="window.open('https://www.getsupportme.com/new-ticket','_blank')">+NEW TICKET</button>
+        </div>
+      </div>
+    </div>
+    <div class="alert">
+      <span>
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/icons/alert-icon.png" alt="Alert" class="alert-icon" width="30" height="30" style="vertical-align: middle; margin-right: 6px;">
+        supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
+      </span>
+      <span>X</span>
+    </div>
+    <div class="content">
+      <div class="notes-grid-container">
+        <!-- Header with controls -->
+        <div class="grid-header">
+          <h2 class="grid-title">AnswerTron 3000</h2>
+          <div class="grid-controls">
+            <button class="activate-btn" id="activateBtn">$ ActivateAi</button>
+            <button class="add-docs-btn" id="addNoteBtn">+Train Doc's</button>
+          </div>
+        </div>
+
+        <!-- Phase 1: Banner -->
+        <div id="answertronIntro" class="intro-block">
+          <img src="answertron-banner.png" alt="AnswerTron 3000 Banner" class="answertron-banner">
+        </div>
+
+        <!-- Phase 2: Chat -->
+        <div id="answertronChat" class="chat-phase hidden">
+          <div class="chat-bubble customer">
+            <img src="https://i.pravatar.cc/40?img=12" class="avatar">
+            <span>Do you deliver on weekends?</span>
+          </div>
+          <div class="chat-bubble ai">
+            <img src="https://i.pravatar.cc/40?img=55" class="avatar">
+            <span>Yep, we sure do! 🚚 Until 3pm Saturday.</span>
+            <div class="scan-line" id="scanLine1"></div>
+          </div>
+          <div class="chat-bubble customer">
+            <img src="https://i.pravatar.cc/40?img=12" class="avatar">
+            <span>How late are you open weekdays?</span>
+          </div>
+          <div class="chat-bubble ai">
+            <img src="https://i.pravatar.cc/40?img=55" class="avatar">
+            <span>Doors stay open till 9pm. Swing by anytime.</span>
+            <div class="scan-line" id="scanLine2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="team">
+        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
+        <div>[List]</div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
+          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
+        </div>
+        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
+          <input type="text" id="chatIdInput" placeholder="Chat ID" style="width:120px; padding:6px; font-size:12px;">
+          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
+          <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+            SEND MSG
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* -------- Plan Badge / Customer Info -------- */
+async function loadPlanBadge() {
+  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0";
+  try {
+    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+    document.getElementById("planBadge").src = data.badge_url;
+    document.querySelector(".customer-number").textContent = data.customer_number;
+  } catch (err) { console.error("Error loading badge:", err); }
+}
+loadPlanBadge();
+
+async function loadCustomerInfo() {
+  try {
+    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const data = await response.json();
+    const numberEl = document.querySelector(".customer-number");
+    if (numberEl && data.masked_id) numberEl.textContent = data.masked_id;
+    const badgeEl = document.querySelector(".plan-badge");
+    if (badgeEl && data.badge_url) badgeEl.src = data.badge_url;
+  } catch (err) { console.error("Error loading customer info:", err); }
+}
+loadCustomerInfo();
+
+/* -------- Server Time -------- */
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm  = String(now.getMonth()+1).padStart(2,"0");
+    const dd  = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh  = String(now.getHours()).padStart(2,"0");
+    const mi  = String(now.getMinutes()).padStart(2,"0");
+    const ss  = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
+
+/* -------- Chat Demo Logic -------- */
+const intro = document.getElementById("answertronIntro");
+const chat  = document.getElementById("answertronChat");
+
+function startScanLine(id) {
+  const scanMessages = [
+    "FAQ accessed...",
+    "HelpDoc pg1 scanned...",
+    "Knowledge base searched...",
+    "Answer found!_"
+  ];
+  let idx = 0;
+  setInterval(() => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = scanMessages[idx];
+      idx = (idx + 1) % scanMessages.length;
+    }
+  }, 1000);
+}
+startScanLine("scanLine1");
+startScanLine("scanLine2");
+
+function showChat() {
+  intro.classList.add("hidden");
+  setTimeout(() => {
+    chat.classList.remove("hidden");
+    chat.classList.add("flicker");
+    setTimeout(() => chat.classList.remove("flicker"), 1200);
+  }, 800);
+}
+function resetChat() {
+  chat.classList.add("hidden");
+  setTimeout(() => {
+    intro.classList.remove("hidden");
+    intro.classList.add("flicker");
+    setTimeout(() => intro.classList.remove("flicker"), 1200);
+  }, 800);
+}
+setTimeout(showChat, 4000);
+setInterval(() => {
+  resetChat();
+  setTimeout(showChat, 4000);
+}, 12000);
+
+/* -------- Team Chat Placeholder -------- */
+document.getElementById("sendButton").addEventListener("click",()=>{
+  const chatId = document.getElementById("chatIdInput").value;
+  const msg = document.getElementById("chatMessageInput").value;
+  if(msg.trim()){
+    const inbox = document.getElementById("chatInbox");
+    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
+    document.getElementById("chatMessageInput").value = "";
+  }
+});
+</script>
+</body>
+</html>
