@@ -81,10 +81,10 @@
       flex-direction: column;
       gap: 4px;
     }
-    .branding .line { border-top:1px solid #91959E; margin: 4px 0; }
-    .branding .links { font-size:8px; }
+    .branding .links { font-size:9px; }
     .menu { flex:1; padding:10px; }
     .menu-item {
+      display:block;
       position:relative;
       margin:12px 0;
       font-family:'Open Sans', sans-serif;
@@ -498,21 +498,18 @@
   <div class="sidebar">
     <div>
       <div class="logo-box">
-     <img class="app-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/logos/app-logo.png" alt="SupportME Logo">
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" height="120">
       </div>
-      <div class="menu">
-        <div class="menu-item">Tickets</div>
-        <div class="menu-item">Notes</div>
-        <div class="menu-item">Tags</div>
-        <div class="menu-item">Chat</div>
-        <div class="menu-item">SMS/MMS</div>
-        <div class="menu-item active">Voicemail</div>
-        <div class="menu-item">VoIP Phone</div>
-        <div class="menu-item">Team</div>
-        <div class="menu-item">Settings</div>
-        <div class="menu-item">App Controls</div>
-        <div class="menu-item">Get Help</div>
-      </div>  
+<div class="menu">
+<a href="https://app.getsupportme.com/admin-dashboard" class="menu-item ">Tickets</a>
+  <a href="https://app.getsupportme.com/aigent.html" class="menu-item">Real AiGent</a>
+  <a href="https://app.getsupportme.com/chat.html" class="menu-item">Live Chat</a>
+  <a href="https://app.getsupportme.com/sms-mms.html" class="menu-item">SMS/MMS</a>
+  <a href="https://app.getsupportme.com/voicemail.html" class="menu-item active">Voicemail</a>
+  <a href="https://portal.ringzu.pro/site" target="_blank" class="menu-item">VOIP Phone</a>
+  <a href="https://app.getsupportme.com/team.html" class="menu-item">My Team</a>
+  <a href="https://getsupportme.com/contact" target="_blank" class="menu-item">Get Help</a>
+</div>
       <div style="margin-top: 2em;">
         <label for="businessPhone" class="sidebar-label">Your Business Phone Number:</label>
         <input type="text" id="businessPhone" class="sidebar-input" placeholder="000-000-0000">
@@ -521,10 +518,9 @@
       </div>
     </div>
     <div class="branding">
-     <div class="logo-container">
-  <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/logos/ringzu-logo.png" alt="RingzU Logo">
-</div>
-
+      <div class="logo-container">
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/ringzu-logo.png" alt="RingzU Logo">
+      </div>
       <div class="bottom-content">
         <hr class="line">
         <div>© 2025 RingzU Telecom Corp.</div>
@@ -540,7 +536,7 @@
   </div>
   <div class="main">
    <div class="header">
-  CUSTOMER SUPPORT ADMIN DASHBOARD
+  CUSTOMER SUPPORT VOICEMAIL DASHBOARD
   <div class="customer-number"></div>
   <!-- Badge image starts blank, will be filled dynamically -->
   <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
@@ -550,15 +546,15 @@
       <div class="right">
         <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
         <div>
-          <button onclick="window.open('https://www.getsupportme.com/billing','_blank')">UPGRADE TODAY</button>
-          <button onclick="window.open('https://www.getsupportme.com/new-ticket','_blank')">+ NEW TICKET</button>
+          <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE TODAY</button>
+          <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+ NEW TICKET</button>
         </div>
       </div>
     </div>
     <div class="alert">
       <span>
-       <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/icons/alert-icon.png" 
-     alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" 
+             alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
         supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
       </span>
       <span style="cursor: pointer;" onclick="this.parentElement.parentElement.style.display='none'">X</span>
@@ -682,30 +678,6 @@ async function loadCustomerInfo() {
 
 loadCustomerInfo();
 </script>
-<script>
-  async function updateHeader() {
-    try {
-      const tenantId = "YOUR_TENANT_ID"; // replace with actual
-      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
-      const data = await response.json();
-
-      if (data.error) throw new Error(data.error);
-
-      // Avatar
-      const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
-      document.getElementById("avatarImg").src = avatarUrl;
-
-      // Welcome text
-      const siteName = data.site_name || "";
-      document.getElementById("welcomeName").innerText = siteName || "User";
-    } catch (err) {
-      console.error("Header update failed:", err);
-    }
-  }
-
-  updateHeader();
-</script>
-
 <script>
 /* ────────── SERVER TIME (24-hour Pacific) ────────── */
 (function startServerClock(){
