@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>supportME! Admin Dashboard - Voicemail</title>
+  <title> Support Admin Voicemail Dashboard</title>
   <style>
     body {
       margin:0;
@@ -547,7 +547,7 @@
         <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
         <div>
           <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE TODAY</button>
-          <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+ NEW TICKET</button>
+          <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+NEW TICKET</button>
         </div>
       </div>
     </div>
@@ -555,7 +555,7 @@
       <span>
         <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" 
              alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
-        supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
+        supportME! deletes all cloud data and support history upon subscription non-renewal.
       </span>
       <span style="cursor: pointer;" onclick="this.parentElement.parentElement.style.display='none'">X</span>
     </div>
@@ -584,8 +584,7 @@
             <button class="control-btn" onclick="selectAll()">Select All</button>
             <button class="control-btn" onclick="markAsRead()">Mark as Read</button>
             <button class="control-btn secondary" onclick="deleteSelected()">Delete Selected</button>
-            <button class="control-btn secondary" onclick="downloadSelected()">Download Selected</button>
-          </div>
+             </div>
           <div class="control-group">
             <select class="filter-select" onchange="filterVoicemails(this.value)">
               <option value="all">All Messages</option>
@@ -711,7 +710,7 @@ document.getElementById("sendButton").addEventListener("click",()=>{
 
 /* ────────── VOICEMAIL FUNCTIONALITY ────────── */
 
-// Sample voicemail data (will be replaced with VOIP.ms API data)
+
 let voicemails = [
   {
     id: 1,
@@ -721,7 +720,7 @@ let voicemails = [
     time: "14:32",
     duration: "02:15",
     status: "new",
-    audioUrl: "#", // Will be actual audio file URL from VOIP.ms
+    audioUrl: "#",
     transcription: "Hi, this is Jane calling about the support ticket..."
   },
   {
@@ -823,7 +822,6 @@ function renderVoicemails(filter = 'all') {
         <div class="voicemail-duration">${voicemail.duration}</div>
         <div class="voicemail-actions">
           <button class="action-btn play" onclick="playVoicemail(${voicemail.id})">▶ Play</button>
-          <button class="action-btn" onclick="downloadVoicemail(${voicemail.id})">⬇ Download</button>
           <button class="action-btn" onclick="saveVoicemail(${voicemail.id})">💾 Save</button>
           <button class="action-btn" onclick="deleteVoicemail(${voicemail.id})">🗑 Delete</button>
         </div>
@@ -899,8 +897,9 @@ function downloadSelected() {
     return;
   }
   
-  // In actual implementation, this would download the audio files
-  alert(`Downloading ${selectedVoicemails.size} voicemail(s)... (Feature will connect to VOIP.ms API)`);
+  // This will download the audio files
+//NOTICE: We do not support external exporting or dowwloading of audio ourside of the dashboard and only telco system stores the messages 
+  alert(`Downloading ${selectedVoicemails.size} voicemail(s)... (Feature will connect to Ringzu API)`);
 }
 
 function filterVoicemails(filter) {
@@ -909,8 +908,8 @@ function filterVoicemails(filter) {
 }
 
 function refreshVoicemails() {
-  // In actual implementation, this would fetch fresh data from VOIP.ms API
-  alert('Refreshing voicemails... (Will connect to VOIP.ms API)');
+  //This will fetch fresh data from RingzU API
+  alert('Refreshing voicemails... (Will connect to Ringzu API)');
   renderVoicemails(currentFilter);
 }
 
@@ -928,17 +927,8 @@ function playVoicemail(id) {
   document.getElementById('audioPlayer').style.display = 'block';
   document.getElementById('playerInfo').textContent = `Playing: ${voicemail.callerName} (${voicemail.callerNumber})`;
   
-  // In actual implementation, this would load the real audio file from VOIP.ms
-  // For now, we'll simulate audio playback
-  simulateAudioPlayback(voicemail.duration);
-}
-
-function downloadVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  // In actual implementation, this would download the audio file from VOIP.ms
-  alert(`Downloading voicemail from ${voicemail.callerName}... (Will connect to VOIP.ms API)`);
+  // This connects to audio file from RingzU via api
+  AudioPlayback(voicemail.duration);
 }
 
 function saveVoicemail(id) {
@@ -981,7 +971,7 @@ function togglePlayPause() {
   }
 }
 
-function simulateAudioPlayback(duration) {
+function AudioPlayback(duration) {
   const [minutes, seconds] = duration.split(':').map(Number);
   currentDuration = minutes * 60 + seconds;
   currentTime = 0;
@@ -992,15 +982,14 @@ function simulateAudioPlayback(duration) {
   isPlaying = false;
 }
 
-function startAudioSimulation() {
+function startAudio() {
   audioInterval = setInterval(() => {
     currentTime++;
     updateProgress();
     
     if (currentTime >= currentDuration) {
       onAudioEnd();
-    }
-  }, 1000);
+    }  }, 1000);
 }
 
 function updateProgress() {
@@ -1048,30 +1037,29 @@ document.addEventListener('DOMContentLoaded', function() {
   renderVoicemails();
 });
 
-/* ────────── VOIP.MS API INTEGRATION STUBS ────────── */
+/* ────────── RingzU API INTEGRATION STUBS ────────── */
 
-// These functions will be implemented to connect with VOIP.ms API
+// These functions will be implemented to connect with RingzU API
 function fetchVoicemailsFromAPI() {
-  // API call to VOIP.ms to get voicemail list
-  // GET https://voip.ms/api/v1/rest.php?api_username=xxx&api_password=xxx&method=getVoiceMails
-  console.log('API: Fetching voicemails from VOIP.ms...');
+  // API call to RingzU to get voicemail list
+  // GET https://voip-ringzu-proxy.onrender.com/api/v1/rest.php?api_username=xxx&api_password=xxx&method=getVoiceMails
+  console.log('API: Fetching voicemails from RingzU...');
 }
 
 function getVoicemailAudioURL(voicemailId) {
   // API call to get the audio file URL for a specific voicemail
-  // This would return the actual audio file URL from VOIP.ms
+  // This would return the actual audio file URL from RingzU
   console.log(`API: Getting audio URL for voicemail ${voicemailId}`);
   return '#'; // Placeholder
 }
 
 function deleteVoicemailViaAPI(voicemailId) {
-  // API call to delete voicemail from VOIP.ms servers
-  // DELETE request to VOIP.ms API
-  console.log(`API: Deleting voicemail ${voicemailId} from VOIP.ms`);
+  // API call to delete voicemail from RingzU servers
+  // DELETE request to RingzU API
+  console.log(`API: Deleting voicemail ${voicemailId} from RingzU`);
 }
 
 function getVoicemailTranscription(voicemailId) {
-  // If VOIP.ms supports transcription, get it via API
-  // Otherwise, integrate with a transcription service
+  //RingzU supports transcription, get it via API for an ADDED FEE
   console.log(`API: Getting transcription for voicemail ${voicemailId}`);
 }
