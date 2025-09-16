@@ -440,7 +440,8 @@
       <div class="menu">
         <a href="https://app.getsupportme.com/customer-dashboard.html" class="menu-item active">All Tickets</a>
         <a href="https://app.getsupportme.com/live-chat.html" class="menu-item">Live Chat</a>
-        <a href="https://app.getsupportme.com/customer-contact.html" class="menu-item">Contact Us</a>       
+        <a href="#" class="menu-item">Contact Us</a> 
+        
     </div>
 </div>
     <div class="branding">
@@ -733,5 +734,141 @@ document.getElementById("subjectInput").addEventListener("input", function(e) {
   }
 });
 </script>
+ <script>
+        // Function to get subscriber's contact URL from stored data or detect it
+        async function getSubscriberContactUrl() {
+            try {
+                // Method 1: Check if contact URL is stored in localStorage from subscription process
+                const storedContactUrl = localStorage.getItem('subscriberContactUrl');
+                if (storedContactUrl && storedContactUrl !== 'null') {
+                    return storedContactUrl;
+                }
+                
+                // Method 2: Get from URL parameters (if passed during app installation)
+                const urlParams = new URLSearchParams(window.location.search);
+                const contactParam = urlParams.get('contact_url') || urlParams.get('contactUrl');
+                if (contactParam) {
+                    // Store for future use
+                    localStorage.setItem('subscriberContactUrl', contactParam);
+                    return contactParam;
+                }
+                
+                // Method 3: Extract from referrer domain and construct likely contact URLs
+                const referrer = document.referrer;
+                if (referrer) {
+                    try {
+                        const referrerUrl = new URL(referrer);
+                        const baseDomain = referrerUrl.origin;
+                        
+                        // Test common contact page patterns
+                        const commonPaths = [
+                            '/contact',
+                            '/contact-us', 
+                            '/contact-me',
+                            '/get-in-touch',
+                            '/about/contact'
+                        ];
+                        
+                        for (const path of commonPaths) {
+                            const testUrl = baseDomain + path;
+                            try {
+                                // Test if the URL exists (note: this may be blocked by CORS)
+                                const response = await fetch(testUrl, { 
+                                    method: 'HEAD',
+                                    mode: 'no-cors' 
+                                });
+                                // If we get here without error, assume it exists
+                                localStorage.setItem('subscriberContactUrl', testUrl);
+                                return testUrl;
+                            } catch (e) {
+                                // Continue to next path
+                                continue;
+                            }
+                        }
+                        
+                        // If no specific contact page found, return base domain
+                        localStorage.setItem('subscriberContactUrl', baseDomain);
+                        return baseDomain;
+                        
+                    } catch (e) {
+                        console.warn('Could not parse referrer URL:', e);
+                    }
+                }
+                
+                // Method 4: Check if there's a data attribute on the link itself
+                const linkElement = document.getElementById('contactUsLink');
+                const dataContact = linkElement.getAttribute('data-contact-url');
+                if (dataContact) {
+                    return dataContact;
+                }
+                
+                // Method 5: Look for contact URL in page meta tags
+                const contactMeta = document.querySelector('meta[name="contact-url"]') || 
+                                  document.querySelector('meta[property="contact-url"]');
+                if (contactMeta) {
+                    return contactMeta.getAttribute('content');
+                }
+                
+                // Fallback: return a default message or current domain
+                return '#'; // Will be handled in the click event
+                
+            } catch (error) {
+                console.warn('Error getting contact URL:', error);
+                return '#';
+            }
+        }
+        
+        // Function to initialize the contact link
+        async function initializeContactLink() {
+            const contactLink = document.getElementById('contactUsLink');
+            
+            try {
+                const contactUrl = await getSubscriberContactUrl();
+                
+                if (contactUrl === '#') {
+                    // No contact URL found - handle gracefully
+                    contactLink.href = '#';
+                    contactLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        alert('Contact information not available. Please contact support.');
+                    });
+                } else {
+                    // Set the contact URL
+                    contactLink.href = contactUrl;
+                    contactLink.target = '_blank'; // Open in new tab
+                }
+                
+                contactLink.classList.remove('loading');
+                
+            } catch (error) {
+                console.error('Error initializing contact link:', error);
+                contactLink.href = '#';
+                contactLink.classList.remove('loading');
+                contactLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Contact information not available. Please contact support.');
+                });
+            }
+        }
+        
+        // Function to manually set contact URL (call this during app installation/setup)
+        function setSubscriberContactUrl(url) {
+            localStorage.setItem('subscriberContactUrl', url);
+            const contactLink = document.getElementById('contactUsLink');
+            if (contactLink) {
+                contactLink.href = url;
+            }
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeContactLink);
+        } else {
+            initializeContactLink();
+        }
+        
+        // Make setSubscriberContactUrl available globally for external calls
+        window.setSubscriberContactUrl = setSubscriberContactUrl;
+    </script>
 </body>
 </html>
