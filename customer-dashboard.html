@@ -67,6 +67,7 @@
       text-align: center;
       width: 100%;
       cursor: pointer;
+      text-decoration: none;
     }
 
     .menu-item::after {
@@ -79,6 +80,13 @@
       margin-left: 4px;
       vertical-align: super;
     }
+
+  /* Active page = lime green button with blue text */
+.menu-item.active {
+  background: #5EDC1F;      /* Lime Green */
+  color: #1F2937;           /* Dark Blue text for accessibility */
+  box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
+}
 
     .branding {
       height: 152px;
@@ -189,197 +197,13 @@
       flex-direction: column; 
       gap: 10px;
       overflow-y: auto;
-    }
-
-    /* Ticket History */
-    .ticket-history { 
-      padding: 10px; 
-      border-bottom: 2px solid var(--border-color); 
-    }
-
-    .ticket-history h3 {
-      font-family: 'Agency FB', sans-serif;
-      font-size: 24px;
-      color: var(--primary-color);
-      font-weight: bold;
-      text-transform: uppercase;
-      margin: 0 0 10px 0;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .button-group button {
-      font-family: 'Agency FB', sans-serif;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      background: var(--primary-color);
-      color: #fff;
-      text-transform: uppercase;
-    }
-
-    .button-group button:hover { background: #C4F3AD; }
-
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      margin-top: 10px; 
-    }
-
-    th, td {
-      border: 1px solid #91959E;
-      padding: 8px;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    th { 
-      background: var(--background-color); 
-      font-weight: bold;
-      font-family: 'Agency FB', sans-serif;
-      font-size: 14px;
-      color: var(--primary-color);
-      text-transform: uppercase;
-    }
-
-    .priority-icon { 
-      width: 12px; 
-      height: 12px; 
-      border-radius: 50%; 
-      display: inline-block; 
-      margin-right: 6px; 
-    }
-
-    .critical { background: #F50000; }
-    .moderate { background: #F5CC00; }
-    .low { background: var(--accent-color); }
-
-    /* Ticket Form */
-    .ticket-form { 
-      padding: 10px; 
-      display: flex; 
-      flex-direction: column; 
-      gap: 8px; 
-      border: 2px solid var(--border-color);
-      background: #fff;
-      margin-top: 10px;
-    }
-
-    .ticket-form h3 {
-      font-family: 'Agency FB', sans-serif;
-      font-size: 24px;
-      color: var(--primary-color);
-      font-weight: bold;
-      text-transform: uppercase;
-      margin: 0 0 10px 0;
-    }
-
-    .ticket-form label {
-      font-family: 'Agency FB', sans-serif;
-      font-size: 14px;
-      color: var(--primary-color);
-      font-weight: bold;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .form-col {
-      flex: 1;
-      border: 1px solid var(--secondary-border);
-      padding: 6px;
-      box-sizing: border-box;
-    }
-
-    .form-col.priority { flex: 1; }
-    .form-col.subject { flex: 2; }
-
-    .ticket-form select,
-    .ticket-form input { 
-      width: 100%;
-      padding: 6px; 
-      font-size: 14px;
-      border: 1px solid var(--secondary-border);
-      border-radius: 4px;
-      background: var(--background-color);
-      color: var(--text-color);
-      box-sizing: border-box;
-    }
-
-    .ticket-form textarea {
-      width: 100%;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid var(--secondary-border);
-      border-radius: 4px;
-      background: var(--background-color);
-      color: var(--text-color);
-      min-height: 80px;
-      resize: vertical;
-      box-sizing: border-box;
-    }
-
-    .form-buttons {
-      display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      border-top: 1px solid var(--secondary-border);
-      padding-top: 10px;
-      margin-top: 10px;
     }
-
-    .upload-info {
-      font-size: 12px;
-      color: var(--text-color);
-    }
-
-    .upload-info ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .upload-info li {
-      padding: 2px 0;
-      color: var(--primary-color);
-    }
-
-    .ticket-form button {
-      font-family: 'Agency FB', sans-serif;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      background: var(--primary-color);
-      color: #fff;
-      text-transform: uppercase;
-      margin-left: 8px;
-    }
-
-    .ticket-form button:first-child {
-      margin-left: 0;
-    }
-
-    .ticket-form button:hover { background: #3157B8; }
 
     /* Footer Banner */
     .footer-banner {
-      width: calc(100% - 4px);
+      width: calc(100% - px);
       height: 149px;
       border: 2px solid var(--border-color);
       box-sizing: border-box;
@@ -428,7 +252,224 @@
       background: var(--primary-color);
       color: #fff;
     }
-  </style>
+
+    /* Live Chat Container Styles */
+    .live-chat-container {
+        width: 1376px;
+        height: 583px;
+        border: 0px solid #0021f7;
+        border-radius: 0px;
+        background: #f4f6f8;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Agency FB', Arial, sans-serif;
+    }
+
+    .live-chat-header {
+        background: linear-gradient(90deg, #5edc1f 20%, #0021f7 100%);
+        color: #00217f7;
+        font-family: 'Agency FB', Arial, sans-serif;
+        font-weight: bold;
+        font-size: 24px;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 40px;
+    }
+
+    .chat-status {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #5edc1f;
+    }
+
+    .chat-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #f8f9fa;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 450px;
+    }
+
+    .message {
+        max-width: 70%;
+        padding: 8px 12px;
+        border-radius: 18px;
+        word-wrap: break-word;
+        position: relative;
+    }
+
+    .message.customer {
+        align-self: flex-start;
+        background: #e9ecef;
+        color: #333;
+    }
+
+    .message.admin {
+        align-self: flex-end;
+        background: #0021f7;
+        color: white;
+    }
+
+    .message-time {
+        font-size: 10px;
+        opacity: 0.7;
+        margin-top: 4px;
+    }
+
+    .typing-indicator {
+        align-self: flex-start;
+        background: #e9ecef;
+        padding: 8px 12px;
+        border-radius: 18px;
+        display: none;
+    }
+
+    .typing-dots {
+        display: flex;
+        gap: 2px;
+    }
+
+    .typing-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #666;
+        animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes typing {
+        0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+        40% { transform: scale(1); opacity: 1; }
+    }
+
+    .chat-input-area {
+        padding: 10px;
+        background: white;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    .chat-input {
+        flex: 1;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        padding: 8px 15px;
+        outline: none;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        resize: none;
+        min-height: 20px;
+        max-height: 80px;
+    }
+
+    .chat-input:focus {
+        border-color: #0021f7;
+    }
+
+    .send-btn {
+        background: #0021f7;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .send-btn:hover {
+        background: #001a99;
+    }
+
+    .send-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    .chat-actions {
+        display: flex;
+        gap: 5px;
+    }
+
+    .action-icon {
+        width: 35px;
+        height: 35px;
+        border: 1px solid #dee2e6;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .action-icon:hover {
+        background: #f8f9fa;
+        border-color: #0021f7;
+    }
+
+    .connection-status {
+        padding: 5px 10px;
+        background: #d4edda;
+        border-bottom: 1px solid #c3e6cb;
+        font-size: 12px;
+        color: #155724;
+        text-align: center;
+    }
+
+    .connection-status.disconnected {
+        background: #f8d7da;
+        border-bottom-color: #f5c6cb;
+        color: #721c24;
+    }
+
+        /* Basic styling for the contact link */
+        .contact-menu-link {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .contact-menu-link:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .contact-menu-link.loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
 <div class="dashboard">
@@ -438,14 +479,14 @@
         <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" height="120" alt="supportME! Logo">
       </div>
       <div class="menu">
-        <a href="https://app.getsupportme.com/customer-dashboard.html" class="menu-item active">All Tickets</a>
-        <a href="https://app.getsupportme.com/live-chat.html" class="menu-item">Live Chat</a>
-        <a href="#" class="menu-item">Contact Us</a> 
-        
+        <a href="https://app.getsupportme.com/customer-dashboard.html" class="menu-item">All Tickets</a>
+        <a href="https://app.getsupportme.com/live-chat.html" class="menu-item active">Live Chat</a>
+       <!-- Empty href that will be populated -->
+<a href="#" id="contactUsLink" class="your-menu-classes">CONTACT US</a>  
     </div>
 </div>
     <div class="branding">
-      <div class="logo-container" onclick="window.location.href='https://ringzu.com'">
+      <div class="logo-container">
         <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/wide-ringzu-logo.png">
       </div>
       <div class="bottom-content">
@@ -465,7 +506,7 @@
   <div class="main">
     <div class="header">
       CUSTOMER SUPPORT CENTER
-          </div>
+    </div>
     <div class="time-banner">
       <div>supportME! official server time: <span id="dateTime"></span></div>
       <div class="right">
@@ -487,102 +528,52 @@
       <span style="cursor:pointer;" onclick="this.parentElement.style.display='none'">X</span>
     </div>
     <div class="content">
-      <div class="ticket-history">
-        <h3>Ticket History</h3>
-        <div class="button-group">
-          <button onclick="refreshTickets()">Refresh</button>
-          <button onclick="closeSelectedTickets()">Close Selected</button>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th><input type="checkbox" onchange="toggleAllTickets(this)"></th>
-              <th>ID</th>
-              <th>Subject</th>
-              <th>Status</th>
-              <th>Priority</th>
-              <th>Created</th>
-              <th>Last Updated</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="checkbox" name="ticketSelect" value="1001"></td>
-              <td>1001</td>
-              <td>Locked out of Account</td>
-              <td><span style="color:#F50000; font-weight:bold;">Open</span></td>
-              <td><span class="priority-icon critical"></span>Critical</td>
-              <td>01/05/2025</td>
-              <td>01/06/2025</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" name="ticketSelect" value="1002"></td>
-              <td>1002</td>
-              <td>Billing Issue</td>
-              <td><span style="color:#5EDC1F; font-weight:bold;">Closed</span></td>
-              <td><span class="priority-icon moderate"></span>Moderate</td>
-              <td>12/22/2024</td>
-              <td>12/23/2024</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" name="ticketSelect" value="1003"></td>
-              <td>1003</td>
-              <td>Feedback on Feature</td>
-              <td><span style="color:#F50000; font-weight:bold;">Open</span></td>
-              <td><span class="priority-icon low"></span>Low</td>
-              <td>12/20/2024</td>
-              <td>01/02/2025</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="live-chat-container">
+            <!-- Chat Header -->
+            <div class="live-chat-header">
+                <span>LIVE CHAT</span>
+                <div class="chat-status">
+                    <span class="status-dot"></span>
+                    <span>Connected</span>
+                </div>
+            </div>
 
-      <div class="ticket-form">
-        <h3>Submit New Ticket</h3>
-        
-        <div class="form-row">
-          <div class="form-col priority">
-            <label>Priority Level</label>
-            <select id="prioritySelect">
-              <optgroup label="Critical (Red)">
-                <option>Locked out of Account</option>
-                <option>Account Takeover</option>
-                <option>Fraud</option>
-              </optgroup>
-              <optgroup label="Moderate (Yellow)">
-                <option>Billing</option>
-                <option>Service Down</option>
-                <option>Feature Broken</option>
-              </optgroup>
-              <optgroup label="Low (Green)">
-                <option>General Question</option>
-                <option>How-To</option>
-                <option>Feedback</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="form-col subject">
-            <label>Ticket Subject</label>
-            <input type="text" id="subjectInput" placeholder="Enter ticket subject" maxlength="100">
-          </div>
-        </div>
+            <!-- Connection Status -->
+            <div class="connection-status" id="connectionStatus">
+                Connected to support team
+            </div>
 
-        <div style="margin-bottom:10px; border:1px solid var(--secondary-border); padding:6px; box-sizing:border-box;">
-          <label>Ticket Description</label>
-          <textarea id="descriptionInput" placeholder="Describe your issue in detail" maxlength="500"></textarea>
-        </div>
+            <!-- Chat Body -->
+            <div class="chat-body">
+                <!-- Messages Area -->
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message admin">
+                        <div>Hello! How can we help you today?</div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
 
-        <div class="form-buttons">
-          <div class="upload-info">
-            <ul id="uploadedFiles"></ul>
-          </div>
-          <div class="button-group">
-            <button onclick="submitTicket()">Submit Ticket</button>
-            <button onclick="subAddFile()">Add File</button>
-            <button onclick="clearForm()">Clear Form</button>
-          </div>
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <span style="margin-left: 8px; font-size: 12px;">Support is typing...</span>
+                </div>
+
+                <!-- Input Area -->
+                <div class="chat-input-area">
+                    <div class="chat-actions">
+                        <div class="action-icon" title="Attach File" onclick="handleAttachment()">📎</div>
+                        <div class="action-icon" title="Emoji" onclick="toggleEmoji()">😊</div>
+                    </div>
+                    <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     
     <div class="footer-banner" onclick="window.location.href='https://getsupportme.com'">
@@ -592,6 +583,146 @@
 </div>
 
 <script>
+// Chat functionality
+let isConnected = false;
+let chatSocket = null;
+
+// Initialize chat connection to admin dashboard
+function initializeChatConnection() {
+    try {
+        // Connect to admin dashboard chat system
+        const adminChatUrl = 'https://app.getsupportme.com/chat.html';
+        // Real connection implementation goes here
+        
+    } catch (error) {
+        console.error('Failed to connect to admin chat:', error);
+        updateConnectionStatus(false);
+    }
+}
+
+// Update connection status
+function updateConnectionStatus(connected) {
+    const statusElement = document.getElementById('connectionStatus');
+    const statusDot = document.querySelector('.status-dot');
+    const statusText = document.querySelector('.chat-status span:last-child');
+    
+    if (connected) {
+        statusElement.textContent = 'Connected to support team';
+        statusElement.className = 'connection-status';
+        statusDot.style.background = '#5edc1f';
+        statusText.textContent = 'Connected';
+    } else {
+        statusElement.textContent = 'Disconnected - Attempting to reconnect...';
+        statusElement.className = 'connection-status disconnected';
+        statusDot.style.background = '#dc3545';
+        statusText.textContent = 'Offline';
+    }
+}
+
+// Handle message sending
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message || !isConnected) return;
+    
+    // Add message to chat
+    addMessage(message, 'customer');
+    
+    // Clear input
+    input.value = '';
+    input.style.height = 'auto';
+    updateSendButton();
+    
+    // Send to admin dashboard
+    sendToAdmin(message);
+}
+
+// Add message to chat display
+function addMessage(text, sender) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    messageDiv.innerHTML = `
+        <div>${text}</div>
+        <div class="message-time">${timeString}</div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Send message to admin dashboard
+function sendToAdmin(message) {
+    // Implement your API call to admin dashboard here
+    console.log('Sending to admin:', message);
+}
+
+// Handle input changes
+function handleInputChange() {
+    const input = document.getElementById('chatInput');
+    
+    // Auto-resize textarea
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 80) + 'px';
+    
+    updateSendButton();
+}
+
+// Update send button state
+function updateSendButton() {
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    
+    sendBtn.disabled = !input.value.trim() || !isConnected;
+}
+
+// Handle Enter key
+function handleKeyPress(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+// Show/hide typing indicator
+function showTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'flex';
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'none';
+}
+
+// Handle file attachment
+function handleAttachment() {
+    // Implement file attachment functionality
+    alert('File attachment feature coming soon!');
+}
+
+// Handle emoji picker
+function toggleEmoji() {
+    // Implement emoji picker functionality
+    alert('Emoji picker coming soon!');
+}
+
+// Initialize chat when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const chatInput = document.getElementById('chatInput');
+    
+    chatInput.addEventListener('input', handleInputChange);
+    chatInput.addEventListener('keypress', handleKeyPress);
+    
+    // Initialize connection
+    initializeChatConnection();
+});
+
 // Server time clock
 (function startServerClock(){
   const tz = "America/Los_Angeles";
@@ -610,131 +741,10 @@
   updateServerTime();
   setInterval(updateServerTime, 1000);
 })();
-
-// Ticket management functions
-function toggleAllTickets(masterCheckbox) {
-  const checkboxes = document.querySelectorAll('input[name="ticketSelect"]');
-  checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
-}
-
-function closeSelectedTickets() {
-  const selected = document.querySelectorAll('input[name="ticketSelect"]:checked');
-  if (selected.length > 0) {
-    if (confirm(`Are you sure you want to close ${selected.length} selected ticket(s)?`)) {
-      alert(`Closing ${selected.length} selected ticket(s)`);
-      // Here you would make API calls to close the tickets
-    }
-  } else {
-    alert("Please select tickets to close");
-  }
-}
-
-function refreshTickets() {
-  alert("Refreshing ticket list...");
-  // Here you would reload the ticket data from your backend
-}
-
-function submitTicket() {
-  const priority = document.getElementById("prioritySelect").value;
-  const subject = document.getElementById("subjectInput").value;
-  const description = document.getElementById("descriptionInput").value;
-  
-  if (!subject.trim()) {
-    alert("Please enter a ticket subject");
-    return;
-  }
-  
-  if (!description.trim()) {
-    alert("Please enter a ticket description");
-    return;
-  }
-  
-  alert("Ticket submitted successfully!");
-  clearForm();
-}
-
-function clearForm() {
-  document.getElementById("prioritySelect").selectedIndex = 0;
-  document.getElementById("subjectInput").value = "";
-  document.getElementById("descriptionInput").value = "";
-  document.getElementById("uploadedFiles").innerHTML = "";
-}
-
-function subAddFile() {
-  // Create a hidden file input
-  const input = document.createElement("input");
-  input.type = "file";
-  input.accept = ".pdf,.doc,.docx,.jpg,.jpeg,.png,";
-  input.multiple = false;
-
-  input.onchange = async (e) => {
-    const files = Array.from(e.target.files);
-    if (!files.length) return;
-
-    // File size limit (1 MB for starter plan, 10MB for pro, 50MB for Premiere)
-    const planLimits = {
-      'starter': 1 * 1024 * 1024,    // 1MB
-      'pro': 10 * 1024 * 1024,     // 10MB
-      'premiere': 50 * 1024 * 1024 // 50MB
-    };
-    
-    // This would normally come from user's plan data
-    const userPlan = 'starter'; // Default to starter
-    const limit = planLimits[userPlan];
-
-    for (const file of files) {
-      if (file.size > limit) {
-        alert(`File "${file.name}" is too large.`);
-        continue;
-      }
-
-      try {
-       const { data, error } = await supabase.storage
-        .from("attachments")
-        .upload(`user-files/${Date.now()}-${file.name}`, file);
-
-   //just show the file was "uploaded"
-        await new Promise(resolve => setTimeout(resolve, 1000));         
-     
-   // Show uploaded file name + size
-        const fileList = document.getElementById("uploadedFiles");
-        const li = document.createElement("li");
-        li.textContent = `✓ ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-        fileList.appendChild(li);
-        
-      } catch (error) {
-        console.error("Upload failed:", error);
-        alert(`Upload failed for "${file.name}": ${error.message}`);
-      }
-    }
-  };
-
-  input.click();
-}
-
-// Character count for textarea
-document.getElementById("descriptionInput").addEventListener("input", function(e) {
-  const remaining = 500 - e.target.value.length;
-  const label = e.target.parentElement.querySelector("label");
-  if (remaining < 50) {
-    label.textContent = `Ticket Description (${remaining} characters remaining)`;
-  } else {
-    label.textContent = "Ticket Description";
-  }
-});
-
-// Character count for subject
-document.getElementById("subjectInput").addEventListener("input", function(e) {
-  const remaining = 100 - e.target.value.length;
-  const label = e.target.parentElement.querySelector("label");
-  if (remaining < 20) {
-    label.textContent = `Ticket Subject (${remaining} characters remaining)`;
-  } else {
-    label.textContent = "Ticket Subject";
-  }
-});
 </script>
- <script>
+    <a href="#" id="contactUsLink" class="contact-menu-link loading">CONTACT US</a>
+
+    <script>
         // Function to get subscriber's contact URL from stored data or detect it
         async function getSubscriberContactUrl() {
             try {
