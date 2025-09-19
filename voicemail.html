@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> Support Admin Voicemail Dashboard</title>
+  <title>supportME! Admin Dashboard</title>
   <style>
     body {
       margin:0;
@@ -20,93 +20,512 @@
       border:2px solid #0021F7;
       box-sizing:border-box;
     }
-    /* Sidebar */
-    .sidebar {
-      width:185px;
-      background:#F4F6F8;
-      border-right:2px solid #E6ECF2;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-    .sidebar-label {
-       display: block;
-       font-family: 'Agency FB', sans-serif;
-       font-size: 12px;
-       color: #0021F7;
-       margin-top: 12px;
-       margin-bottom: 4px;
-       padding: 0 10px;
-    }
-    .sidebar-input {
-       width: calc(100% - 20px);
-       padding: 6px 8px;
-       font-family: 'Open Sans', sans-serif;
-       font-size: 13px;
-      border: 1px solid #E6ECF2;
-      border-radius: 4px;
-      background: #F4F6F8;
-       color: #1F2937;
-       margin: 0 10px;
-    }
-    .logo-box {
-      height:125px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-bottom:2px solid #E6ECF2;
-    }
-    .branding {
-      height:152px;
-      border-top:2px solid #E6ECF2;
-      font-size:10px;
-      padding:6px;
-      display:flex;
-      flex-direction:column;
-      text-align:center;
-    }
-    .logo-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-    }
-    .branding img { 
-      height:30px; 
-      width: 30px;
-    }
-    .bottom-content {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .branding .links { font-size:9px; }
-    .menu { flex:1; padding:10px; }
-    .menu-item {
-      display:block;
-      position:relative;
-      margin:12px 0;
-      font-family:'Open Sans', sans-serif;
-      color:#0021F7;
-      font-size:14px;
-      font-weight: bold;
-      text-transform:uppercase;
-      cursor: pointer;
-    }
-    .menu-item:hover { color: #3157B8; }
-    .menu-item.active { background: #E6ECF2; padding: 4px; border-radius: 4px; }
-    .menu-item::after {
-      content: '';
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      background: #F50000;
-      border-radius: 50%;
-      margin-left: 4px;
-      vertical-align: super;
-    }
-    .placeholders { margin-top:40px; font-size:12px; }
+/* Sidebar */
+.sidebar {
+  width:185px;
+  background:#F4F6F8;
+  border-right:2px solid #E6ECF2;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.sidebar-static {
+  width: calc(100% - 20px);
+  padding: 6px 8px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  border: 1px solid #1f2937;
+  border-radius: 0px;
+  background: #fff;
+  color: #1F2937;
+  margin: 0 10px 10px 10px;
+}
+
+.sidebar-label {
+  display: block;
+  font-family: 'Agency FB', sans-serif;
+  font-size: 12px;
+  color: #0021F7; /* brand blue */
+  margin-top: 12px;
+  margin-bottom: 4px;
+  padding: 0 10px;
+}
+
+.sidebar-input {
+  width: calc(100% - 20px);
+  padding: 6px 8px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  border: 1px solid #E6ECF2;
+  border-radius: 0px;
+  background: #F4F6F8;
+  color: #1F2937;
+  margin: 0 10px;
+}
+
+.logo-box {
+  height:125px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:2px solid #E6ECF2;
+}
+
+.branding {
+  height:152px;
+  border-top:2px solid #E6ECF2;
+  font-size:10px;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+}
+
+.logo-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+
+.dashboard-container {
+            width: 1366px;
+            height: 483px;
+            font-family: 'Open Sans', sans-serif;
+            background: #F4F6F8;
+            overflow: hidden;
+            position: relative;
+        }
+
+.ticket-grid-container {
+            width: 100%;
+            height: 100%;
+            background: #F4F6F8;
+            border: 1px solid #91959E;
+            border-radius: 0px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+.grid-header {
+            background: linear-gradient(90deg, #5edc1f 0%, #0021F7 100%);
+            color: #0021F7;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+            border-bottom: 1px solid #91959E;
+        }
+
+.grid-title {
+            font-family: 'Agency FB', 'Arial Black', sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            color: #0021F7;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+        }
+
+.grid-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+.search-box {
+            padding: 6px 10px;
+            border: 1px solid #91959E;
+            border-radius: 4px;
+            background: #F9FAFB;
+            color: #1F2937;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            width: 150px;
+        }
+
+.search-box::placeholder {
+            color: #91959E;
+        }
+
+.filter-select {
+            padding: 6px 8px;
+            border: 1px solid #91959E;
+            border-radius: 4px;
+            background: #F9FAFB;
+            color: #1F2937;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            width: 100px;
+        }
+
+.refresh-btn {
+            background: #c4f3ad;
+            border: 1px solid #91959E;
+            color: #1F2937;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+.refresh-btn:hover {
+            background: #3157b8;
+            color: #F4F6F8;
+        }
+
+.stats-bar {
+            background: #e6ecf2;
+            padding: 8px 20px;
+            border-bottom: 1px solid #91959E;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            min-height: 35px;
+        }
+
+.stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-family: 'Open Sans', sans-serif;
+        }
+.stat-number {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+.stat-label {
+            color: #91959E;
+        }
+
+.ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #F4F6F8;
+            flex: 1;
+            height: calc(100% - 95px);
+        }
+
+.table-header {
+            background: #e6ecf2;
+            border-bottom: 2px solid #91959E;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+.table-header th {
+            padding: 8px 8px;
+            text-align: left;
+            font-family: 'Agency FB', 'Arial Black', sans-serif;
+            font-weight: bold;
+            color: #1F2937;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            border-right: 1px solid #91959E;
+        }
+
+.table-header th:last-child {
+            border-right: none;
+        }
+
+.table-body {
+            overflow-y: auto;
+            max-height: calc(100% - 60px);
+        }
+
+.table-row {
+            border-bottom: 1px solid #91959E;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            height: 50px;
+        }
+
+        .table-row:hover {
+            background: #e6ecf2;
+        }
+
+        .table-row.selected {
+            background: #e6ecf2;
+            border-left: 3px solid #0021F7;
+        }
+
+        .table-cell {
+            padding: 8px 8px;
+            vertical-align: middle;
+            color: #1F2937;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 11px;
+            border-right: 1px solid #91959E;
+            max-height: 50px;
+            overflow: hidden;
+        }
+
+        .table-cell:last-child {
+            border-right: none;
+        }
+
+        .checkbox-cell {
+            width: 60px;
+            text-align: center;
+        }
+
+        .ticket-checkbox {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+
+        .ticket-number {
+            font-weight: 600;
+            color: #0021F7;
+            font-size: 12px;
+        }
+
+        .issue-text {
+            line-height: 1.3;
+        }
+
+        .issue-category {
+            font-weight: 600;
+            color: #1F2937;
+            font-size: 11px;
+        }
+
+        .issue-description {
+            color: #91959E;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .priority-status-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            align-items: flex-start;
+        }
+
+        .priority-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .priority-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Priority Colors (based on issue categories) */
+        .priority-red { background: #F50000; }      /* Critical: Login/Password/Fraud/Account Takeover */
+        .priority-yellow { background: #F5CC00; }   /* Moderate: Billing/Charges/Returns/Shipping */
+        .priority-green { background: #5EDC1F; }    /* Low: Reviews/Errors/Product Info */
+
+        .priority-text {
+            font-size: 9px;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-text {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 4px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .status-open { 
+            background: #F4F6F8; 
+            color: #F50000; 
+            border: 1px solid #F50000; 
+        }
+
+        .status-pending { 
+            background: #F4F6F8; 
+            color: #F5CC00; 
+            border: 1px solid #F5CC00; 
+        }
+
+        .status-closed { 
+            background: #F4F6F8; 
+            color: #5EDC1F; 
+            border: 1px solid #5EDC1F; 
+        }
+
+        .attachment-icon {
+            font-size: 14px;
+            color: #91959E;
+        }
+
+        .attachment-yes {
+            color: #0021F7;
+        }
+
+        .messages-count {
+            background: #0021F7;
+            color: #F4F6F8;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 20px;
+            display: inline-block;
+        }
+
+        .assignee-dropdown {
+            padding: 4px 6px;
+            border: 1px solid #91959E;
+            border-radius: 3px;
+            background: #F9FAFB;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 10px;
+            color: #1F2937;
+            cursor: pointer;
+            width: 100%;
+            max-width: 120px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230021f7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 6px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 24px;
+        }
+
+        .assignee-unassigned {
+            color: #91959E;
+            font-style: italic;
+        }
+
+        .bulk-actions {
+            padding: 8px 20px;
+            background: #e6ecf2;
+            border-top: 1px solid #91959E;
+            display: none;
+            min-height: 35px;
+            align-items: center;
+        }
+
+        .bulk-actions.show {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .bulk-btn {
+            background: #c4f3ad;
+            color: #1F2937;
+            border: 1px solid #91959E;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .bulk-btn:hover {
+            background: #3157b8;
+            color: #F4F6F8;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: #91959E;
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        /* Column widths */
+        .col-select { width: 60px; }
+        .col-ticket { width: 80px; }
+        .col-issue { width: 220px; }
+        .col-customer { width: 140px; }
+        .col-via { width: 80px; }
+        .col-priority-status { width: 120px; }
+        .col-last { width: 90px; }
+        .col-attachments { width: 80px; }
+        .col-messages { width: 80px; }
+        .col-assigned { width: 120px; }
+ 
+.branding img { 
+  height:45px; 
+  width:150px;
+}
+
+.bottom-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.branding .links { 
+  font-size:9px; 
+}
+
+.menu { 
+  flex:1; 
+  padding:10px; 
+}
+
+/* Menu items */
+.menu-item {
+  display: block;
+  margin: 12px 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #0021F7;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 0px;
+  transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+/* Little red dot */
+.menu-item::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #F50000;
+  border-radius: 50%;
+  margin-left: 4px;
+  vertical-align: super;
+}
+
+/* Hover effect */
+.menu-item:hover {
+  background: #e0f2ff;
+  color: #3157B8;
+}
+
+/* Active page = lime green button with dark blue text */
+.menu-item.active {
+  background: #5EDC1F;  /* Lime Green */
+  color: #1F2937;       /* Dark Blue */
+  box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
+}
+.placeholders { margin-top:40px; font-size:12px; }
     .main {
       flex:1;
       display:flex;
@@ -182,297 +601,17 @@
       font-size:14px;
     }
     .content { 
-      flex:1; 
-      border:2px solid #0021F7; 
-      background:#fff; 
-      padding: 5px;
-      overflow-y: auto;
-    }
-    
-    /* Voicemail specific styles */
-    .voicemail-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .voicemail-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 15px;
-      background: #F4F6F8;
-      border: 1px solid #E6ECF2;
-      border-radius: 6px;
-    }
-    
-    .voicemail-title {
-      font-family: 'Agency FB', sans-serif;
-      font-size: 24px;
-      font-weight: bold;
-      color: #0021F7;
-      margin: 0;
-    }
-    
-    .voicemail-stats {
-      display: flex;
-      gap: 20px;
-      font-size: 14px;
-      color: #1F2937;
-    }
-    
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    
-    .stat-count {
-      background: #0021F7;
-      color: white;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 12px;
-    }
-    
-    .voicemail-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 15px;
-      background: #5EDC1F;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-    
-    .control-group {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    
-    .control-btn {
-      background: #0021F7;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    
-    .control-btn:hover {
-      background: #3157B8;
-    }
-    
-    .control-btn.secondary {
-      background: #91959E;
-    }
-    
-    .control-btn.secondary:hover {
-      background: #6B7280;
-    }
-    
-    .filter-select {
-      padding: 4px 8px;
-      border: 1px solid #E6ECF2;
-      border-radius: 4px;
-      font-size: 12px;
-      background: white;
-    }
-    
-    .voicemail-list {
-      flex: 1;
-      overflow-y: auto;
-      border: 1px solid #E6ECF2;
-      border-radius: 4px;
-    }
-    
-    .voicemail-item {
-      display: flex;
-      align-items: center;
-      padding: 12px 15px;
-      border-bottom: 1px solid #E6ECF2;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .voicemail-item:hover {
-      background: #F9FAFB;
-    }
-    
-    .voicemail-item.unread {
-      background: #EEF2FF;
-      border-left: 4px solid #0021F7;
-    }
-    
-    .voicemail-checkbox {
-      margin-right: 12px;
-    }
-    
-    .voicemail-status {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-    
-    .status-new { background: #EF4444; }
-    .status-played { background: #10B981; }
-    .status-saved { background: #F59E0B; }
-    
-    .voicemail-info {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 15px;
-      align-items: center;
-    }
-    
-    .caller-info {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .caller-name {
-      font-weight: bold;
-      color: #0021F7;
-      font-size: 14px;
-    }
-    
-    .caller-number {
-      color: #6B7280;
-      font-size: 12px;
-    }
-    
-    .voicemail-date {
-      color: #1F2937;
-      font-size: 12px;
-    }
-    
-    .voicemail-duration {
-      color: #6B7280;
-      font-size: 12px;
-      font-family: monospace;
-    }
-    
-    .voicemail-actions {
-      display: flex;
-      gap: 6px;
-    }
-    
-    .action-btn {
-      background: none;
-      border: 1px solid #E6ECF2;
-      padding: 4px 8px;
-      border-radius: 3px;
-      cursor: pointer;
-      font-size: 11px;
-      color: #1F2937;
-      transition: all 0.2s;
-    }
-    
-    .action-btn:hover {
-      border-color: #0021F7;
-      color: #0021F7;
-    }
-    
-    .action-btn.play {
-      background: #0021F7;
-      color: white;
-      border-color: #0021F7;
-    }
-    
-    .action-btn.play:hover {
-      background: #3157B8;
-    }
-    
-    .audio-player {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      border: 2px solid #0021F7;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      display: none;
-      min-width: 300px;
-    }
-    
-    .player-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    
-    .player-info {
-      font-size: 14px;
-      font-weight: bold;
-      color: #0021F7;
-    }
-    
-    .close-player {
-      background: none;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      color: #6B7280;
-    }
-    
-    .player-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    
-    .play-pause-btn {
-      background: #0021F7;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-    
-    .progress-bar {
-      flex: 1;
-      height: 4px;
-      background: #E6ECF2;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: #0021F7;
-      width: 0%;
-      transition: width 0.1s;
-    }
-    
-    .time-display {
-      font-size: 12px;
-      color: #6B7280;
-      font-family: monospace;
-    }
-    
+       flex:1; 
+       border:2px 
+       solid #0021F7;  
+       background:#f4f6f8; 
+       padding: 5px; 
+}
     .footer {
       height:149px;
       display:flex;
       border:2px solid #0021F7;
-      width:calc(100% - 4px);
+      width:calc(100% - 0px);
       box-sizing:border-box;
     }
     .team {
@@ -497,46 +636,46 @@
 <div class="dashboard">
   <div class="sidebar">
     <div>
-      <div class="logo-box">
-        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" height="120">
+    <div class="logo-box" onclick="window.location.href='https://app.getsupportme.com/admin-dashboard.html'">
+<img class="app-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" alt="SupportME Logo">
       </div>
 <div class="menu">
-<a href="https://app.getsupportme.com/admin-dashboard" class="menu-item ">Tickets</a>
+<a href="https://app.getsupportme.com/admin-dashboard" class="menu-item active">Tickets</a>
   <a href="https://app.getsupportme.com/aigent.html" class="menu-item">Real AiGent</a>
   <a href="https://app.getsupportme.com/chat.html" class="menu-item">Live Chat</a>
   <a href="https://app.getsupportme.com/sms-mms.html" class="menu-item">SMS/MMS</a>
-  <a href="https://app.getsupportme.com/voicemail.html" class="menu-item active">Voicemail</a>
+  <a href="https://app.getsupportme.com/voicemail.html" class="menu-item">Voicemail</a>
   <a href="https://portal.ringzu.pro/site" target="_blank" class="menu-item">VOIP Phone</a>
   <a href="https://app.getsupportme.com/team.html" class="menu-item">My Team</a>
   <a href="https://getsupportme.com/contact" target="_blank" class="menu-item">Get Help</a>
 </div>
       <div style="margin-top: 2em;">
-        <label for="businessPhone" class="sidebar-label">Your Business Phone Number:</label>
-        <input type="text" id="businessPhone" class="sidebar-input" placeholder="000-000-0000">
-        <label for="billingDate" class="sidebar-label">Next Billing Date:</label>
-        <input type="text" id="billingDate" class="sidebar-input" placeholder="00/00/0000">
+      <label class="sidebar-label">Your Business Phone Number:</label>
+<div class="sidebar-static">503-555-1212</div>
+
+<label class="sidebar-label">Next Billing Date:</label>
+<div class="sidebar-static">03/01/2025</div>
+
       </div>
     </div>
     <div class="branding">
-      <div class="logo-container">
-        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/ringzu-logo.png" alt="RingzU Logo">
+     <div class="logo-container" onclick="window.location.href='https://ringzu.com'"><img class="ringzu-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/wide-ringzu-logo.png" alt="RingzU Telecom Logo">
       </div>
       <div class="bottom-content">
-        <hr class="line">
         <div>© 2025 RingzU Telecom Corp.</div>
         <div>supportME! is built on the <a href="https://www.ringzu.com" target="_blank" style="color:#0021F7; text-decoration:none;">
           <strong>RingzU Telecom Imagination Platform™</strong></a></div>
         <div class="links">
           <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:#0021F7; text-decoration:none;">Privacy</a> | 
-          <a href="https://www.getsupportme.com/TOS" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
           <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:#0021F7; text-decoration:none;">Billing</a>
         </div>
       </div>
     </div>
   </div>
   <div class="main">
-   <div class="header">
-  CUSTOMER SUPPORT VOICEMAIL DASHBOARD
+  <div class="header">
+  CUSTOMER SUPPORT ADMIN DASHBOARD
   <div class="customer-number"></div>
   <!-- Badge image starts blank, will be filled dynamically -->
   <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
@@ -544,62 +683,631 @@
     <div class="time-banner">
       <div>supportME! official server time: <span id="dateTime"></span></div>
       <div class="right">
-        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName"></span></div>
         <div>
-          <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE TODAY</button>
-          <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+NEW TICKET</button>
+              <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE</button>
+           <button onclick="window.open('https://app.getsupportme.com/customer-dashboard.html?new-ticket=true')">+NEW TICKET</button>
         </div>
       </div>
     </div>
     <div class="alert">
       <span>
-        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" 
-             alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
-        supportME! deletes all cloud data and support history upon subscription non-renewal.
+      <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" alt="Alert" class="alert-icon">
+        supportME! deletes all customer cloud data and history upon subscription non-renewal.
       </span>
-      <span style="cursor: pointer;" onclick="this.parentElement.parentElement.style.display='none'">X</span>
+      <span>X</span>
     </div>
     <div class="content">
-      <div class="voicemail-container">
-        <div class="voicemail-header">
-          <h2 class="voicemail-title">Voicemail Inbox</h2>
-          <div class="voicemail-stats">
-            <div class="stat-item">
-              <span>New:</span>
-              <span class="stat-count" id="newCount">3</span>
+      <div class="ticket-grid-container">
+        <div class="dashboard-container">
+        <div class="ticket-grid-container">
+            <!-- Header with controls -->
+            <div class="grid-header">
+                <h2 class="grid-title">SUPPORT TICKETS</h2>
+                <div class="grid-controls">
+                    <input type="text" class="search-box" id="searchInput" placeholder="Search tickets...">
+                    <select class="filter-select" id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="open">Open</option>
+                        <option value="pending">Pending</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                    <select class="filter-select" id="priorityFilter">
+                        <option value="all">All Priority</option>
+                        <option value="red">Critical</option>
+                        <option value="yellow">Moderate</option>
+                        <option value="green">Low</option>
+                    </select>
+                    <button class="refresh-btn" id="refreshBtn">Refresh</button>
+                </div>
             </div>
-            <div class="stat-item">
-              <span>Total:</span>
-              <span class="stat-count" id="totalCount">12</span>
+
+            <!-- Stats bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCount">0</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-item">
+                    <span class="priority-indicator priority-red"></span>
+                    <span class="stat-number" id="criticalCount">0</span>
+                    <span class="stat-label">Critical</span>
+                </div>
+                <div class="stat-item">
+                    <span class="priority-indicator priority-yellow"></span>
+                    <span class="stat-number" id="moderateCount">0</span>
+                    <span class="stat-label">Moderate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="priority-indicator priority-green"></span>
+                    <span class="stat-number" id="lowCount">0</span>
+                    <span class="stat-label">Low</span>
+                </div>
+                <div class="stat-item" id="selectedCounter" style="margin-left: auto; display: none;">
+                    <span class="stat-number" id="selectedCount">0</span>
+                    <span class="stat-label">Selected</span>
+                </div>
             </div>
-            <div class="stat-item">
-              <span>Saved:</span>
-              <span class="stat-count" id="savedCount">5</span>
+
+            <!-- Bulk actions -->
+            <div class="bulk-actions" id="bulkActions">
+                <span style="color: #1F2937; font-size: 11px;">Bulk Actions:</span>
+                <button class="bulk-btn" id="bulkCloseBtn">Mark Closed</button>
+                <button class="bulk-btn" id="bulkPendingBtn">Mark Pending</button>
+                <button class="bulk-btn" id="bulkOpenBtn">Mark Open</button>
             </div>
-          </div>
+
+            <!-- Table -->
+            <div class="table-container" style="flex: 1; overflow-y: auto;">
+                <table class="ticket-table" id="ticketTable">
+                    <thead class="table-header">
+                        <tr>
+                            <th class="col-select">
+                                <input type="checkbox" id="selectAllCheckbox" class="ticket-checkbox">
+                            </th>
+                            <th class="col-ticket">TICKET #</th>
+                            <th class="col-issue">ISSUE RAISED</th>
+                            <th class="col-customer">CUSTOMER NAME</th>
+                            <th class="col-via">CONTACT VIA</th>
+                            <th class="col-priority-status">PRIORITY/STATUS</th>
+                            <th class="col-last">LAST ACTION</th>
+                            <th class="col-attachments">ATTACHMENTS</th>
+                            <th class="col-messages"># OF MESSAGES</th>
+                            <th class="col-assigned">ASSIGNED TO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketTableBody">
+                        <!-- Rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                No tickets found matching your criteria.
+            </div>
         </div>
-        
-        <div class="voicemail-controls">
-          <div class="control-group">
-            <button class="control-btn" onclick="selectAll()">Select All</button>
-            <button class="control-btn" onclick="markAsRead()">Mark as Read</button>
-            <button class="control-btn secondary" onclick="deleteSelected()">Delete Selected</button>
-             </div>
-          <div class="control-group">
-            <select class="filter-select" onchange="filterVoicemails(this.value)">
-              <option value="all">All Messages</option>
-              <option value="new">New Only</option>
-              <option value="saved">Saved Only</option>
-              <option value="today">Today</option>
-              <option value="week">This Week</option>
-            </select>
-            <button class="control-btn" onclick="refreshVoicemails()">🔄 Refresh</button>
-          </div>
-        </div>
-        
-        <div class="voicemail-list" id="voicemailList">
-          <!-- Voicemail items will be populated here -->
-        </div>
+    </div>
+
+    <script>
+        // Issue categories that determine priority (customer-selected)
+        const issuePriorityMap = {
+            // RED (Critical) - Security & Access Issues
+            'Login Issues': 'red',
+            'Password Problems': 'red', 
+            'Fraud': 'red',
+            'Account Take Over': 'red',
+            
+            // YELLOW (Moderate) - Financial & Service Issues  
+            'Billing Questions': 'yellow',
+            'Unknown Charges on Card Statement': 'yellow',
+            'Returns and Shipping Issues': 'yellow',
+            
+            // GREEN (Low Priority) - General Inquiries
+            'Reviews and Commendations': 'green',
+            'Found Errors': 'green',
+            'Product Information Requests': 'green'
+        };
+
+        // Team members for assignment dropdown
+        const teamMembers = [
+            'Unassigned',
+            'Alex Johnson',
+            'Alice Cooper', 
+            'Mike Davis',
+            'Sarah Thompson',
+            'David Chen',
+            'Lisa Rodriguez',
+            'Tom Wilson',
+            'Development Team',
+            'Billing Team',
+            'Security Team'
+        ];
+
+        // Sample ticket data with proper priority/status separation
+        let ticketData = [
+            {
+                id: "1",
+                selected: false,
+                ticketNumber: '#1234',
+                issue: 'Login Issues',
+                issueDescription: 'User cannot access dashboard after password reset',
+                customer: 'Jane Smith',
+                contactVia: 'Email',
+                issueCategory: 'Login Issues', // Determines priority color
+                priority: 'red', // Auto-assigned based on category
+                status: 'OPEN', // Admin-controlled status
+                lastAction: '2h ago',
+                hasAttachments: true,
+                attachmentCount: 1,
+                messages: 3,
+                assignedTo: 'Alex Johnson'
+            },
+            {
+                id: "2",
+                selected: false,
+                ticketNumber: '#1233',
+                issue: 'Billing Questions',
+                issueDescription: 'Double charge on monthly subscription',
+                customer: 'Bob Lee',
+                contactVia: 'Phone',
+                issueCategory: 'Billing Questions',
+                priority: 'yellow',
+                status: 'PENDING',
+                lastAction: '4h ago',
+                hasAttachments: false,
+                attachmentCount: 0,
+                messages: 2,
+                assignedTo: 'Billing Team'
+            },
+            {
+                id: "3",
+                selected: false,
+                ticketNumber: '#1232',
+                issue: 'Found Errors',
+                issueDescription: 'Form submission not working on mobile devices',
+                customer: 'Chris Diaz',
+                contactVia: 'Chat',
+                issueCategory: 'Found Errors',
+                priority: 'green',
+                status: 'OPEN',
+                lastAction: '10m ago',
+                hasAttachments: true,
+                attachmentCount: 2,
+                messages: 6,
+                assignedTo: 'Development Team'
+            },
+            {
+                id: "4",
+                selected: false,
+                ticketNumber: '#1231',
+                issue: 'Account Take Over',
+                issueDescription: 'Suspicious login activity detected',
+                customer: 'Sarah Wilson',
+                contactVia: 'Email',
+                issueCategory: 'Account Take Over',
+                priority: 'red',
+                status: 'CLOSED',
+                lastAction: '1d ago',
+                hasAttachments: true,
+                attachmentCount: 3,
+                messages: 8,
+                assignedTo: 'Security Team'
+            },
+            {
+                id: "5",
+                selected: false,
+                ticketNumber: '#1230',
+                issue: 'Product Information Requests',
+                issueDescription: 'Requesting specifications for premium plan features',
+                customer: 'Tom Rodriguez',
+                contactVia: 'Chat',
+                issueCategory: 'Product Information Requests',
+                priority: 'green',
+                status: 'PENDING',
+                lastAction: '3h ago',
+                hasAttachments: false,
+                attachmentCount: 0,
+                messages: 4,
+                assignedTo: 'Alice Cooper'
+            },
+            {
+                id: "6",
+                selected: false,
+                ticketNumber: '#1229',
+                issue: 'Returns and Shipping Issues',
+                issueDescription: 'Package arrived damaged, requesting replacement',
+                customer: 'Maria Garcia',
+                contactVia: 'Email',
+                issueCategory: 'Returns and Shipping Issues',
+                priority: 'yellow',
+                status: 'OPEN',
+                lastAction: '45m ago',
+                hasAttachments: true,
+                attachmentCount: 4,
+                messages: 2,
+                assignedTo: 'Unassigned'
+            },
+            {
+                id: "7",
+                selected: false,
+                ticketNumber: '#1228',
+                issue: 'Password Problems',
+                issueDescription: 'Unable to reset password using recovery email',
+                customer: 'James Parker',
+                contactVia: 'Phone',
+                issueCategory: 'Password Problems',
+                priority: 'red',
+                status: 'OPEN',
+                lastAction: '20m ago',
+                hasAttachments: false,
+                attachmentCount: 0,
+                messages: 1,
+                assignedTo: 'Security Team'
+            },
+            {
+                id: "8",
+                selected: false,
+                ticketNumber: '#1227',
+                issue: 'Reviews and Commendations',
+                issueDescription: 'Positive feedback about customer service experience',
+                customer: 'Emma Thompson',
+                contactVia: 'Web',
+                issueCategory: 'Reviews and Commendations',
+                priority: 'green',
+                status: 'CLOSED',
+                lastAction: '2d ago',
+                hasAttachments: false,
+                attachmentCount: 0,
+                messages: 3,
+                assignedTo: 'Alice Cooper'
+            }
+        ];
+
+        let filteredData = [...ticketData];
+
+        // Initialize the table when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            setupEventListeners();
+            updateStats();
+        });
+
+        function renderTable() {
+            const tbody = document.getElementById('ticketTableBody');
+            const noResults = document.getElementById('noResults');
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            tbody.innerHTML = filteredData.map(ticket => `
+                <tr class="table-row ${ticket.selected ? 'selected' : ''}" data-ticket-id="${ticket.id}">
+                    <td class="table-cell checkbox-cell">
+                        <input type="checkbox" class="ticket-checkbox" ${ticket.selected ? 'checked' : ''} 
+                               onchange="toggleTicketSelection('${ticket.id}')">
+                    </td>
+                    <td class="table-cell">
+                        <span class="ticket-number">${ticket.ticketNumber}</span>
+                    </td>
+                    <td class="table-cell">
+                        <div class="issue-text">
+                            <div class="issue-category">${ticket.issue}</div>
+                            <div class="issue-description">${ticket.issueDescription}</div>
+                        </div>
+                    </td>
+                    <td class="table-cell">${ticket.customer}</td>
+                    <td class="table-cell">${ticket.contactVia}</td>
+                    <td class="table-cell">
+                        <div class="priority-status-cell">
+                            <div class="priority-row">
+                                <span class="priority-indicator priority-${ticket.priority}"></span>
+                                <span class="priority-text">${getPriorityLabel(ticket.priority)}</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-text status-${ticket.status.toLowerCase()}">${ticket.status}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="table-cell">${ticket.lastAction}</td>
+                    <td class="table-cell" style="text-align: center;">
+                        <span class="attachment-icon ${ticket.hasAttachments ? 'attachment-yes' : ''}">
+                            ${ticket.hasAttachments ? '📎' : '—'}
+                        </span>
+                    </td>
+                    <td class="table-cell" style="text-align: center;">
+                        <span class="messages-count">${ticket.messages}</span>
+                    </td>
+                    <td class="table-cell">
+                        <select class="assignee-dropdown ${ticket.assignedTo === 'Unassigned' ? 'assignee-unassigned' : ''}" 
+                                onchange="updateAssignment('${ticket.id}', this.value)">
+                            ${teamMembers.map(member => 
+                                `<option value="${member}" ${ticket.assignedTo === member ? 'selected' : ''}>${member}</option>`
+                            ).join('')}
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Add click handlers to rows
+            document.querySelectorAll('.table-row').forEach(row => {
+                row.addEventListener('click', function(e) {
+                    if (e.target.type !== 'checkbox' && e.target.tagName !== 'SELECT') {
+                        selectTicketRow(this.dataset.ticketId);
+                    }
+                });
+            });
+        }
+
+        function getPriorityLabel(priority) {
+            switch(priority) {
+                case 'red': return 'CRITICAL';
+                case 'yellow': return 'MODERATE'; 
+                case 'green': return 'LOW';
+                default: return 'UNKNOWN';
+            }
+        }
+
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', function() {
+                filterTickets();
+            });
+
+            // Status filter
+            document.getElementById('statusFilter').addEventListener('change', function() {
+                filterTickets();
+            });
+
+            // Priority filter
+            document.getElementById('priorityFilter').addEventListener('change', function() {
+                filterTickets();
+            });
+
+            // Refresh button
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                refreshData();
+            });
+
+            // Select all checkbox
+            document.getElementById('selectAllCheckbox').addEventListener('change', function() {
+                toggleSelectAll(this.checked);
+            });
+
+            // Bulk action buttons
+            document.getElementById('bulkCloseBtn').addEventListener('click', () => bulkUpdateStatus('CLOSED'));
+            document.getElementById('bulkPendingBtn').addEventListener('click', () => bulkUpdateStatus('PENDING'));
+            document.getElementById('bulkOpenBtn').addEventListener('click', () => bulkUpdateStatus('OPEN'));
+        }
+
+        function filterTickets() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const priorityFilter = document.getElementById('priorityFilter').value;
+
+            filteredData = ticketData.filter(ticket => {
+                const matchesSearch = !searchTerm || 
+                    ticket.ticketNumber.toLowerCase().includes(searchTerm) ||
+                    ticket.issue.toLowerCase().includes(searchTerm) ||
+                    ticket.issueDescription.toLowerCase().includes(searchTerm) ||
+                    ticket.customer.toLowerCase().includes(searchTerm) ||
+                    ticket.assignedTo.toLowerCase().includes(searchTerm);
+
+                const matchesStatus = statusFilter === 'all' || 
+                    ticket.status.toLowerCase() === statusFilter.toLowerCase();
+
+                const matchesPriority = priorityFilter === 'all' || 
+                    ticket.priority === priorityFilter;
+
+                return matchesSearch && matchesStatus && matchesPriority;
+            });
+
+            renderTable();
+            updateStats();
+        }
+
+        function toggleTicketSelection(ticketId) {
+            const ticket = ticketData.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.selected = !ticket.selected;
+                renderTable();
+                updateBulkActions();
+                updateSelectAllCheckbox();
+            }
+        }
+
+        function toggleSelectAll(selectAll) {
+            filteredData.forEach(ticket => {
+                const originalTicket = ticketData.find(t => t.id === ticket.id);
+                if (originalTicket) {
+                    originalTicket.selected = selectAll;
+                }
+            });
+            renderTable();
+            updateBulkActions();
+        }
+
+        function selectTicketRow(ticketId) {
+            const ticket = ticketData.find(t => t.id === ticketId);
+            if (ticket) {
+                console.log('Selected ticket:', ticket);
+                // Add your ticket detail logic here
+                alert(`Ticket: ${ticket.ticketNumber}\nCategory: ${ticket.issue}\nCustomer: ${ticket.customer}\nStatus: ${ticket.status}\nPriority: ${getPriorityLabel(ticket.priority)}`);
+            }
+        }
+
+        function updateAssignment(ticketId, newAssignee) {
+            const ticket = ticketData.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.assignedTo = newAssignee;
+                ticket.lastAction = 'Just now';
+                console.log(`Ticket ${ticket.ticketNumber} assigned to ${newAssignee}`);
+                
+                // Here you would typically save to your backend
+                // saveTicketUpdate(ticketId, { assignedTo: newAssignee });
+            }
+        }
+
+        function updateBulkActions() {
+            const selectedCount = ticketData.filter(t => t.selected).length;
+            const bulkActions = document.getElementById('bulkActions');
+            const selectedCounter = document.getElementById('selectedCounter');
+            const selectedCountSpan = document.getElementById('selectedCount');
+
+            if (selectedCount > 0) {
+                bulkActions.classList.add('show');
+                selectedCounter.style.display = 'flex';
+                selectedCountSpan.textContent = selectedCount;
+            } else {
+                bulkActions.classList.remove('show');
+                selectedCounter.style.display = 'none';
+            }
+        }
+
+        function updateSelectAllCheckbox() {
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const visibleTickets = filteredData;
+            const selectedVisible = visibleTickets.filter(ticket => {
+                const original = ticketData.find(t => t.id === ticket.id);
+                return original && original.selected;
+            });
+
+            if (selectedVisible.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (selectedVisible.length === visibleTickets.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        function updateStats() {
+            const total = filteredData.length;
+            const critical = filteredData.filter(t => t.priority === 'red').length;
+            const moderate = filteredData.filter(t => t.priority === 'yellow').length;
+            const low = filteredData.filter(t => t.priority === 'green').length;
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('criticalCount').textContent = critical;
+            document.getElementById('moderateCount').textContent = moderate;
+            document.getElementById('lowCount').textContent = low;
+        }
+
+        function bulkUpdateStatus(newStatus) {
+            const selectedTickets = ticketData.filter(t => t.selected);
+            
+            selectedTickets.forEach(ticket => {
+                ticket.status = newStatus;
+                ticket.lastAction = 'Just now';
+                ticket.selected = false; // Deselect after action
+            });
+
+            filterTickets(); // Refresh display
+            updateBulkActions();
+            updateSelectAllCheckbox();
+            
+            alert(`Updated ${selectedTickets.length} tickets to ${newStatus}`);
+        }
+
+        function refreshData() {
+            console.log('Refreshing ticket data...');
+            
+            // Here you would fetch fresh data from your Wix backend
+            // Example: wixData.query("SupportTickets").find().then(...)
+            
+            filterTickets();
+            
+            // Show refresh feedback
+            const refreshBtn = document.getElementById('refreshBtn');
+            const originalText = refreshBtn.textContent;
+            refreshBtn.textContent = 'Refreshed!';
+            refreshBtn.style.background = '#5EDC1F';
+            refreshBtn.style.color = '#1F2937';
+            
+            setTimeout(() => {
+                refreshBtn.textContent = originalText;
+                refreshBtn.style.background = '#C4F3AD';
+                refreshBtn.style.color = '#ffffff';
+            }, 1500);
+        }
+
+        // Function to add new ticket (called when customer submits)
+        function addNewTicket(ticketInfo) {
+            const priority = issuePriorityMap[ticketInfo.issueCategory] || 'green';
+            
+            const newTicket = {
+                id: Date.now().toString(),
+                selected: false,
+                ticketNumber: `#${Date.now()}`,
+                issue: ticketInfo.issueCategory,
+                issueDescription: ticketInfo.description || 'New ticket submitted',
+                customer: ticketInfo.customer || 'Unknown Customer',
+                contactVia: ticketInfo.contactVia || 'Web',
+                issueCategory: ticketInfo.issueCategory,
+                priority: priority, // Auto-assigned based on issue category
+                status: 'OPEN',
+                lastAction: 'Just now',
+                hasAttachments: ticketInfo.hasAttachments || false,
+                attachmentCount: ticketInfo.attachmentCount || 0,
+                messages: 1,
+                assignedTo: 'Unassigned'
+            };
+            
+            ticketData.unshift(newTicket);
+            filterTickets();
+        }
+
+        function updateTicketStatus(ticketId, newStatus) {
+            const ticket = ticketData.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.status = newStatus.toUpperCase();
+                ticket.lastAction = 'Just now';
+                filterTickets();
+            }
+        }
+
+        function addMessageToTicket(ticketId) {
+            const ticket = ticketData.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.messages += 1;
+                ticket.lastAction = 'Just now';
+                filterTickets();
+            }
+        }
+
+        function addAttachmentToTicket(ticketId, attachmentCount = 1) {
+            const ticket = ticketData.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.hasAttachments = true;
+                ticket.attachmentCount += attachmentCount;
+                ticket.lastAction = 'Just now';
+                filterTickets();
+            }
+        }
+
+        // Export functions for integration with your dashboard
+        window.supportTicketGrid = {
+            addNewTicket,
+            updateTicketStatus,
+            addMessageToTicket,
+            addAttachmentToTicket,
+            getSelectedTickets: () => ticketData.filter(t => t.selected),
+            refreshData,
+            setData: (newData) => {
+                ticketData = newData;
+                filterTickets();
+            },
+            getIssuePriorityMap: () => issuePriorityMap,
+            getTeamMembers: () => teamMembers,
+            getCurrentData: () => ticketData
+        };
+    </script>
       </div>
     </div>
     <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
@@ -608,7 +1316,7 @@
         <div>[List]</div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column;">
-        <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
+        <div class="chat-window" style="background:#f4f6f8; border:1px solid #1f2937; height:90px; margin-bottom:8px;">
           <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
         </div>
         <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
@@ -622,23 +1330,56 @@
     </div>
   </div>
 </div>
-
-<!-- Audio Player Popup -->
-<div class="audio-player" id="audioPlayer">
-  <div class="player-header">
-    <div class="player-info" id="playerInfo">Playing: John Doe</div>
-    <button class="close-player" onclick="closePlayer()">×</button>
-  </div>
-  <div class="player-controls">
-    <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
-    <div class="progress-bar" onclick="seekTo(event)">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
-  </div>
-  <audio id="audioElement" ontimeupdate="updateProgress()" onended="onAudioEnd()"></audio>
-</div>
 <script>
+/* ───────── SERVER TIME (24-hour Pacific) ───────── */
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm  = String(now.getMonth()+1).padStart(2,"0");
+    const dd  = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh  = String(now.getHours()).padStart(2,"0");
+    const mi  = String(now.getMinutes()).padStart(2,"0");
+    const ss  = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
+
+/* ───────── TEAM CHAT PLACEHOLDER ───────── */
+document.getElementById("sendButton").addEventListener("click",()=>{
+  const chatId = document.getElementById("chatIdInput").value;
+  const msg = document.getElementById("chatMessageInput").value;
+  if(msg.trim()){
+    const inbox = document.getElementById("chatInbox");
+    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
+    document.getElementById("chatMessageInput").value = "";
+  }
+});
+</script>
+<script>
+/* ───────── SIDEBAR ROUTER ───────── */
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const target = item.getAttribute('data-target');
+
+    // Outbound links
+    if (target === "voip-link") {
+      window.open("https://portal.ringzu.pro/site", "_blank"); //(Ultimate plan only)
+    } else if (target === "gethelp-link") {
+      window.open("https://www.getsupportme.com/contact", "_blank"); // SupportME contact form
+    } 
+    
+    // Internal dashboard pages
+    else if (target) {
+      window.location.href = target;
+    }
+  });
+});
 async function loadPlanBadge() {
   const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
   try {
@@ -650,7 +1391,6 @@ async function loadPlanBadge() {
     console.error("Error loading badge:", err);
   }
 }
-
 loadPlanBadge();
 </script>
 <script>
@@ -678,388 +1418,35 @@ async function loadCustomerInfo() {
 loadCustomerInfo();
 </script>
 <script>
-/* ────────── SERVER TIME (24-hour Pacific) ────────── */
-(function startServerClock(){
-  const tz = "America/Los_Angeles";
-  function updateServerTime() {
-    const now = new Date();
-    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
-    const mm  = String(now.getMonth()+1).padStart(2,"0");
-    const dd  = String(now.getDate()).padStart(2,"0");
-    const yyyy = now.getFullYear();
-    const hh  = String(now.getHours()).padStart(2,"0");
-    const mi  = String(now.getMinutes()).padStart(2,"0");
-    const ss  = String(now.getSeconds()).padStart(2,"0");
-    document.getElementById("dateTime").textContent =
-      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
-  }
-  updateServerTime();
-  setInterval(updateServerTime,1000);
-})();
+  async function updateHeader() {
+    try {
+      const tenantId = d23635f6-3b0a-475a-a4e5-7959b5091aa0; // replace with actual
+      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+      const data = await response.json();
 
-/* ────────── TEAM CHAT PLACEHOLDER ────────── */
-document.getElementById("sendButton").addEventListener("click",()=>{
-  const chatId = document.getElementById("chatIdInput").value;
-  const msg = document.getElementById("chatMessageInput").value;
-  if(msg.trim()){
-    const inbox = document.getElementById("chatInbox");
-    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
-    document.getElementById("chatMessageInput").value = "";
-  }
-});
+      if (data.error) throw new Error(data.error);
 
-/* ────────── VOICEMAIL FUNCTIONALITY ────────── */
+      // Avatar
+      const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
+      document.getElementById("avatarImg").src = avatarUrl;
 
-
-let voicemails = [
-  {
-    id: 1,
-    callerName: "Jane Smith",
-    callerNumber: "(555) 123-4567",
-    date: "2025-09-09",
-    time: "14:32",
-    duration: "02:15",
-    status: "new",
-    audioUrl: "#",
-    transcription: "Hi, this is Jane calling about the support ticket..."
-  },
-  {
-    id: 2,
-    callerName: "Bob Johnson",
-    callerNumber: "(555) 987-6543",
-    date: "2025-09-09",
-    time: "11:45",
-    duration: "01:32",
-    status: "played",
-    audioUrl: "#",
-    transcription: "Hello, I need help with my account settings..."
-  },
-  {
-    id: 3,
-    callerName: "Sarah Wilson",
-    callerNumber: "(555) 456-7890",
-    date: "2025-09-08",
-    time: "16:22",
-    duration: "03:45",
-    status: "new",
-    audioUrl: "#",
-    transcription: "This is regarding the billing issue we discussed..."
-  },
-  {
-    id: 4,
-    callerName: "Mike Davis",
-    callerNumber: "(555) 321-9876",
-    date: "2025-09-08",
-    time: "09:15",
-    duration: "01:08",
-    status: "saved",
-    audioUrl: "#",
-    transcription: "Quick question about the new features..."
-  },
-  {
-    id: 5,
-    callerName: "Emily Chen",
-    callerNumber: "(555) 654-3210",
-    date: "2025-09-07",
-    time: "13:58",
-    duration: "02:43",
-    status: "played",
-    audioUrl: "#",
-    transcription: "Following up on our previous conversation..."
-  },
-  {
-    id: 6,
-    callerName: "Tom Anderson",
-    callerNumber: "(555) 789-0123",
-    date: "2025-09-07",
-    time: "10:30",
-    duration: "01:55",
-    status: "new",
-    audioUrl: "#",
-    transcription: "I'm having trouble accessing my dashboard..."
-  }
-];
-
-let selectedVoicemails = new Set();
-let currentFilter = 'all';
-
-function renderVoicemails(filter = 'all') {
-  const container = document.getElementById('voicemailList');
-  let filteredVoicemails = voicemails;
-  
-  // Apply filter
-  switch(filter) {
-    case 'new':
-      filteredVoicemails = voicemails.filter(vm => vm.status === 'new');
-      break;
-    case 'saved':
-      filteredVoicemails = voicemails.filter(vm => vm.status === 'saved');
-      break;
-    case 'today':
-      filteredVoicemails = voicemails.filter(vm => vm.date === '2025-09-09');
-      break;
-    case 'week':
-      const weekAgo = new Date();
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      filteredVoicemails = voicemails.filter(vm => new Date(vm.date) >= weekAgo);
-      break;
-  }
-  
-  container.innerHTML = '';
-  
-  filteredVoicemails.forEach(voicemail => {
-    const item = document.createElement('div');
-    item.className = `voicemail-item ${voicemail.status === 'new' ? 'unread' : ''}`;
-    item.innerHTML = `
-      <input type="checkbox" class="voicemail-checkbox" onchange="toggleSelection(${voicemail.id})">
-      <div class="voicemail-status status-${voicemail.status}"></div>
-      <div class="voicemail-info">
-        <div class="caller-info">
-          <div class="caller-name">${voicemail.callerName}</div>
-          <div class="caller-number">${voicemail.callerNumber}</div>
-        </div>
-        <div class="voicemail-date">${voicemail.date} ${voicemail.time}</div>
-        <div class="voicemail-duration">${voicemail.duration}</div>
-        <div class="voicemail-actions">
-          <button class="action-btn play" onclick="playVoicemail(${voicemail.id})">▶ Play</button>
-          <button class="action-btn" onclick="saveVoicemail(${voicemail.id})">💾 Save</button>
-          <button class="action-btn" onclick="deleteVoicemail(${voicemail.id})">🗑 Delete</button>
-        </div>
-      </div>
-    `;
-    container.appendChild(item);
-  });
-  
-  updateStats();
-}
-
-function updateStats() {
-  const newCount = voicemails.filter(vm => vm.status === 'new').length;
-  const totalCount = voicemails.length;
-  const savedCount = voicemails.filter(vm => vm.status === 'saved').length;
-  
-  document.getElementById('newCount').textContent = newCount;
-  document.getElementById('totalCount').textContent = totalCount;
-  document.getElementById('savedCount').textContent = savedCount;
-}
-
-function toggleSelection(id) {
-  if (selectedVoicemails.has(id)) {
-    selectedVoicemails.delete(id);
-  } else {
-    selectedVoicemails.add(id);
-  }
-}
-
-function selectAll() {
-  const checkboxes = document.querySelectorAll('.voicemail-checkbox');
-  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-  
-  checkboxes.forEach(cb => {
-    cb.checked = !allChecked;
-    const id = parseInt(cb.parentElement.querySelector('.voicemail-info').dataset.id || 
-                       cb.parentElement.innerHTML.match(/playVoicemail\((\d+)\)/)?.[1]);
-    if (cb.checked && id) {
-      selectedVoicemails.add(id);
-    } else if (id) {
-      selectedVoicemails.delete(id);
+      // Welcome text
+      const siteName = data.site_name || "";
+      document.getElementById("welcomeName").innerText = siteName || "User";
+    } catch (err) {
+      console.error("Header update failed:", err);
     }
-  });
-}
-
-function markAsRead() {
-  selectedVoicemails.forEach(id => {
-    const voicemail = voicemails.find(vm => vm.id === id);
-    if (voicemail && voicemail.status === 'new') {
-      voicemail.status = 'played';
-    }
-  });
-  selectedVoicemails.clear();
-  renderVoicemails(currentFilter);
-}
-
-function deleteSelected() {
-  if (selectedVoicemails.size === 0) {
-    alert('Please select voicemails to delete');
-    return;
   }
-  
-  if (confirm(`Are you sure you want to delete ${selectedVoicemails.size} voicemail(s)?`)) {
-    voicemails = voicemails.filter(vm => !selectedVoicemails.has(vm.id));
-    selectedVoicemails.clear();
-    renderVoicemails(currentFilter);
-  }
+
+  updateHeader();
+</script>
+<script>
+function upgradeUser() {
+  // Example: if you're storing instanceId locally after login
+  const instanceId = localStorage.getItem("wixInstanceId");
+  const url = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
+  window.location.href = url;
 }
-
-function downloadSelected() {
-  if (selectedVoicemails.size === 0) {
-    alert('Please select voicemails to download');
-    return;
-  }
-  
-  // This will download the audio files
-//NOTICE: We do not support external exporting or dowwloading of audio ourside of the dashboard and only telco system stores the messages 
-  alert(`Downloading ${selectedVoicemails.size} voicemail(s)... (Feature will connect to Ringzu API)`);
-}
-
-function filterVoicemails(filter) {
-  currentFilter = filter;
-  renderVoicemails(filter);
-}
-
-function refreshVoicemails() {
-  //This will fetch fresh data from RingzU API
-  alert('Refreshing voicemails... (Will connect to Ringzu API)');
-  renderVoicemails(currentFilter);
-}
-
-function playVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  // Mark as played if it was new
-  if (voicemail.status === 'new') {
-    voicemail.status = 'played';
-    renderVoicemails(currentFilter);
-  }
-  
-  // Show audio player
-  document.getElementById('audioPlayer').style.display = 'block';
-  document.getElementById('playerInfo').textContent = `Playing: ${voicemail.callerName} (${voicemail.callerNumber})`;
-  
-  // This connects to audio file from RingzU via api
-  AudioPlayback(voicemail.duration);
-}
-
-function saveVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  voicemail.status = 'saved';
-  renderVoicemails(currentFilter);
-  alert(`Voicemail from ${voicemail.callerName} has been saved.`);
-}
-
-function deleteVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  if (confirm(`Are you sure you want to delete the voicemail from ${voicemail.callerName}?`)) {
-    voicemails = voicemails.filter(vm => vm.id !== id);
-    renderVoicemails(currentFilter);
-  }
-}
-
-// Audio Player Functions
-let isPlaying = false;
-let currentDuration = 0;
-let currentTime = 0;
-let audioInterval;
-
-function togglePlayPause() {
-  const btn = document.getElementById('playPauseBtn');
-  const audioElement = document.getElementById('audioElement');
-  
-  if (isPlaying) {
-    btn.textContent = '▶';
-    isPlaying = false;
-    clearInterval(audioInterval);
-  } else {
-    btn.textContent = '⏸';
-    isPlaying = true;
-    startAudioSimulation();
-  }
-}
-
-function AudioPlayback(duration) {
-  const [minutes, seconds] = duration.split(':').map(Number);
-  currentDuration = minutes * 60 + seconds;
-  currentTime = 0;
-  
-  document.getElementById('timeDisplay').textContent = `0:00 / ${duration}`;
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('playPauseBtn').textContent = '▶';
-  isPlaying = false;
-}
-
-function startAudio() {
-  audioInterval = setInterval(() => {
-    currentTime++;
-    updateProgress();
-    
-    if (currentTime >= currentDuration) {
-      onAudioEnd();
-    }  }, 1000);
-}
-
-function updateProgress() {
-  if (currentDuration > 0) {
-    const progress = (currentTime / currentDuration) * 100;
-    document.getElementById('progressFill').style.width = `${progress}%`;
-    
-    const currentMin = Math.floor(currentTime / 60);
-    const currentSec = currentTime % 60;
-    const totalMin = Math.floor(currentDuration / 60);
-    const totalSec = currentDuration % 60;
-    
-    document.getElementById('timeDisplay').textContent = 
-      `${currentMin}:${currentSec.toString().padStart(2, '0')} / ${totalMin}:${totalSec.toString().padStart(2, '0')}`;
-  }
-}
-
-function seekTo(event) {
-  const progressBar = event.currentTarget;
-  const rect = progressBar.getBoundingClientRect();
-  const clickX = event.clientX - rect.left;
-  const progressPercent = clickX / rect.width;
-  
-  currentTime = Math.floor(progressPercent * currentDuration);
-  updateProgress();
-}
-
-function onAudioEnd() {
-  document.getElementById('playPauseBtn').textContent = '▶';
-  isPlaying = false;
-  clearInterval(audioInterval);
-  currentTime = 0;
-  updateProgress();
-}
-
-function closePlayer() {
-  document.getElementById('audioPlayer').style.display = 'none';
-  if (isPlaying) {
-    togglePlayPause();
-  }
-}
-
-// Initialize voicemail list on page load
-document.addEventListener('DOMContentLoaded', function() {
-  renderVoicemails();
-});
-
-/* ────────── RingzU API INTEGRATION STUBS ────────── */
-
-// These functions will be implemented to connect with RingzU API
-function fetchVoicemailsFromAPI() {
-  // API call to RingzU to get voicemail list
-  // GET https://voip-ringzu-proxy.onrender.com/api/v1/rest.php?api_username=xxx&api_password=xxx&method=getVoiceMails
-  console.log('API: Fetching voicemails from RingzU...');
-}
-
-function getVoicemailAudioURL(voicemailId) {
-  // API call to get the audio file URL for a specific voicemail
-  // This would return the actual audio file URL from RingzU
-  console.log(`API: Getting audio URL for voicemail ${voicemailId}`);
-  return '#'; // Placeholder
-}
-
-function deleteVoicemailViaAPI(voicemailId) {
-  // API call to delete voicemail from RingzU servers
-  // DELETE request to RingzU API
-  console.log(`API: Deleting voicemail ${voicemailId} from RingzU`);
-}
-
-function getVoicemailTranscription(voicemailId) {
-  //RingzU supports transcription, get it via API for an ADDED FEE
-  console.log(`API: Getting transcription for voicemail ${voicemailId}`);
-}
+</script>
+</body>
+</html>
