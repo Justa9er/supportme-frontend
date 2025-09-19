@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>supportME! Customer Support Center</title>
+  <style>
+    :root {
+      --primary-color: #0021F7;
+      --accent-color: #5EDC1F;
+      --text-color: #1F2937;
+      --background-color: #F4F6F8;
+      --border-color: #0021F7;
+      --secondary-border: #E6ECF2;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background-color);
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text-color);
+      width: 1600px;
+      height: 950px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .dashboard {
+      display: flex;
+      height: 100%;
+      border: 2px solid var(--border-color);
+      box-sizing: border-box;
+    }
+
+    .sidebar {
+      width: 185px;
+      background: var(--background-color);
+      border-right: 2px solid var(--secondary-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo-box {
+      height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px solid var(--secondary-border);
+    }
+
+    .menu { 
+      flex: 1; 
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .menu-item {
+      position: relative;
+      margin: 12px 0;
+      font-family: 'Open Sans', sans-serif;
+      color: var(--primary-color);
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      width: 100%;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .menu-item::after {
+      content: '';
+      display: inline-block;
+      width: 7px; 
+      height: 7px;
+      background: #F50000;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: super;
+    }
+
+  /* Active page = lime green button with blue text */
+.menu-item.active {
+  background: #5EDC1F;      /* Lime Green */
+  color: #1F2937;           /* Dark Blue text for accessibility */
+  box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
+}
+
+    .branding {
+      height: 152px;
+      border-top: 0px solid var(--secondary-border);
+      font-size: 10px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .logo-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .branding img { height: 45px; width: 150px; }
+    .bottom-content { display: flex; flex-direction: column; gap: 4px; }
+    .branding .links { font-size: 9px; }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      gap: 10px;
+      width: 1405px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      background: var(--accent-color);
+      border: 2px solid var(--border-color);
+      height: 57px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Agency FB', sans-serif;
+      font-size: 36px;
+      color: var(--primary-color);
+      font-weight: bold;
+      text-transform: uppercase;
+      position: relative;
+    }
+    .time-banner {
+      height: 67px;
+      background: var(--background-color);
+      border: 2px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      font-family: 'Agency FB', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .time-banner .right { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-end; 
+    }
+
+    .time-banner .top { 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      margin-bottom: 4px; 
+    }
+
+    .time-banner button {
+      font-family: 'Agency FB', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 6px 14px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .time-banner button:hover { background: #3157B8; }
+
+    .alert {
+      height: 37px;
+      border: 2px solid var(--border-color);
+      background: var(--background-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .content { 
+      flex: 1; 
+      border: 2px solid var(--border-color); 
+      background: #fff; 
+      padding: 5px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px;
+      overflow-y: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Footer Banner */
+    .footer-banner {
+      width: calc(100% - px);
+      height: 149px;
+      border: 2px solid var(--border-color);
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
+      background: var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .banner-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: var(--primary-color);
+      font-family: 'Agency FB', sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .banner-content a {
+      color: var(--primary-color);
+      text-decoration: none;
+      border: 2px solid var(--primary-color);
+      padding: 10px 20px;
+      margin-top: 10px;
+      display: inline-block;
+      background: rgba(255,255,255,0.9);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .banner-content a:hover {
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    /* Live Chat Container Styles */
+    .live-chat-container {
+        width: 1376px;
+        height: 583px;
+        border: 0px solid #0021f7;
+        border-radius: 0px;
+        background: #f4f6f8;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Agency FB', Arial, sans-serif;
+    }
+
+    .live-chat-header {
+        background: linear-gradient(90deg, #5edc1f 20%, #0021f7 100%);
+        color: #00217f7;
+        font-family: 'Agency FB', Arial, sans-serif;
+        font-weight: bold;
+        font-size: 24px;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 40px;
+    }
+
+    .chat-status {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #5edc1f;
+    }
+
+    .chat-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #f8f9fa;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 450px;
+    }
+
+    .message {
+        max-width: 70%;
+        padding: 8px 12px;
+        border-radius: 18px;
+        word-wrap: break-word;
+        position: relative;
+    }
+
+    .message.customer {
+        align-self: flex-start;
+        background: #e9ecef;
+        color: #333;
+    }
+
+    .message.admin {
+        align-self: flex-end;
+        background: #0021f7;
+        color: white;
+    }
+
+    .message-time {
+        font-size: 10px;
+        opacity: 0.7;
+        margin-top: 4px;
+    }
+
+    .typing-indicator {
+        align-self: flex-start;
+        background: #e9ecef;
+        padding: 8px 12px;
+        border-radius: 18px;
+        display: none;
+    }
+
+    .typing-dots {
+        display: flex;
+        gap: 2px;
+    }
+
+    .typing-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #666;
+        animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes typing {
+        0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+        40% { transform: scale(1); opacity: 1; }
+    }
+
+    .chat-input-area {
+        padding: 10px;
+        background: white;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    .chat-input {
+        flex: 1;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        padding: 8px 15px;
+        outline: none;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        resize: none;
+        min-height: 20px;
+        max-height: 80px;
+    }
+
+    .chat-input:focus {
+        border-color: #0021f7;
+    }
+
+    .send-btn {
+        background: #0021f7;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .send-btn:hover {
+        background: #001a99;
+    }
+
+    .send-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    .chat-actions {
+        display: flex;
+        gap: 5px;
+    }
+
+    .action-icon {
+        width: 35px;
+        height: 35px;
+        border: 1px solid #dee2e6;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .action-icon:hover {
+        background: #f8f9fa;
+        border-color: #0021f7;
+    }
+
+    .connection-status {
+        padding: 5px 10px;
+        background: #d4edda;
+        border-bottom: 1px solid #c3e6cb;
+        font-size: 12px;
+        color: #155724;
+        text-align: center;
+    }
+
+    .connection-status.disconnected {
+        background: #f8d7da;
+        border-bottom-color: #f5c6cb;
+        color: #721c24;
+    }
+
+        /* Basic styling for the contact link */
+        .contact-menu-link {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .contact-menu-link:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .contact-menu-link.loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+  <div class="sidebar">
+    <div>
+      <div class="logo-box" onclick="window.location.href='https://app.getsupportme.com/customer-dashboard.html'">
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" height="120" alt="supportME! Logo">
+      </div>
+      <div class="menu">
+        <a href="https://app.getsupportme.com/customer-dashboard.html" class="menu-item">All Tickets</a>
+        <a href="https://app.getsupportme.com/live-chat.html" class="menu-item active">Live Chat</a>
+       <!-- Empty href that will be populated -->
+<a href="#" id="contactUsLink" class="your-menu-classes">CONTACT US</a>  
+    </div>
+</div>
+    <div class="branding">
+      <div class="logo-container">
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/wide-ringzu-logo.png">
+      </div>
+      <div class="bottom-content">
+      <div>© 2025 RingzU Telecom Corp.</div>
+        <div>supportME! is built on the 
+          <a href="https://www.ringzu.com" target="_blank" style="color:var(--primary-color); text-decoration:none;">
+          <strong>RingzU Telecom Imagination Platform™</strong></a>
+        </div>
+        <div class="links">
+          <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:var(--primary-color); text-decoration:none;">Privacy</a> | 
+          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:var(--primary-color); text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:var(--primary-color); text-decoration:none;">Billing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="header">
+      CUSTOMER SUPPORT CENTER
+    </div>
+    <div class="time-banner">
+      <div>supportME! official server time: <span id="dateTime"></span></div>
+      <div class="right">
+        <div class="top">
+          <img src="https://i.pravatar.cc/30" alt="avatar"> 
+          Welcome Back, <span id="welcomeName"></span>
+        </div>
+        <div>
+          <button onclick="alert('Sign Out clicked')">LOG IN/OUT</button>
+        </div>
+      </div>
+    </div>
+    <div class="alert">
+      <span>
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" 
+             alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 9px;">
+        <strong>supportME! updates in real time. Do not close this window during ongoing conversations.</strong>
+      </span>
+      <span style="cursor:pointer;" onclick="this.parentElement.style.display='none'">X</span>
+    </div>
+    <div class="content">
+        <div class="live-chat-container">
+            <!-- Chat Header -->
+            <div class="live-chat-header">
+                <span>LIVE CHAT</span>
+                <div class="chat-status">
+                    <span class="status-dot"></span>
+                    <span>Connected</span>
+                </div>
+            </div>
+
+            <!-- Connection Status -->
+            <div class="connection-status" id="connectionStatus">
+                Connected to support team
+            </div>
+
+            <!-- Chat Body -->
+            <div class="chat-body">
+                <!-- Messages Area -->
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message admin">
+                        <div>Hello! How can we help you today?</div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <span style="margin-left: 8px; font-size: 12px;">Support is typing...</span>
+                </div>
+
+                <!-- Input Area -->
+                <div class="chat-input-area">
+                    <div class="chat-actions">
+                        <div class="action-icon" title="Attach File" onclick="handleAttachment()">📎</div>
+                        <div class="action-icon" title="Emoji" onclick="toggleEmoji()">😊</div>
+                    </div>
+                    <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-banner" onclick="window.location.href='https://getsupportme.com'">
+      <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/footer-banner.png" alt="supportME! Banner">
+    </div>
+  </div>
+</div>
+
+<script>
+// Chat functionality
+let isConnected = false;
+let chatSocket = null;
+
+// Initialize chat connection to admin dashboard
+function initializeChatConnection() {
+    try {
+        // Connect to admin dashboard chat system
+        const adminChatUrl = 'https://app.getsupportme.com/chat.html';
+        // Real connection implementation goes here
+        
+    } catch (error) {
+        console.error('Failed to connect to admin chat:', error);
+        updateConnectionStatus(false);
+    }
+}
+
+// Update connection status
+function updateConnectionStatus(connected) {
+    const statusElement = document.getElementById('connectionStatus');
+    const statusDot = document.querySelector('.status-dot');
+    const statusText = document.querySelector('.chat-status span:last-child');
+    
+    if (connected) {
+        statusElement.textContent = 'Connected to support team';
+        statusElement.className = 'connection-status';
+        statusDot.style.background = '#5edc1f';
+        statusText.textContent = 'Connected';
+    } else {
+        statusElement.textContent = 'Disconnected - Attempting to reconnect...';
+        statusElement.className = 'connection-status disconnected';
+        statusDot.style.background = '#dc3545';
+        statusText.textContent = 'Offline';
+    }
+}
+
+// Handle message sending
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message || !isConnected) return;
+    
+    // Add message to chat
+    addMessage(message, 'customer');
+    
+    // Clear input
+    input.value = '';
+    input.style.height = 'auto';
+    updateSendButton();
+    
+    // Send to admin dashboard
+    sendToAdmin(message);
+}
+
+// Add message to chat display
+function addMessage(text, sender) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    messageDiv.innerHTML = `
+        <div>${text}</div>
+        <div class="message-time">${timeString}</div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Send message to admin dashboard
+function sendToAdmin(message) {
+    // Implement your API call to admin dashboard here
+    console.log('Sending to admin:', message);
+}
+
+// Handle input changes
+function handleInputChange() {
+    const input = document.getElementById('chatInput');
+    
+    // Auto-resize textarea
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 80) + 'px';
+    
+    updateSendButton();
+}
+
+// Update send button state
+function updateSendButton() {
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    
+    sendBtn.disabled = !input.value.trim() || !isConnected;
+}
+
+// Handle Enter key
+function handleKeyPress(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+// Show/hide typing indicator
+function showTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'flex';
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'none';
+}
+
+// Handle file attachment
+function handleAttachment() {
+    // Implement file attachment functionality
+    alert('File attachment feature coming soon!');
+}
+
+// Handle emoji picker
+function toggleEmoji() {
+    // Implement emoji picker functionality
+    alert('Emoji picker coming soon!');
+}
+
+// Initialize chat when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const chatInput = document.getElementById('chatInput');
+    
+    chatInput.addEventListener('input', handleInputChange);
+    chatInput.addEventListener('keypress', handleKeyPress);
+    
+    // Initialize connection
+    initializeChatConnection();
+});
+
+// Server time clock
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime(){
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", {weekday:"long", timeZone:tz});
+    const mm = String(now.getMonth()+1).padStart(2,"0");
+    const dd = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh = String(now.getHours()).padStart(2,"0");
+    const mi = String(now.getMinutes()).padStart(2,"0");
+    const ss = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent = 
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime, 1000);
+})();
+</script>
+    <a href="#" id="contactUsLink" class="contact-menu-link loading">CONTACT US</a>
+
+    <script>
+        // Function to get subscriber's contact URL from stored data or detect it
+        async function getSubscriberContactUrl() {
+            try {
+                // Method 1: Check if contact URL is stored in localStorage from subscription process
+                const storedContactUrl = localStorage.getItem('subscriberContactUrl');
+                if (storedContactUrl && storedContactUrl !== 'null') {
+                    return storedContactUrl;
+                }
+                
+                // Method 2: Get from URL parameters (if passed during app installation)
+                const urlParams = new URLSearchParams(window.location.search);
+                const contactParam = urlParams.get('contact_url') || urlParams.get('contactUrl');
+                if (contactParam) {
+                    // Store for future use
+                    localStorage.setItem('subscriberContactUrl', contactParam);
+                    return contactParam;
+                }
+                
+                // Method 3: Extract from referrer domain and construct likely contact URLs
+                const referrer = document.referrer;
+                if (referrer) {
+                    try {
+                        const referrerUrl = new URL(referrer);
+                        const baseDomain = referrerUrl.origin;
+                        
+                        // Test common contact page patterns
+                        const commonPaths = [
+                            '/contact',
+                            '/contact-us', 
+                            '/contact-me',
+                            '/get-in-touch',
+                            '/about/contact'
+                        ];
+                        
+                        for (const path of commonPaths) {
+                            const testUrl = baseDomain + path;
+                            try {
+                                // Test if the URL exists (note: this may be blocked by CORS)
+                                const response = await fetch(testUrl, { 
+                                    method: 'HEAD',
+                                    mode: 'no-cors' 
+                                });
+                                // If we get here without error, assume it exists
+                                localStorage.setItem('subscriberContactUrl', testUrl);
+                                return testUrl;
+                            } catch (e) {
+                                // Continue to next path
+                                continue;
+                            }
+                        }
+                        
+                        // If no specific contact page found, return base domain
+                        localStorage.setItem('subscriberContactUrl', baseDomain);
+                        return baseDomain;
+                        
+                    } catch (e) {
+                        console.warn('Could not parse referrer URL:', e);
+                    }
+                }
+                
+                // Method 4: Check if there's a data attribute on the link itself
+                const linkElement = document.getElementById('contactUsLink');
+                const dataContact = linkElement.getAttribute('data-contact-url');
+                if (dataContact) {
+                    return dataContact;
+                }
+                
+                // Method 5: Look for contact URL in page meta tags
+                const contactMeta = document.querySelector('meta[name="contact-url"]') || 
+                                  document.querySelector('meta[property="contact-url"]');
+                if (contactMeta) {
+                    return contactMeta.getAttribute('content');
+                }
+                
+                // Fallback: return a default message or current domain
+                return '#'; // Will be handled in the click event
+                
+            } catch (error) {
+                console.warn('Error getting contact URL:', error);
+                return '#';
+            }
+        }
+        
+        // Function to initialize the contact link
+        async function initializeContactLink() {
+            const contactLink = document.getElementById('contactUsLink');
+            
+            try {
+                const contactUrl = await getSubscriberContactUrl();
+                
+                if (contactUrl === '#') {
+                    // No contact URL found - handle gracefully
+                    contactLink.href = '#';
+                    contactLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        alert('Contact information not available. Please contact support.');
+                    });
+                } else {
+                    // Set the contact URL
+                    contactLink.href = contactUrl;
+                    contactLink.target = '_blank'; // Open in new tab
+                }
+                
+                contactLink.classList.remove('loading');
+                
+            } catch (error) {
+                console.error('Error initializing contact link:', error);
+                contactLink.href = '#';
+                contactLink.classList.remove('loading');
+                contactLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Contact information not available. Please contact support.');
+                });
+            }
+        }
+        
+        // Function to manually set contact URL (call this during app installation/setup)
+        function setSubscriberContactUrl(url) {
+            localStorage.setItem('subscriberContactUrl', url);
+            const contactLink = document.getElementById('contactUsLink');
+            if (contactLink) {
+                contactLink.href = url;
+            }
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeContactLink);
+        } else {
+            initializeContactLink();
+        }
+        
+        // Make setSubscriberContactUrl available globally for external calls
+        window.setSubscriberContactUrl = setSubscriberContactUrl;
+    </script>
+</body>
+</html>
