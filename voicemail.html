@@ -60,10 +60,13 @@
       height:152px;
       border-top:2px solid #E6ECF2;
       font-size:10px;
-      padding:6px;
+      color:#1f2937
+      font-weight:bold
+      padding:4px;
       display:flex;
       flex-direction:column;
       text-align:center;
+      margin-bottom: 10px;
     }
     .logo-container {
       flex: 1;
@@ -73,13 +76,13 @@
       margin-bottom: 8px;
     }
     .branding img { 
-      height:30px; 
-      width: 30px;
+      height:45px; 
+      width: 150px;
     }
     .bottom-content {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap:5px;
     }
     .branding .links { font-size:9px; }
     .menu { flex:1; padding:10px; }
@@ -94,8 +97,13 @@
       text-transform:uppercase;
       cursor: pointer;
     }
+     /* Active page = lime green button with dark blue text */
+     .menu-item.active {
+       background: #5EDC1F;  /* Lime Green */
+       color: #1F2937;       /* Dark Blue */
+       box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
+}
     .menu-item:hover { color: #3157B8; }
-    .menu-item.active { background: #E6ECF2; padding: 4px; border-radius: 4px; }
     .menu-item::after {
       content: '';
       display: inline-block;
@@ -519,7 +527,7 @@
     </div>
     <div class="branding">
       <div class="logo-container">
-        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/ringzu-logo.png" alt="RingzU Logo">
+        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/wide-ringzu-logo.png" alt="RingzU Logo">
       </div>
       <div class="bottom-content">
         <hr class="line">
@@ -528,7 +536,7 @@
           <strong>RingzU Telecom Imagination Platform™</strong></a></div>
         <div class="links">
           <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:#0021F7; text-decoration:none;">Privacy</a> | 
-          <a href="https://www.getsupportme.com/TOS" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
           <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:#0021F7; text-decoration:none;">Billing</a>
         </div>
       </div>
@@ -547,7 +555,7 @@
         <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
         <div>
           <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE TODAY</button>
-          <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+ NEW TICKET</button>
+          <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+NEW TICKET</button>
         </div>
       </div>
     </div>
