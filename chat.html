@@ -73,8 +73,8 @@
       margin-bottom: 8px;
     }
     .branding img { 
-      height:30px; 
-      width: 30px;
+      height:45px; 
+      width: 150px;
     }
     .bottom-content {
       display: flex;
@@ -840,219 +840,253 @@
             </div>
           </div>
 
-    <!-- Chat window -->
-<div class="chat-window-area" id="chatWindow">
-  <div class="empty-chat" id="emptyChat">
-    <div class="empty-chat-icon">💬</div>
-    <div>Select a customer conversation to start chatting</div>
-    <div style="font-size: 12px; margin-top: 8px; opacity: 0.7;">
-      Customer messages will appear here
-    </div>
-  </div>
-
-  <!-- Typing Indicator -->
-  <div class="typing-indicator" id="typingIndicator" style="display: none;">
-    Agent is typing...
-  </div>
-
-  <!-- Chat Input Area -->
-  <div class="chat-input-area">
-    <textarea class="chat-input" id="messageInput" placeholder="Type your message..." rows="1"></textarea>
-    <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
-  </div>
-</div>
-
+          <!-- Chat window -->
+          <div class="chat-window-area" id="chatWindow">
+            <div class="empty-chat" id="emptyChat">
+              <div class="empty-chat-icon">💬</div>
+              <div>Select a customer conversation to start chatting</div>
+              <div style="font-size: 12px; margin-top: 8px; opacity: 0.7;">
+                Customer messages will appear here
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  <!-- Team Chat Footer -->
-<div class="footer">
-  <div class="team" style="width:33%;">
-    <div class="cols">
-      <span>Chat ID</span>
-      <span>Name</span>
-      <span>Status</span>
-      <span>My Status</span>
-    </div>
-    <div id="teamList" style="font-size:12px; color:#666;">
-      <!-- Team members will populate here -->
-      <div style="opacity:0.6; font-style:italic;">No team members yet</div>
-    </div>
-  </div>
-
-  <div style="flex:1; display:flex; flex-direction:column;">
-    <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
-      <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">
-        <!-- Team chat messages appear here -->
+    <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
+      <div class="team" style="width:33%;">
+        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
+        <div>[List]</div>
       </div>
-    </div>
-
-    <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
-      <input type="text" id="chatIdInput" placeholder="Chat ID (or leave blank/9999 for broadcast)" style="width:200px; padding:6px; font-size:12px;">
-      <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
-      <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-        SEND MSG
-      </button>
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
+          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
+        </div>
+        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
+          <input type="text" id="chatIdInput" placeholder="Chat ID" style="width:120px; padding:6px; font-size:12px;">
+          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
+          <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+            SEND MSG
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // Store messages in-memory per session
-  const chatInbox = document.getElementById("chatInbox");
-  const sendBtn = document.getElementById("sendButton");
+/* ────────── SERVER TIME (24-hour Pacific) ────────── */
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm  = String(now.getMonth()+1).padStart(2,"0");
+    const dd  = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh  = String(now.getHours()).padStart(2,"0");
+    const mi  = String(now.getMinutes()).padStart(2,"0");
+    const ss  = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
 
-  sendBtn.addEventListener("click", () => {
-    const chatId = document.getElementById("chatIdInput").value.trim();
-    const msg = document.getElementById("chatMessageInput").value.trim();
-
-    if (!msg) return;
-
-    // Decide target (one-to-one or broadcast)
-    const target = chatId === "" || chatId === "9999" ? "ALL" : chatId;
-
-    // Append to inbox
-    const line = document.createElement("div");
-    line.textContent = `[To ${target}] ${msg}`;
-    chatInbox.appendChild(line);
-    chatInbox.scrollTop = chatInbox.scrollHeight;
-
-    // Clear input
+/* ────────── TEAM CHAT PLACEHOLDER ────────── */
+document.getElementById("sendButton").addEventListener("click",()=>{
+  const chatId = document.getElementById("chatIdInput").value;
+  const msg = document.getElementById("chatMessageInput").value;
+  if(msg.trim()){
+    const inbox = document.getElementById("chatInbox");
+    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
     document.getElementById("chatMessageInput").value = "";
-  });
-</script>
-<script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-
-  // ✅ Initialize Supabase client
-  const supabase = createClient(
-    "https://ucekalsakfxczmaxfpkq.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZWthbHNha2Z4Y3ptYXhmcGtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMTUzNTUsImV4cCI6MjA2OTc5MTM1NX0.ONjltg1JIFhN480rHl-kObkCwqUgy3W34_YLS5aBqpQ"
-  );
-
-  // ✅ Insert message into Supabase
-  async function sendMessageToDB(tenantId, chatId, sender, text) {
-    const { error } = await supabase.from("chat_messages").insert([{
-      tenant_id: tenantId,
-      chat_id: chatId,
-      sender,
-      message: text,
-      status: "sent"
-    }]);
-    if (error) console.error("Error sending message:", error);
   }
+});
 
-  // ✅ Subscribe to messages in Supabase
-  function subscribeToMessages(chatId, onMessage) {
-    return supabase
-      .channel(`chat:${chatId}`)
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "chat_messages", filter: `chat_id=eq.${chatId}` },
-        payload => {
-          onMessage(payload.new);
-        }
-      )
-      .subscribe();
+/* ────────── CUSTOMER CHAT FUNCTIONALITY ────────── */
+let filteredChats = [...chatData];
+let currentChatId = null;
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  renderChatList();
+  setupEventListeners();
+  updateStats();
+});
+
+function renderChatList() {
+  const container = document.getElementById('chatListItems');
+  
+  if (filteredChats.length === 0) {
+    container.innerHTML = '<div class="no-chats">No conversations found matching your criteria.</div>';
+    return;
   }
-
-  /* ────────── STATE ────────── */
-  let currentChatId = null;
-  let tenantId = null;  // set this at login/init
-  let subscription = null;
-
-  /* ────────── SERVER TIME ────────── */
-  (function startServerClock(){
-    const tz = "America/Los_Angeles";
-    function updateServerTime() {
-      const now = new Date();
-      const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
-      const mm  = String(now.getMonth()+1).padStart(2,"0");
-      const dd  = String(now.getDate()).padStart(2,"0");
-      const yyyy = now.getFullYear();
-      const hh  = String(now.getHours()).padStart(2,"0");
-      const mi  = String(now.getMinutes()).padStart(2,"0");
-      const ss  = String(now.getSeconds()).padStart(2,"0");
-      document.getElementById("dateTime").textContent =
-        `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
-    }
-    updateServerTime();
-    setInterval(updateServerTime,1000);
-  })();
-
-  /* ────────── CHAT FUNCTIONS ────────── */
-  async function selectChat(chatId) {
-    currentChatId = chatId;
-
-    // unsubscribe old
-    if (subscription) {
-      supabase.removeChannel(subscription);
-    }
-
-    // clear window
-    const chatWindow = document.getElementById('chatWindow');
-    chatWindow.innerHTML = '';
-
-    // subscribe to new
-    subscription = subscribeToMessages(chatId, (msg) => {
-      renderMessage(msg);
-    });
-
-    // load history
-    const { data, error } = await supabase
-      .from("chat_messages")
-      .select("*")
-      .eq("chat_id", chatId)
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.error("Error loading messages:", error);
-      return;
-    }
-
-    chatWindow.innerHTML = '';
-    data.forEach(m => renderMessage(m));
-  }
-
-  function renderMessage(msg) {
-    const chatWindow = document.getElementById('chatWindow');
-    const div = document.createElement('div');
-    div.className = `message ${msg.sender === 'agent' ? 'outgoing' : 'incoming'}`;
-    div.innerHTML = `
-      <div class="message-bubble">${msg.message}</div>
-      <div class="message-info">
-        <span class="message-time">${new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+  
+  container.innerHTML = filteredChats.map(chat => `
+    <div class="chat-item ${chat.unreadCount > 0 ? 'unread' : ''} ${chat.id === currentChatId ? 'active' : ''}" 
+         data-chat-id="${chat.id}" onclick="selectChat('${chat.id}')">
+      <div class="chat-customer-info">
+        <span class="customer-name">
+          <span class="status-indicator status-${chat.status}"></span>
+          ${chat.customerName}
+        </span>
+        <span class="chat-time">${chat.lastMessageTime}</span>
       </div>
-    `;
-    chatWindow.appendChild(div);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+      <div class="chat-preview">${chat.lastMessage}</div>
+      <div class="chat-meta">
+        <a href="#" class="ticket-link">${chat.ticketNumber}</a>
+        ${chat.unreadCount > 0 ? `<span class="unread-count">${chat.unreadCount}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectChat(chatId) {
+  currentChatId = chatId;
+  const chat = chatData.find(c => c.id === chatId);
+  
+  if (chat) {
+    // Mark as read
+    chat.unreadCount = 0;
+    chat.messages.forEach(msg => {
+      if (msg.sender === 'customer') msg.status = 'read';
+    });
+    
+    renderChatWindow(chat);
+    renderChatList();
+    updateStats();
   }
+}
 
-  async function sendMessage() {
-    const input = document.getElementById('messageInput');
-    const message = input.value.trim();
-    if (!message || !currentChatId || !tenantId) return;
+function renderChatWindow(chat) {
+  const chatWindow = document.getElementById('chatWindow');
+  
+  chatWindow.innerHTML = `
+    <div class="chat-window-header">
+      <div class="current-customer">
+        <img src="${chat.customerAvatar}" class="customer-avatar" alt="${chat.customerName}">
+        <div class="customer-details">
+          <div class="current-customer-name">
+            <span class="status-indicator status-${chat.status}"></span>
+            ${chat.customerName}
+          </div>
+          <div class="customer-status">
+            ${chat.ticketNumber} • ${chat.status.charAt(0).toUpperCase() + chat.status.slice(1)}
+          </div>
+        </div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-action-btn" onclick="viewTicket('${chat.ticketNumber}')">View Ticket</button>
+        <button class="chat-action-btn" onclick="escalateChat('${chat.id}')">Escalate</button>
+        <button class="chat-action-btn" onclick="endChat('${chat.id}')">End Chat</button>
+      </div>
+    </div>
+    
+    <div class="chat-messages" id="chatMessages">
+      ${chat.messages.map(msg => `
+        <div class="message ${msg.sender === 'agent' ? 'outgoing' : 'incoming'}">
+          <img src="${msg.sender === 'agent' ? 'https://i.pravatar.cc/100?img=10' : chat.customerAvatar}" 
+               class="message-avatar" alt="">
+          <div class="message-content">
+            <div class="message-bubble">${msg.content}</div>
+            <div class="message-info">
+              <span class="message-time">${formatMessageTime(msg.timestamp)}</span>
+              ${msg.sender === 'agent' ? `<span class="message-status">${msg.status}</span>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    
+    <div class="typing-indicator" id="typingIndicator" style="display: none;">
+      ${chat.customerName} is typing...
+    </div>
+    
+    <div class="chat-input-area">
+      <div class="input-toolbar">
+        <button class="toolbar-btn" onclick="insertTemplate('greeting')">Greeting</button>
+        <button class="toolbar-btn" onclick="insertTemplate('closing')">Closing</button>
+        <button class="toolbar-btn" onclick="insertTemplate('escalate')">Escalate</button>
+        <button class="toolbar-btn" onclick="attachFile()">📎 File</button>
+      </div>
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="messageInput" 
+                placeholder="Type your message..." 
+                onkeydown="handleInputKeydown(event)"
+                oninput="handleInputChange()"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>
+          <span style="transform: rotate(45deg);">📤</span>
+        </button>
+      </div>
+    </div>
+  `;
+  
+  // Scroll to bottom
+  setTimeout(() => {
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }, 100);
+}
 
-    await sendMessageToDB(tenantId, currentChatId, 'agent', message);
-
-    input.value = '';
-    document.getElementById('sendBtn').disabled = true;
-  }
-
- function handleInputChange() {
-  const input = document.getElementById('messageInput');
-  const sendBtn = document.getElementById('sendBtn');
-  sendBtn.disabled = !input.value.trim();
-
-  // Typing indicator logic
-  if (input.value.trim()) {
-    showTypingIndicator();
-    clearTimeout(window._typingTimeout);
-    window._typingTimeout = setTimeout(hideTypingIndicator, 2000); 
+function formatMessageTime(timestamp) {
+  const now = new Date();
+  const msgTime = new Date(timestamp);
+  const diff = now - msgTime;
+  
+  if (diff < 60000) {
+    return 'Just now';
+  } else if (diff < 3600000) {
+    return Math.floor(diff / 60000) + 'm ago';
+  } else if (diff < 86400000) {
+    return msgTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
   } else {
-    hideTypingIndicator();
+    return msgTime.toLocaleDateString();
   }
+}
+
+function setupEventListeners() {
+  document.getElementById('searchInput').addEventListener('input', filterChats);
+  document.getElementById('statusFilter').addEventListener('change', filterChats);
+  document.getElementById('priorityFilter').addEventListener('change', filterChats);
+  document.getElementById('refreshBtn').addEventListener('click', refreshChats);
+  document.getElementById('newChatBtn').addEventListener('click', startNewChat);
+}
+
+function filterChats() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const statusFilter = document.getElementById('statusFilter').value;
+  const priorityFilter = document.getElementById('priorityFilter').value;
+
+  filteredChats = chatData.filter(chat => {
+    const matchesSearch = !searchTerm || 
+      chat.customerName.toLowerCase().includes(searchTerm) ||
+      chat.ticketNumber.toLowerCase().includes(searchTerm) ||
+      chat.lastMessage.toLowerCase().includes(searchTerm);
+
+    const matchesStatus = statusFilter === 'all' || chat.status === statusFilter;
+    const matchesPriority = priorityFilter === 'all' || chat.priority === priorityFilter;
+
+    return matchesSearch && matchesStatus && matchesPriority;
+  });
+
+  renderChatList();
+  updateStats();
+}
+
+function updateStats() {
+  const total = filteredChats.length;
+  const online = filteredChats.filter(c => c.status === 'online').length;
+  const away = filteredChats.filter(c => c.status === 'away').length;
+  const urgent = filteredChats.filter(c => c.priority === 'urgent').length;
+  const totalUnread = filteredChats.reduce((sum, chat) => sum + chat.unreadCount, 0);
+
+  document.getElementById('totalChats').textContent = total;
+  document.getElementById('onlineCount').textContent = online;
+  document.getElementById('awayCount').textContent = away;
+  document.getElementById('busyCount').textContent = urgent;
+  document.getElementById('unreadCount').textContent = totalUnread;
 }
 
 function handleInputKeydown(event) {
@@ -1062,70 +1096,248 @@ function handleInputKeydown(event) {
   }
 }
 
+function handleInputChange() {
+  const input = document.getElementById('messageInput');
+  const sendBtn = document.getElementById('sendBtn');
+  if (sendBtn) sendBtn.disabled = !input.value.trim();
+}
 
-  /* ────────── TYPING INDICATOR ────────── */
-  function showTypingIndicator() {
-    document.getElementById('typingIndicator').style.display = 'block';
+function sendMessage() {
+  const input = document.getElementById('messageInput');
+  const message = input.value.trim();
+  
+  if (!message || !currentChatId) return;
+
+  const chat = chatData.find(c => c.id === currentChatId);
+  if (!chat) return;
+
+  const newMessage = {
+    id: 'msg_' + Date.now(),
+    sender: 'agent',
+    content: message,
+    timestamp: new Date(),
+    status: 'sent'
+  };
+
+  chat.messages.push(newMessage);
+  chat.lastMessage = `You: ${message}`;
+  chat.lastMessageTime = 'Just now';
+
+  input.value = '';
+  const sendBtn = document.getElementById('sendBtn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  renderChatWindow(chat);
+  renderChatList();
+
+  setTimeout(() => {
+    newMessage.status = 'delivered';
+    renderChatWindow(chat);
+  }, 1000);
+
+  setTimeout(() => {
+    newMessage.status = 'read';
+    renderChatWindow(chat);
+  }, 3000);
+}
+
+function insertTemplate(type) {
+  const input = document.getElementById('messageInput');
+  const templates = {
+    greeting: "Hello! Thank you for contacting support. I'm here to help you today. How can I assist you?",
+    closing: "Thank you for contacting us today. Is there anything else I can help you with?",
+    escalate: "I'm going to escalate your case to our specialized team who can better assist you with this issue. They will be in touch shortly."
+  };
+
+  if (input) {
+    input.value = templates[type] || '';
+    input.focus();
+    handleInputChange();
   }
-  function hideTypingIndicator() {
-    document.getElementById('typingIndicator').style.display = 'none';
-  }
+}
 
-  /* ────────── INIT ────────── */
-  document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('messageInput');
-    input.addEventListener('input', handleInputChange);
-    input.addEventListener('keydown', handleInputKeydown);
-  });
+function attachFile() {
+  alert('File attachment feature would be implemented here.');
+}
 
-  /* ────────── SIDEBAR ROUTER ────────── */
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const target = item.getAttribute('data-target');
-      if (target === "ringzu-link") {
-        window.open("https://portal.ringzu.pro/site", "_blank");
-      } else if (target === "gethelp-link") {
-        window.open("https://www.getsupportme.com/contact", "_blank");
-      } else if (target) {
-        window.location.href = target;
-      }
-    });
-  });
+function viewTicket(ticketNumber) {
+  alert(`Opening ticket ${ticketNumber} - this would navigate to the ticket details.`);
+}
 
-  /* ────────── PLAN BADGE ────────── */
-  async function loadPlanBadge() {
-    const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
-    try {
-      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
-      const data = await response.json();
-      document.getElementById("planBadge").src = data.badge_url;
-      document.querySelector(".customer-number").textContent = data.customer_number;
-    } catch (err) {
-      console.error("Error loading badge:", err);
+function escalateChat(chatId) {
+  if (confirm('Are you sure you want to escalate this chat to a supervisor?')) {
+    const chat = chatData.find(c => c.id === chatId);
+    if (chat) {
+      chat.priority = 'urgent';
+      alert(`Chat with ${chat.customerName} has been escalated.`);
+      renderChatList();
+      updateStats();
     }
   }
-  loadPlanBadge();
+}
 
-  /* ────────── CUSTOMER INFO ────────── */
-  async function loadCustomerInfo() {
-    try {
-      const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
-      const data = await response.json();
-
-      const numberEl = document.querySelector(".customer-number");
-      if (numberEl && data.masked_id) {
-        numberEl.textContent = data.masked_id;
+function endChat(chatId) {
+  if (confirm('Are you sure you want to end this chat conversation?')) {
+    const chat = chatData.find(c => c.id === chatId);
+    if (chat) {
+      chat.status = 'offline';
+      alert(`Chat with ${chat.customerName} has been ended.`);
+      
+      if (currentChatId === chatId) {
+        currentChatId = null;
+        document.getElementById('chatWindow').innerHTML = `
+          <div class="empty-chat" id="emptyChat">
+            <div class="empty-chat-icon">💬</div>
+            <div>Select a customer conversation to start chatting</div>
+            <div style="font-size: 12px; margin-top: 8px; opacity: 1;">
+              Customer messages will appear here
+            </div>
+          </div>
+        `;
       }
-
-      const badgeEl = document.querySelector(".plan-badge");
-      if (badgeEl && data.badge_url) {
-        badgeEl.src = data.badge_url;
-      }
-    } catch (err) {
-      console.error("Error loading customer info:", err);
+      
+      renderChatList();
+      updateStats();
     }
   }
-  loadCustomerInfo();
+}
+
+function startNewChat() {
+  alert('New chat feature would open a customer selection dialog or create a new conversation.');
+}
+
+function refreshChats() {
+  console.log('Refreshing chat data...');
+  filterChats();
+  
+  const refreshBtn = document.getElementById('refreshBtn');
+  const originalText = refreshBtn.textContent;
+  refreshBtn.textContent = 'Refreshed!';
+  refreshBtn.style.background = '#5EDC1F';
+  
+  setTimeout(() => {
+    refreshBtn.textContent = originalText;
+    refreshBtn.style.background = '#c4f3ad';
+  }, 1500);
+}
+
+// Simulate real-time updates
+function simulateIncomingMessage() {
+  if (Math.random() < 0.3 && chatData.length > 0) {
+    const randomChat = chatData[Math.floor(Math.random() * chatData.length)];
+    const customerMessages = [
+      "Hello, are you there?",
+      "I have a quick question",
+      "Can you help me with this?",
+      "Thank you for your help!",
+      "Is this still being worked on?"
+    ];
+    
+    const newMessage = {
+      id: 'incoming_' + Date.now(),
+      sender: 'customer',
+      content: customerMessages[Math.floor(Math.random() * customerMessages.length)],
+      timestamp: new Date(),
+      status: 'delivered'
+    };
+
+    randomChat.messages.push(newMessage);
+    randomChat.lastMessage = newMessage.content;
+    randomChat.lastMessageTime = 'Just now';
+    randomChat.unreadCount++;
+
+    if (currentChatId === randomChat.id) {
+      renderChatWindow(randomChat);
+    }
+    
+    renderChatList();
+    updateStats();
+  }
+}
+
+function showTypingIndicator() {
+  if (currentChatId && Math.random() < 0.2) {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) {
+      indicator.style.display = 'block';
+      setTimeout(() => {
+        indicator.style.display = 'none';
+        if (Math.random() < 0.5) {
+          setTimeout(simulateIncomingMessage, 2000);
+        }
+      }, 3000);
+    }
+  }
+}
+
+setInterval(simulateIncomingMessage, 15000);
+setInterval(showTypingIndicator, 20000);
+
+window.customerChat = {
+  selectChat,
+  sendMessage,
+  refreshChats,
+  getCurrentData: () => chatData,
+  setCurrentChat: (chatId) => { currentChatId = chatId; }
+};
+</script>
+<script>
+/* ───────── SIDEBAR ROUTER ───────── */
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const target = item.getAttribute('data-target');
+
+    // Outbound links
+    if (target === "voip-link") {
+      window.open("https://portal.ringzu.pro/site", "_blank"); // (Ultimate plan only)
+    } else if (target === "gethelp-link") {
+      window.open("https://www.getsupportme.com/contact", "_blank"); // SupportME contact form
+    } 
+    
+    // Internal dashboard pages
+    else if (target) {
+      window.location.href = target;
+    }
+  });
+});
+async function loadPlanBadge() {
+  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
+  try {
+    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+    document.getElementById("planBadge").src = data.badge_url;
+    document.querySelector(".customer-number").textContent = data.customer_number;
+  } catch (err) {
+    console.error("Error loading badge:", err);
+  }
+}
+
+loadPlanBadge();
+
+</script>
+<script>
+async function loadCustomerInfo() {
+  try {
+    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const data = await response.json();
+
+    // Update number in header
+    const numberEl = document.querySelector(".customer-number");
+    if (numberEl && data.masked_id) {
+      numberEl.textContent = data.masked_id;
+    }
+
+    // Update plan badge
+    const badgeEl = document.querySelector(".plan-badge");
+    if (badgeEl && data.badge_url) {
+      badgeEl.src = data.badge_url;
+    }
+  } catch (err) {
+    console.error("Error loading customer info:", err);
+  }
+}
+
+loadCustomerInfo();
 </script>
 
 </body>
