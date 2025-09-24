@@ -563,15 +563,11 @@
                     <span style="margin-left: 8px; font-size: 12px;">Support is typing...</span>
                 </div>
 
-                <!-- Input Area -->
-                <div class="chat-input-area">
-                    <div class="chat-actions">
-                        <div class="action-icon" title="Attach File" onclick="handleAttachment()">📎</div>
-                        <div class="action-icon" title="Emoji" onclick="toggleEmoji()">😊</div>
-                    </div>
-                    <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"></textarea>
-                    <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
-                </div>
+<!-- Input Area -->
+<div class="chat-input-area">
+    <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
+</div>
             </div>
         </div>
     </div>
@@ -581,19 +577,53 @@
     </div>
   </div>
 </div>
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+  // ✅ Initialize Supabase client
+  const supabase = createClient(
+    "https://ucekalsakfxczmaxfpkq.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZWthbHNha2Z4Y3ptYXhmcGtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMTUzNTUsImV4cCI6MjA2OTc5MTM1NX0.ONjltg1JIFhN480rHl-kObkCwqUgy3W34_YLS5aBqpQ"
+  );
+
+  // ✅ Helper: send a message into chat_messages
+  async function sendMessageToDB(tenantId, chatId, sender, text) {
+    const { error } = await supabase.from("chat_messages").insert([{
+      tenant_id: tenantId,
+      chat_id: chatId,
+      sender,
+      message: text,
+      status: "sent"
+    }]);
+    if (error) console.error("Error sending message:", error);
+  }
+
+  // ✅ Helper: subscribe to real-time messages for a chat
+  function subscribeToMessages(chatId, onMessage) {
+    return supabase
+      .channel(`chat:${chatId}`)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "chat_messages", filter: `chat_id=eq.${chatId}` },
+        payload => {
+          onMessage(payload.new);
+        }
+      )
+      .subscribe();
+  }
+</script>
 
 <script>
 // Chat functionality
 let isConnected = false;
-let chatSocket = null;
+let currentChatId = null;   // track current conversation
+let tenantId = null;        // set this during login/init
 
 // Initialize chat connection to admin dashboard
 function initializeChatConnection() {
     try {
-        // Connect to admin dashboard chat system
-        const adminChatUrl = 'https://app.getsupportme.com/chat.html';
-        // Real connection implementation goes here
-        
+        isConnected = true; 
+        updateConnectionStatus(true);
     } catch (error) {
         console.error('Failed to connect to admin chat:', error);
         updateConnectionStatus(false);
@@ -620,13 +650,13 @@ function updateConnectionStatus(connected) {
 }
 
 // Handle message sending
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('chatInput');
     const message = input.value.trim();
     
-    if (!message || !isConnected) return;
+    if (!message || !isConnected || !currentChatId || !tenantId) return;
     
-    // Add message to chat
+    // Add message locally
     addMessage(message, 'customer');
     
     // Clear input
@@ -634,8 +664,8 @@ function sendMessage() {
     input.style.height = 'auto';
     updateSendButton();
     
-    // Send to admin dashboard
-    sendToAdmin(message);
+    // Send to Supabase
+    await sendMessageToDB(tenantId, currentChatId, 'customer', message);
 }
 
 // Add message to chat display
@@ -656,20 +686,11 @@ function addMessage(text, sender) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-// Send message to admin dashboard
-function sendToAdmin(message) {
-    // Implement your API call to admin dashboard here
-    console.log('Sending to admin:', message);
-}
-
 // Handle input changes
 function handleInputChange() {
     const input = document.getElementById('chatInput');
-    
-    // Auto-resize textarea
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 80) + 'px';
-    
     updateSendButton();
 }
 
@@ -677,7 +698,6 @@ function handleInputChange() {
 function updateSendButton() {
     const input = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
-    
     sendBtn.disabled = !input.value.trim() || !isConnected;
 }
 
@@ -689,37 +709,21 @@ function handleKeyPress(event) {
     }
 }
 
-// Show/hide typing indicator
+// Typing indicator
 function showTypingIndicator() {
     document.getElementById('typingIndicator').style.display = 'flex';
     const messagesContainer = document.getElementById('chatMessages');
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
-
 function hideTypingIndicator() {
     document.getElementById('typingIndicator').style.display = 'none';
-}
-
-// Handle file attachment
-function handleAttachment() {
-    // Implement file attachment functionality
-    alert('File attachment feature coming soon!');
-}
-
-// Handle emoji picker
-function toggleEmoji() {
-    // Implement emoji picker functionality
-    alert('Emoji picker coming soon!');
 }
 
 // Initialize chat when page loads
 document.addEventListener('DOMContentLoaded', function() {
     const chatInput = document.getElementById('chatInput');
-    
     chatInput.addEventListener('input', handleInputChange);
     chatInput.addEventListener('keypress', handleKeyPress);
-    
-    // Initialize connection
     initializeChatConnection();
 });
 
@@ -742,143 +746,5 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(updateServerTime, 1000);
 })();
 </script>
-    <a href="#" id="contactUsLink" class="contact-menu-link loading">CONTACT US</a>
-
-    <script>
-        // Function to get subscriber's contact URL from stored data or detect it
-        async function getSubscriberContactUrl() {
-            try {
-                // Method 1: Check if contact URL is stored in localStorage from subscription process
-                const storedContactUrl = localStorage.getItem('subscriberContactUrl');
-                if (storedContactUrl && storedContactUrl !== 'null') {
-                    return storedContactUrl;
-                }
-                
-                // Method 2: Get from URL parameters (if passed during app installation)
-                const urlParams = new URLSearchParams(window.location.search);
-                const contactParam = urlParams.get('contact_url') || urlParams.get('contactUrl');
-                if (contactParam) {
-                    // Store for future use
-                    localStorage.setItem('subscriberContactUrl', contactParam);
-                    return contactParam;
-                }
-                
-                // Method 3: Extract from referrer domain and construct likely contact URLs
-                const referrer = document.referrer;
-                if (referrer) {
-                    try {
-                        const referrerUrl = new URL(referrer);
-                        const baseDomain = referrerUrl.origin;
-                        
-                        // Test common contact page patterns
-                        const commonPaths = [
-                            '/contact',
-                            '/contact-us', 
-                            '/contact-me',
-                            '/get-in-touch',
-                            '/about/contact'
-                        ];
-                        
-                        for (const path of commonPaths) {
-                            const testUrl = baseDomain + path;
-                            try {
-                                // Test if the URL exists (note: this may be blocked by CORS)
-                                const response = await fetch(testUrl, { 
-                                    method: 'HEAD',
-                                    mode: 'no-cors' 
-                                });
-                                // If we get here without error, assume it exists
-                                localStorage.setItem('subscriberContactUrl', testUrl);
-                                return testUrl;
-                            } catch (e) {
-                                // Continue to next path
-                                continue;
-                            }
-                        }
-                        
-                        // If no specific contact page found, return base domain
-                        localStorage.setItem('subscriberContactUrl', baseDomain);
-                        return baseDomain;
-                        
-                    } catch (e) {
-                        console.warn('Could not parse referrer URL:', e);
-                    }
-                }
-                
-                // Method 4: Check if there's a data attribute on the link itself
-                const linkElement = document.getElementById('contactUsLink');
-                const dataContact = linkElement.getAttribute('data-contact-url');
-                if (dataContact) {
-                    return dataContact;
-                }
-                
-                // Method 5: Look for contact URL in page meta tags
-                const contactMeta = document.querySelector('meta[name="contact-url"]') || 
-                                  document.querySelector('meta[property="contact-url"]');
-                if (contactMeta) {
-                    return contactMeta.getAttribute('content');
-                }
-                
-                // Fallback: return a default message or current domain
-                return '#'; // Will be handled in the click event
-                
-            } catch (error) {
-                console.warn('Error getting contact URL:', error);
-                return '#';
-            }
-        }
-        
-        // Function to initialize the contact link
-        async function initializeContactLink() {
-            const contactLink = document.getElementById('contactUsLink');
-            
-            try {
-                const contactUrl = await getSubscriberContactUrl();
-                
-                if (contactUrl === '#') {
-                    // No contact URL found - handle gracefully
-                    contactLink.href = '#';
-                    contactLink.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        alert('Contact information not available. Please contact support.');
-                    });
-                } else {
-                    // Set the contact URL
-                    contactLink.href = contactUrl;
-                    contactLink.target = '_blank'; // Open in new tab
-                }
-                
-                contactLink.classList.remove('loading');
-                
-            } catch (error) {
-                console.error('Error initializing contact link:', error);
-                contactLink.href = '#';
-                contactLink.classList.remove('loading');
-                contactLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('Contact information not available. Please contact support.');
-                });
-            }
-        }
-        
-        // Function to manually set contact URL (call this during app installation/setup)
-        function setSubscriberContactUrl(url) {
-            localStorage.setItem('subscriberContactUrl', url);
-            const contactLink = document.getElementById('contactUsLink');
-            if (contactLink) {
-                contactLink.href = url;
-            }
-        }
-        
-        // Initialize when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeContactLink);
-        } else {
-            initializeContactLink();
-        }
-        
-        // Make setSubscriberContactUrl available globally for external calls
-        window.setSubscriberContactUrl = setSubscriberContactUrl;
-    </script>
 </body>
 </html>
