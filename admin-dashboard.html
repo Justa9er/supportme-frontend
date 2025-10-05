@@ -1310,21 +1310,27 @@
     </script>
       </div>
     </div>
-    <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
-      <div class="team" style="width:33%;">
-        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
-        <div>[List]</div>
-      </div>
-      <div style="flex:1; display:flex; flex-direction:column;">
-        <div class="chat-window" style="background:#f4f6f8; border:1px solid #1f2937; height:90px; margin-bottom:8px;">
-          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
+       <div class="footer">
+      <div class="team">
+        TEAM IN APP
+        <div class="team-row">''cols''<
+          <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
+	  <span>Alex</span><span>1001</span><span>A</span><span> A B AC</span>
+
+          <label><input type="radio" name="status-Alex" value="online">A</label>
+          <label><input type="radio" name="status-Alex" value="busy">B</label>
+          <label><input type="radio" name="status-Alex" value="after call">AC</label>
+          <span id="statusDisplay-Alex"></span>
         </div>
-        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
-          <input type="text" id="chatIdInput" placeholder="Chat ID" style="width:120px; padding:6px; font-size:12px;">
-          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
-          <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-            SEND MSG
-          </button>
+      </div>
+      <div class="chat">
+        <div class="chat-window">
+          <div id="chatInbox">[Chat transcript here]</div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatIdInput" placeholder="Chat ID">
+          <input type="text" id="chatMessageInput" placeholder="Type your message...">
+          <button id="sendButton">SEND MSG</button>
         </div>
       </div>
     </div>
