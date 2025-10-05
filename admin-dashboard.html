@@ -163,12 +163,13 @@
             cursor: pointer;
             font-family: 'Open Sans', sans-serif;
             font-size: 12px;
+			font-weight: bold;
             transition: all 0.3s ease;
         }
 
 .refresh-btn:hover {
             background: #3157b8;
-            color: #1f2937;
+            color: #fff;
         }
 
 .stats-bar {
@@ -661,6 +662,42 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 13px;
 }
+.status-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.status-buttons input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #1F2937;
+  cursor: pointer;
+}
+
+/* Green = Available */
+.status-buttons input[value="A"] {
+  background: #28a745;
+}
+
+/* Red = Busy */
+.status-buttons input[value="B"] {
+  background: #dc3545;
+}
+
+/* Yellow = After Call */
+.status-buttons input[value="AC"] {
+  background: #ffc107;
+}
+
+/* Optional hover glow */
+.status-buttons input[type="radio"]:hover {
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+	.hidden { display: none; }
+ 
 .chat {
   flex: 1;
   background: #5EDC1F;
@@ -1387,18 +1424,35 @@
       </div>
     </div>
        <div class="footer">
-      <div class="team">
-        TEAM IN APP
-        <div class="team-row">
-          <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
-	  <span>Alex</span><span>1001</span><span>A</span><span>A B AC</span>
+     <div class="team">
+  TEAM IN APP
+  <div class="team-row header">
+    <span>NAME</span>
+    <span>CHAT ID</span>
+    <span>STATUS</span>
+    <span>UPDATE</span>
+  </div>
 
-          <label><input type="radio" name="status-Alex" value="online">A</label>
-          <label><input type="radio" name="status-Alex" value="busy">B</label>
-          <label><input type="radio" name="status-Alex" value="after call">AC</label>
-          <span id="statusDisplay-Alex"></span>
-        </div>
-      </div>
+  <!-- Example: Alex (the current logged-in user) -->
+  <div class="team-row" data-user="Alex">
+    <span>Alex</span>
+    <span>1001</span>
+    <span id="statusDisplay-Alex">A</span>
+    <div class="status-buttons">
+      <label><input type="radio" name="status-Alex" value="A" checked></label>
+      <label><input type="radio" name="status-Alex" value="B"></label>
+      <label><input type="radio" name="status-Alex" value="AC"></label>
+    </div>
+  </div>
+
+  <!-- Example: other users -->
+  <div class="team-row" data-user="Sam">
+    <span>Sam</span>
+    <span>1002</span>
+    <span id="statusDisplay-Sam">B</span>
+    <div class="status-buttons hidden"></div>
+  </div>
+</div>
       <div class="chat">
         <div class="chat-window">
           <div id="chatInbox"></div>
@@ -1527,6 +1581,19 @@ function upgradeUser() {
   const url = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
   window.location.href = url;
 }
+</script>
+	  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.status-buttons input[type="radio"]').forEach(input => {
+    input.addEventListener('change', e => {
+      const user = e.target.name.replace('status-', '');
+      const display = document.getElementById(`statusDisplay-${user}`);
+      if (display) {
+        display.textContent = e.target.value;
+      }
+    });
+  });
+});
 </script>
 </body>
 </html>
