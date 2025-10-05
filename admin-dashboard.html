@@ -465,19 +465,39 @@
         .col-messages { width: 80px; }
         .col-assigned { width: 120px; }
  
+.branding {
+  height: 152px;
+  border-top: 2px solid #E6ECF2;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;       /* centers everything vertically */
+  align-items: center;           /* centers horizontally */
+  text-align: center;
+  gap: 4px;                      /* small space between logo, text, and links */
+  padding: 6px;
+}
+
 .branding img { 
-  height:45px; 
-  width:150px;
+  height: 45px; 
+  width: 150px;
+  display: block;
+  margin-bottom: 4px;
 }
 
 .bottom-content {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  align-items: center;
+  gap: 2px;
 }
 
 .branding .links { 
-  font-size:9px; 
+  font-size: 9px; 
+  white-space: nowrap;           /* keeps links from wrapping */
+  display: flex;
+  justify-content: center;
+  gap: 8px;                      /* evenly spaced links */
 }
 
 .menu { 
@@ -622,14 +642,61 @@
       font-size:16px;
       font-weight:bold;
     }
-    .team .cols { display:flex; justify-content:space-between; border-bottom:1px solid #91959E; margin-bottom:4px; }
-    .chat { flex:1; background:#5EDC1F; display:flex; flex-direction:column; padding:6px; }
-    .chat-window { flex:1; background:#fff; border:1px solid #91959E; margin-bottom:6px; }
-    .chat-inputs { display:flex; gap:4px; }
-    .chat-inputs input { border:1px solid #91959E; padding:2px 4px; font-size:14px; }
-    .chat-inputs button {
-      background:#0021F7; color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer;
-    }
+	.team-row {
+ 	  display: grid;
+  	  grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      align-items: center;
+      text-align: center;
+      margin-top: 4px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 13px;
+}
+.chat {
+  flex: 1;
+  background: #5EDC1F;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+}
+
+.chat-window {
+  flex: 1;
+  background: #f4f6f8;
+  border: 1px solid #91959E;
+  margin-bottom: 6px;
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-input-row input#chatIdInput {
+  width: 90px;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.chat-input-row input#chatMessageInput {
+  flex: 1;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.chat-input-row button#sendButton {
+  padding: 6px 12px;
+  background: #0021F7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input-row button#sendButton:hover {
+  background: #5edc1f;
+}
   </style>
 </head>
 <body>
@@ -1313,9 +1380,9 @@
        <div class="footer">
       <div class="team">
         TEAM IN APP
-        <div class="team-row">''cols''<
+        <div class="team-row">
           <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
-	  <span>Alex</span><span>1001</span><span>A</span><span> A B AC</span>
+	  <span>Alex</span><span>1001</span><span>A</span><span>A B AC</span>
 
           <label><input type="radio" name="status-Alex" value="online">A</label>
           <label><input type="radio" name="status-Alex" value="busy">B</label>
@@ -1325,7 +1392,7 @@
       </div>
       <div class="chat">
         <div class="chat-window">
-          <div id="chatInbox">[Chat transcript here]</div>
+          <div id="chatInbox"></div>
         </div>
         <div class="chat-input-row">
           <input type="text" id="chatIdInput" placeholder="Chat ID">
@@ -1334,8 +1401,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
 <script>
 /* ───────── SERVER TIME (24-hour Pacific) ───────── */
 (function startServerClock(){
