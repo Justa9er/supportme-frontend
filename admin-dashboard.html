@@ -602,17 +602,28 @@
       background:#0021F7;
       color:#fff;
     }
-    .time-banner button:hover { background:#3157B8; }
-    .alert {
-      height:37px;
-      border:2px solid #0021F7;
-      background:#F4F6F8;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 10px;
-      font-size:14px;
-    }
+    .time-banner button:hover { background:#5edc1f; }
+	  
+   .alert {
+  height:37px;
+  border:2px solid #0021F7;
+  background:#F4F6F8;
+  display:flex;
+  align-items:center;           /* ✅ Centers content vertically */
+  justify-content:flex-start;   /* Text stays beside icon */
+  gap:8px;                      /* Adds a little breathing room between icon and text */
+  padding:0 10px;
+  font-size:14px;
+  font-family:'Open Sans', sans-serif;
+  color:#1F2937;
+}
+
+.alert img {
+  width:32px;
+  height:32px;
+  display:block;
+  object-fit:contain;
+}
     .content { 
        flex:1; 
        border:2px 
