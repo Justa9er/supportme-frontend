@@ -665,9 +665,11 @@
 }
 
 .team-row.header {
-  border-bottom: 1px solid #0021F7;
-  margin-bottom: 2px; /* keeps it tight but readable */
-  padding-bottom: 0;
+  border: none;               /* kill any leftover box borders */
+  border-bottom: 1px solid #0021F7;  /* single blue line under titles */
+  padding: 0;                 /* remove all padding */
+  margin: 0 0 2px 0;          /* tiny bottom gap only */
+  background: transparent;    /* no blue fill */
 }
 .status-buttons {
   display: flex;
