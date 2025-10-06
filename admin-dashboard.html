@@ -665,8 +665,17 @@
 }
 
 .team-row.header {
-   border-bottom: 1px solid #0021F7;  /* single blue line under titles */
- }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: end;            /* text hugs the line */
+  text-align: center;
+  border-bottom: 1px solid #0021F7; /* clean blue line */
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  height: 22px;                /* small height so no excess gap */
+  line-height: 1;
+}
 .status-buttons {
   display: flex;
   justify-content: center;
