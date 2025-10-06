@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>supportME! Admin Dashboard - Voicemail</title>
-  <style>
+   <style>
     body {
       margin:0;
       background:#F4F6F8;
@@ -20,175 +20,69 @@
       border:2px solid #0021F7;
       box-sizing:border-box;
     }
-    /* Sidebar */
-    .sidebar {
-      width:185px;
-      background:#F4F6F8;
-      border-right:2px solid #E6ECF2;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-    .sidebar-label {
-       display: block;
-       font-family: 'Agency FB', sans-serif;
-       font-size: 12px;
-       color: #0021F7;
-       margin-top: 12px;
-       margin-bottom: 4px;
-       padding: 0 10px;
-    }
-    .sidebar-input {
-       width: calc(100% - 20px);
-       padding: 6px 8px;
-       font-family: 'Open Sans', sans-serif;
-       font-size: 13px;
-      border: 1px solid #E6ECF2;
-      border-radius: 4px;
-      background: #F4F6F8;
-       color: #1F2937;
-       margin: 0 10px;
-    }
-    .logo-box {
-      height:125px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-bottom:2px solid #E6ECF2;
-    }
-    .branding {
-      height:152px;
-      border-top:2px solid #E6ECF2;
-      font-size:10px;
-      color:#1f2937
-      font-weight:bold
-      padding:4px;
-      display:flex;
-      flex-direction:column;
-      text-align:center;
-      margin-bottom: 10px;
-    }
-    .logo-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-    }
-    .branding img { 
-      height:45px; 
-      width: 150px;
-    }
-    .bottom-content {
-      display: flex;
-      flex-direction: column;
-      gap:5px;
-    }
-    .branding .links { font-size:9px; }
-    .menu { flex:1; padding:10px; }
-    .menu-item {
-      display:block;
-      position:relative;
-      margin:12px 0;
-      font-family:'Open Sans', sans-serif;
-      color:#0021F7;
-      font-size:14px;
-      font-weight: bold;
-      text-transform:uppercase;
-      cursor: pointer;
-    }
-     /* Active page = lime green button with dark blue text */
-     .menu-item.active {
-       background: #5EDC1F;  /* Lime Green */
-       color: #1F2937;       /* Dark Blue */
-       box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
+
+.sidebar {
+  width:185px;
+  background:#F4F6F8;
+  border-right:2px solid #E6ECF2;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
-    .menu-item:hover { color: #3157B8; }
-    .menu-item::after {
-      content: '';
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      background: #F50000;
-      border-radius: 50%;
-      margin-left: 4px;
-      vertical-align: super;
-    }
-    .placeholders { margin-top:40px; font-size:12px; }
-    .main {
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      padding:10px;
-      gap:10px;
-      width:1405px;
-      box-sizing:border-box;
-    }
-    .header {
-      background:#5EDC1F;
-      border:2px solid #0021F7;
-      height:57px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-family:'Agency FB', sans-serif;
-      font-size:36px;
-      color:#0021F7;
-      font-weight: bold;
-      text-transform:uppercase;
-      position:relative;
-    }
-    .customer-number {
-      position:absolute;
-      right:70px;
-      top:15px;
-      font-family:'Agency FB', sans-serif;
-      font-size: 12px;
-    }
-    .plan-badge {
-      position:absolute;
-      right:10px;
-      top:5px;
-      width:37px;
-      height:47px;
-    }
-    .time-banner {
-      height:67px;
-      background:#F4F6F8;
-      border:2px solid #0021F7;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:0 20px;
-      font-family:'Agency FB', sans-serif;
-      font-size:16px;
-      font-weight: bold;
-    }
-    .time-banner .right { display:flex; flex-direction:column; align-items:flex-end; }
-    .time-banner .top { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
-    .time-banner button {
-      font-family:'Agency FB', sans-serif;
-      font-size:16px;
-      font-weight:bold;
-      padding:6px 14px;
-      margin-left:8px;
-      border:none;
-      border-radius:4px;
-      cursor:pointer;
-      background:#0021F7;
-      color:#fff;
-    }
-    .time-banner button:hover { background:#3157B8; }
-    .alert {
-      height:37px;
-      border:2px solid #0021F7;
-      background:#F4F6F8;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 10px;
-      font-size:14px;
-    }
+
+.sidebar-static,
+.sidebar-input {
+  width: calc(100% - 28px);
+  margin: 0 8px 10px 8px;
+  padding: 6px 8px;
+  border: 1px solid #1F2937;
+  background: #F4F6F8;
+  color: #1F2937;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.sidebar-label {
+  display: block;
+  font-family: 'Agency FB', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #0021F7; /* brand blue */
+  margin-top: 14px;
+  margin-bottom: 4px;
+  padding: 0 10px;
+}
+	  
+.logo-box {
+  height:125px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:2px solid #E6ECF2;
+}
+
+.branding {
+  height:152px;
+  border-top:2px solid #E6ECF2;
+  font-size:12px;
+  font-weight: bold;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+}
+
+.logo-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px; /* exact height of your logo */
+  line-height: 0; /* kills any font-line gap ghosts */
+}
     .content { 
       flex:1; 
       border:2px solid #0021F7; 
@@ -205,15 +99,89 @@
       flex-direction: column;
       gap: 10px;
     }
+
+    .voicemail-container {
+      width: 1366px;
+      height: 485px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 6px;
+    }
+    .voicemail-header {
+      height: 40px;
+      background: linear-gradient(90deg, #5edc1f 0%, #0021F7 100%);
+      color: #0021F7;
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      padding-left: 15px;
+    }
+    .voicemail-entry {
+      display: flex;
+      flex-direction: column;
+      margin: 12px 0;
+      padding: 10px 0;
+      border-bottom: 1px solid #D1D5DB;
+    }
+    .voicemail-meta {
+      font-size: 14px;
+      color: #1F2937;
+      margin-bottom: 6px;
+    }
+    .audio-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .play-button {
+      width: 30px;
+      height: 30px;
+      background-color: #0021F7;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .progress-container {
+      flex-grow: 1;
+      height: 6px;
+      background-color: #D1D5DB;
+      position: relative;
+      border-radius: 3px;
+    }
+    .progress-bar {
+      height: 6px;
+      background-color: #5EDC1F;
+      width: 0%;
+      border-radius: 3px;
+    }
+    .time-display {
+      color: #1F2937;
+      font-size: 14px;
+      min-width: 40px;
+    }
+    .placeholder .play-button {
+      background-color: #0021f7;
+      cursor: default;
+    }
+    .placeholder .progress-bar {
+      background-color: #CCCCCC;
+    }
+    .placeholder .time-display {
+      color: #1f2937;
+    }
     
     .voicemail-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 15px;
+      padding: 10px 10px;
       background: #F4F6F8;
       border: 1px solid #E6ECF2;
-      border-radius: 6px;
+      border-radius: 0px;
     }
     
     .voicemail-title {
@@ -251,7 +219,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 8px 15px;
-      background: #5EDC1F;
+      background: linear-gradient(90deg, #5edc1f 20%, #0021F7 100%);
       border-radius: 4px;
       margin-bottom: 10px;
     }
@@ -262,10 +230,10 @@
       align-items: center;
     }
     
-    .control-btn {
-      background: #0021F7;
-      color: white;
-      border: none;
+ .control-btn {
+      background: #E6ECF2;
+      color: #0021F7;
+      border: 2px solid #FFF;
       padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
@@ -275,15 +243,15 @@
     }
     
     .control-btn:hover {
-      background: #3157B8;
+      background: #3152B8;
     }
     
     .control-btn.secondary {
-      background: #91959E;
+      background: #638AFF;
     }
     
     .control-btn.secondary:hover {
-      background: #6B7280;
+      background: #3157B8;
     }
     
     .filter-select {
@@ -295,7 +263,7 @@
     }
     
     .voicemail-list {
-      flex: 1;
+      flex: ;
       overflow-y: auto;
       border: 1px solid #E6ECF2;
       border-radius: 4px;
@@ -476,11 +444,190 @@
       font-family: monospace;
     }
     
+.branding {
+  height: 152px;
+  border-top: 0px solid #E6ECF2;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;       /* centers everything vertically */
+  align-items: center;           /* centers horizontally */
+  text-align: center;
+  padding: 4px;
+}
+
+.branding img {
+  height:55px;
+  width:150px;
+  display:block;
+  object-fit:contain;
+  margin:0;
+  padding:0;
+}
+
+.bottom-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.branding .links { 
+  font-size: 10px; 
+  white-space: nowrap;           /* keeps links from wrapping */
+  display: flex;
+  justify-content: center;
+  gap: 6px;                      /* evenly spaced links */
+}
+
+.menu { 
+  flex:1; 
+  padding:10px; 
+}
+
+/* Menu items */
+.menu-item {
+  display: block;
+  margin: 12px 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #0021F7;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 0px;
+  transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+/* Little red dot */
+.menu-item::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #F50000;
+  border-radius: 50%;
+  margin-left: 4px;
+  vertical-align: super;
+}
+
+/* Hover effect */
+.menu-item:hover {
+  background: #e0f2ff;
+  color: #3157B8;
+}
+
+/* Active page = lime green button with dark blue text */
+.menu-item.active {
+  background: #5EDC1F;  /* Lime Green */
+  color: #1F2937;       /* Dark Blue */
+  box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
+}
+.placeholders { margin-top:40px; font-size:12px; }
+    .main {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      gap:10px;
+      width:1405px;
+      box-sizing:border-box;
+    }
+    .header {
+      background:#5EDC1F;
+      border:2px solid #0021F7;
+      height:57px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:'Agency FB', sans-serif;
+      font-size:36px;
+      color:#0021F7;
+      font-weight: bold;
+      text-transform:uppercase;
+      position:relative;
+    }
+    .customer-number {
+      position:absolute;
+      right:70px;
+      top:15px;
+      font-family:'Agency FB', sans-serif;
+      font-size: 12px;
+    }
+    .plan-badge {
+      position:absolute;
+      right:10px;
+      top:5px;
+      width:37px;
+      height:47px;
+    }
+    .time-banner {
+      height:67px;
+      background:#F4F6F8;
+      border:2px solid #0021F7;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 20px;
+      font-family:'Agency FB', sans-serif;
+      font-size:20px;
+      font-weight: bold;
+    }
+    .time-banner .right { display:flex; flex-direction:column; align-items:flex-end; }
+    .time-banner .top { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+    .time-banner button {
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+      padding:6px 14px;
+      margin-left:8px;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      background:#0021F7;
+      color:#fff;
+    }
+    .time-banner button:hover { background:#5edc1f; }
+	  
+.alert {
+  height: 37px;
+  border: 2px solid #0021F7;
+  background: #F4F6F8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+.alert span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alert img.alert-icon {
+  width: 38px;
+  height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+}
+    .content { 
+       flex:1; 
+       border:2px 
+       solid #0021F7;  
+       background:#f4f6f8; 
+       padding: 5px; 
+}
     .footer {
       height:149px;
       display:flex;
       border:2px solid #0021F7;
-      width:calc(100% - 4px);
+      width:calc(100% - 0px);
       box-sizing:border-box;
     }
     .team {
@@ -491,15 +638,106 @@
       font-size:16px;
       font-weight:bold;
     }
-    .team .cols { display:flex; justify-content:space-between; border-bottom:1px solid #91959E; margin-bottom:4px; }
-    .chat { flex:1; background:#5EDC1F; display:flex; flex-direction:column; padding:6px; }
-    .chat-window { flex:1; background:#fff; border:1px solid #91959E; margin-bottom:6px; }
-    .chat-inputs { display:flex; gap:4px; }
-    .chat-inputs input { border:1px solid #91959E; padding:2px 4px; font-size:14px; }
-    .chat-inputs button {
-      background:#0021F7; color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer;
-    }
+.team-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  align-items: center;
+  text-align: center;
+  margin-top: 0px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+}
+
+.team-row.header {
+  border-bottom: 0px;
+  background: none;
+  padding: 0px;
+  margin: 0px;
+}
+.status-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.status-buttons input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #1F2937;
+  cursor: pointer;
+}
+
+/* Green = Available */
+.status-buttons input[value="A"] {
+  background: #28a745;
+}
+
+/* Red = Busy */
+.status-buttons input[value="B"] {
+  background: #dc3545;
+}
+
+/* Yellow = After Call */
+.status-buttons input[value="AC"] {
+  background: #ffc107;
+}
+
+/* Optional hover glow */
+.status-buttons input[type="radio"]:hover {
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+	.hidden { display: none; }
+ 
+.chat {
+  flex: 1;
+  background: #5EDC1F;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+}
+
+.chat-window {
+  flex: 1;
+  background: #f4f6f8;
+  border: 1px solid #91959E;
+  margin-bottom: 6px;
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-input-row input#chatIdInput {
+  width: 90px;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.chat-input-row input#chatMessageInput {
+  flex: 1;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.chat-input-row button#sendButton {
+  padding: 6px 12px;
+  background: #0021F7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input-row button#sendButton:hover {
+  background: #5edc1f;
+}
   </style>
+
 </head>
 <body>
 <div class="dashboard">
@@ -545,14 +783,14 @@
   <div class="main">
    <div class="header">
   CUSTOMER SUPPORT VOICEMAIL DASHBOARD
-  <div class="customer-number"></div>
+  <div class="customer-number">000000000000</div>
   <!-- Badge image starts blank, will be filled dynamically -->
-  <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
+  <img id="planBadge" class="plan-badge" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/badges/ult.png" alt="Plan Badge">
 </div>
     <div class="time-banner">
-      <div>supportME! official server time: <span id="dateTime"></span></div>
+      <div>supportME! Official Server Time is: <span id="dateTime"></span></div>
       <div class="right">
-        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back, <span id="welcomeName">User</span></div>
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar">Welcome Back!</div>
         <div>
           <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE TODAY</button>
           <button onclick="window.open('https://app.getsupportme.com/customer-dashboard?new-ticket=true',)">+NEW TICKET</button>
@@ -562,15 +800,15 @@
     <div class="alert">
       <span>
         <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" 
-             alt="alert icon" width="38" height="30" style="vertical-align: middle; margin-right: 6px;">
-        supportME! deletes all customer cloud account data and support history upon payment fail or non renewal of subscribed plan.
+             alt="alert icon" width="38" height="32" style="vertical-align: middle; margin-right: 6px;">
+        supportME! deletes all customer data upon payment fail or subscription non-renewal.
       </span>
       <span style="cursor: pointer;" onclick="this.parentElement.parentElement.style.display='none'">X</span>
     </div>
     <div class="content">
       <div class="voicemail-container">
         <div class="voicemail-header">
-          <h2 class="voicemail-title">Voicemail Inbox</h2>
+            <h2 class="voicemail-title">VOICEMAIL PLAYLIST</h2>
           <div class="voicemail-stats">
             <div class="stat-item">
               <span>New:</span>
@@ -606,52 +844,226 @@
           </div>
         </div>
         
-        <div class="voicemail-list" id="voicemailList">
-          <!-- Voicemail items will be populated here -->
-        </div>
+        <div class="voicemail-list" id="voicemailList"></div>
+           <script>
+    async function fetchVoicemails() {
+      const mailboxId = 'XXXX'; // Replace with actual user mailbox ID
+      const folder = 'INBOX';
+      const container = document.querySelector('.voicemail-container');
+
+      try {
+        const response = await fetch(`https://ringzu-voip-proxy.onrender.com/getVoicemailMessages?mailbox=${mailboxId}&folder=${folder}`);
+        const { messages } = await response.json();
+
+        if (!messages || messages.length === 0) {
+          addPlaceholderEntries(container);
+          return;
+        }
+
+        for (const msg of messages) {
+          const fileRes = await fetch(`https://ringzu-voip-proxy.onrender.com/getVoicemailMessageFile?mailbox=${msg.mailbox}&folder=${msg.folder}&message_num=${msg.message_num}&format=mp3`);
+          const { message } = await fileRes.json();
+          const base64 = message[0].data;
+          const audioSrc = `data:audio/mp3;base64,${base64}`;
+
+          const entry = document.createElement('div');
+          entry.className = 'voicemail-entry';
+
+          const meta = document.createElement('div');
+          meta.className = 'voicemail-meta';
+          meta.textContent = `Message from: ${msg.callerid || 'Unknown'} | Received on: ${msg.date || 'Unknown Date'}`;
+
+          const bar = document.createElement('div');
+          bar.className = 'audio-bar';
+
+          const btn = document.createElement('button');
+          btn.className = 'play-button';
+          btn.textContent = '▶';
+
+          const progressWrap = document.createElement('div');
+          progressWrap.className = 'progress-container';
+          const progress = document.createElement('div');
+          progress.className = 'progress-bar';
+          progressWrap.appendChild(progress);
+
+          const time = document.createElement('div');
+          time.className = 'time-display';
+          time.textContent = '0:00';
+
+          bar.appendChild(btn);
+          bar.appendChild(progressWrap);
+          bar.appendChild(time);
+
+          entry.appendChild(meta);
+          entry.appendChild(bar);
+          container.appendChild(entry);
+
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.play-button').forEach(b => b.textContent = '▶');
+            document.querySelectorAll('.progress-bar').forEach(p => p.style.width = '0%');
+            document.querySelectorAll('.time-display').forEach(t => t.textContent = '0:00');
+
+            const audio = new Audio(audioSrc);
+            audio.play();
+            btn.textContent = '⏸';
+
+            audio.ontimeupdate = () => {
+              const progressPercent = (audio.currentTime / audio.duration) * 100;
+              progress.style.width = progressPercent + '%';
+              const minutes = Math.floor(audio.currentTime / 60);
+              const seconds = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+              time.textContent = `${minutes}:${seconds}`;
+            };
+
+            audio.onended = () => {
+              btn.textContent = '▶';
+              progress.style.width = '0%';
+              time.textContent = '0:00';
+            };
+
+            btn.onclick = () => {
+              audio.pause();
+              btn.textContent = '▶';
+              btn.onclick = () => playVoicemail(btn, audioSrc);
+            };
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch voicemails:', error);
+        addPlaceholderEntries(container);
+      }
+    }
+
+    function addPlaceholderEntries(container) {
+      for (let i = 0; i < 3; i++) {
+        const entry = document.createElement('div');
+        entry.className = 'voicemail-entry placeholder';
+
+        const meta = document.createElement('div');
+        meta.className = 'voicemail-meta';
+        meta.textContent = 'Message from: — | Received on: —';
+
+        const bar = document.createElement('div');
+        bar.className = 'audio-bar';
+
+        const btn = document.createElement('button');
+        btn.className = 'play-button';
+        btn.textContent = '▶';
+        btn.disabled = true;
+
+        const progressWrap = document.createElement('div');
+        progressWrap.className = 'progress-container';
+        const progress = document.createElement('div');
+        progress.className = 'progress-bar';
+        progress.style.width = '0%';
+        progressWrap.appendChild(progress);
+
+        const time = document.createElement('div');
+        time.className = 'time-display';
+        time.textContent = '0:00';
+
+        bar.appendChild(btn);
+        bar.appendChild(progressWrap);
+        bar.appendChild(time);
+
+        entry.appendChild(meta);
+        entry.appendChild(bar);
+        container.appendChild(entry);
+      }
+    }
+
+    fetchVoicemails();
+  </script>
       </div>
     </div>
-    <div class="footer" style="background:#5EDC1F; padding:12px; display:flex; gap:12px; box-sizing:border-box;">
-      <div class="team" style="width:33%;">
-        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
-        <div>[List]</div>
-      </div>
-      <div style="flex:1; display:flex; flex-direction:column;">
-        <div class="chat-window" style="background:#fff; border:1px solid #ccc; height:90px; margin-bottom:8px;">
-          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:#1F2937;">[Chat transcript here]</div>
-        </div>
-        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
-          <input type="text" id="chatIdInput" placeholder="Chat ID" style="width:120px; padding:6px; font-size:12px;">
-          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;">
-          <button id="sendButton" style="padding:6px 12px; background:#0021F7; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-            SEND MSG
-          </button>
-        </div>
-      </div>
-    </div>
+        <div class="footer">
+     <div class="team">
+  TEAM ONLINE
+ <div class="team-row header">
+  <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
+</div>
+<div class="team-row">
+  <span>Alex</span><span>1001</span><span>A</span>
+  <div class="status-buttons">
+    <input type="radio" name="status-Alex" value="A">
+    <input type="radio" name="status-Alex" value="B">
+    <input type="radio" name="status-Alex" value="AC">
   </div>
 </div>
 
-<!-- Audio Player Popup -->
-<div class="audio-player" id="audioPlayer">
-  <div class="player-header">
-    <div class="player-info" id="playerInfo">Playing: John Doe</div>
-    <button class="close-player" onclick="closePlayer()">×</button>
+  <!-- Example: other users -->
+  <div class="team-row" data-user="Sam">
+    <span>Sam</span>
+    <span>1002</span>
+    <span id="statusDisplay-Sam">B</span>
+    <div class="status-buttons hidden"></div>
   </div>
-  <div class="player-controls">
-    <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
-    <div class="progress-bar" onclick="seekTo(event)">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
-  </div>
-  <audio id="audioElement" ontimeupdate="updateProgress()" onended="onAudioEnd()"></audio>
 </div>
+      <div class="chat">
+        <div class="chat-window">
+          <div id="chatInbox"></div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatIdInput" placeholder="Chat ID">
+          <input type="text" id="chatMessageInput" placeholder="Type your message...">
+          <button id="sendButton">SEND MSG</button>
+        </div>
+      </div>
+    </div>
 <script>
+/* ───────── SERVER TIME (24-hour Pacific) ───────── */
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm  = String(now.getMonth()+1).padStart(2,"0");
+    const dd  = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh  = String(now.getHours()).padStart(2,"0");
+    const mi  = String(now.getMinutes()).padStart(2,"0");
+    const ss  = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+  }
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
+
+/* ───────── TEAM CHAT PLACEHOLDER ───────── */
+document.getElementById("sendButton").addEventListener("click",()=>{
+  const chatId = document.getElementById("chatIdInput").value;
+  const msg = document.getElementById("chatMessageInput").value;
+  if(msg.trim()){
+    const inbox = document.getElementById("chatInbox");
+    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
+    document.getElementById("chatMessageInput").value = "";
+  }
+});
+</script>
+<script>
+/* ───────── SIDEBAR ROUTER ───────── */
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const target = item.getAttribute('data-target');
+
+    // Outbound links
+    if (target === "voip-link") {
+      window.open("https://portal.ringzu.pro/site", "_blank"); 
+    } else if (target === "gethelp-link") {
+      window.open("https://www.getsupportme.com/contact", "_blank"); 
+    } 
+    
+    // Internal dashboard pages
+    else if (target) {
+      window.location.href = target;
+    }
+  });
+});
 async function loadPlanBadge() {
   const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
   try {
-    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
     const data = await response.json();
     document.getElementById("planBadge").src = data.badge_url;
     document.querySelector(".customer-number").textContent = data.customer_number;
@@ -659,13 +1071,12 @@ async function loadPlanBadge() {
     console.error("Error loading badge:", err);
   }
 }
-
 loadPlanBadge();
 </script>
 <script>
 async function loadCustomerInfo() {
   try {
-    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const response = await fetch("https://ringzu-voip-proxy.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
     const data = await response.json();
 
     // Update number in header
@@ -687,399 +1098,42 @@ async function loadCustomerInfo() {
 loadCustomerInfo();
 </script>
 <script>
-/* ────────── SERVER TIME (24-hour Pacific) ────────── */
-(function startServerClock(){
-  const tz = "America/Los_Angeles";
-  function updateServerTime() {
-    const now = new Date();
-    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
-    const mm  = String(now.getMonth()+1).padStart(2,"0");
-    const dd  = String(now.getDate()).padStart(2,"0");
-    const yyyy = now.getFullYear();
-    const hh  = String(now.getHours()).padStart(2,"0");
-    const mi  = String(now.getMinutes()).padStart(2,"0");
-    const ss  = String(now.getSeconds()).padStart(2,"0");
-    document.getElementById("dateTime").textContent =
-      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
-  }
-  updateServerTime();
-  setInterval(updateServerTime,1000);
-})();
+  async function updateHeader() {
+    try {
+      const tenantId = d23635f6-3b0a-475a-a4e5-7959b5091aa0; // replace with actual
+      const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
+      const data = await response.json();
 
-/* ────────── TEAM CHAT PLACEHOLDER ────────── */
-document.getElementById("sendButton").addEventListener("click",()=>{
-  const chatId = document.getElementById("chatIdInput").value;
-  const msg = document.getElementById("chatMessageInput").value;
-  if(msg.trim()){
-    const inbox = document.getElementById("chatInbox");
-    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
-    document.getElementById("chatMessageInput").value = "";
+      if (data.error) throw new Error(data.error);
+
+      // Avatar
+      const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
+      document.getElementById("avatarImg").src = avatarUrl;
+       }
   }
+
+  updateHeader();
+</script>
+<script>
+function upgradeUser() {
+  // Example: if you're storing instanceId locally after login
+  const instanceId = localStorage.getItem("wixInstanceId");
+  const url = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
+  window.location.href = url;
+}
+</script>
+	  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.status-buttons input[type="radio"]').forEach(input => {
+    input.addEventListener('change', e => {
+      const user = e.target.name.replace('status-', '');
+      const display = document.getElementById(`statusDisplay-${user}`);
+      if (display) {
+        display.textContent = e.target.value;
+      }
+    });
+  });
 });
-
-/* ────────── VOICEMAIL FUNCTIONALITY ────────── */
-
-// Sample voicemail data (will be replaced with VOIP.ms API data)
-let voicemails = [
-  {
-    id: 1,
-    callerName: "Jane Smith",
-    callerNumber: "(555) 123-4567",
-    date: "2025-09-09",
-    time: "14:32",
-    duration: "02:15",
-    status: "new",
-    audioUrl: "#", // Will be actual audio file URL from VOIP.ms
-    transcription: "Hi, this is Jane calling about the support ticket..."
-  },
-  {
-    id: 2,
-    callerName: "Bob Johnson",
-    callerNumber: "(555) 987-6543",
-    date: "2025-09-09",
-    time: "11:45",
-    duration: "01:32",
-    status: "played",
-    audioUrl: "#",
-    transcription: "Hello, I need help with my account settings..."
-  },
-  {
-    id: 3,
-    callerName: "Sarah Wilson",
-    callerNumber: "(555) 456-7890",
-    date: "2025-09-08",
-    time: "16:22",
-    duration: "03:45",
-    status: "new",
-    audioUrl: "#",
-    transcription: "This is regarding the billing issue we discussed..."
-  },
-  {
-    id: 4,
-    callerName: "Mike Davis",
-    callerNumber: "(555) 321-9876",
-    date: "2025-09-08",
-    time: "09:15",
-    duration: "01:08",
-    status: "saved",
-    audioUrl: "#",
-    transcription: "Quick question about the new features..."
-  },
-  {
-    id: 5,
-    callerName: "Emily Chen",
-    callerNumber: "(555) 654-3210",
-    date: "2025-09-07",
-    time: "13:58",
-    duration: "02:43",
-    status: "played",
-    audioUrl: "#",
-    transcription: "Following up on our previous conversation..."
-  },
-  {
-    id: 6,
-    callerName: "Tom Anderson",
-    callerNumber: "(555) 789-0123",
-    date: "2025-09-07",
-    time: "10:30",
-    duration: "01:55",
-    status: "new",
-    audioUrl: "#",
-    transcription: "I'm having trouble accessing my dashboard..."
-  }
-];
-
-let selectedVoicemails = new Set();
-let currentFilter = 'all';
-
-function renderVoicemails(filter = 'all') {
-  const container = document.getElementById('voicemailList');
-  let filteredVoicemails = voicemails;
-  
-  // Apply filter
-  switch(filter) {
-    case 'new':
-      filteredVoicemails = voicemails.filter(vm => vm.status === 'new');
-      break;
-    case 'saved':
-      filteredVoicemails = voicemails.filter(vm => vm.status === 'saved');
-      break;
-    case 'today':
-      filteredVoicemails = voicemails.filter(vm => vm.date === '2025-09-09');
-      break;
-    case 'week':
-      const weekAgo = new Date();
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      filteredVoicemails = voicemails.filter(vm => new Date(vm.date) >= weekAgo);
-      break;
-  }
-  
-  container.innerHTML = '';
-  
-  filteredVoicemails.forEach(voicemail => {
-    const item = document.createElement('div');
-    item.className = `voicemail-item ${voicemail.status === 'new' ? 'unread' : ''}`;
-    item.innerHTML = `
-      <input type="checkbox" class="voicemail-checkbox" onchange="toggleSelection(${voicemail.id})">
-      <div class="voicemail-status status-${voicemail.status}"></div>
-      <div class="voicemail-info">
-        <div class="caller-info">
-          <div class="caller-name">${voicemail.callerName}</div>
-          <div class="caller-number">${voicemail.callerNumber}</div>
-        </div>
-        <div class="voicemail-date">${voicemail.date} ${voicemail.time}</div>
-        <div class="voicemail-duration">${voicemail.duration}</div>
-        <div class="voicemail-actions">
-          <button class="action-btn play" onclick="playVoicemail(${voicemail.id})">▶ Play</button>
-          <button class="action-btn" onclick="downloadVoicemail(${voicemail.id})">⬇ Download</button>
-          <button class="action-btn" onclick="saveVoicemail(${voicemail.id})">💾 Save</button>
-          <button class="action-btn" onclick="deleteVoicemail(${voicemail.id})">🗑 Delete</button>
-        </div>
-      </div>
-    `;
-    container.appendChild(item);
-  });
-  
-  updateStats();
-}
-
-function updateStats() {
-  const newCount = voicemails.filter(vm => vm.status === 'new').length;
-  const totalCount = voicemails.length;
-  const savedCount = voicemails.filter(vm => vm.status === 'saved').length;
-  
-  document.getElementById('newCount').textContent = newCount;
-  document.getElementById('totalCount').textContent = totalCount;
-  document.getElementById('savedCount').textContent = savedCount;
-}
-
-function toggleSelection(id) {
-  if (selectedVoicemails.has(id)) {
-    selectedVoicemails.delete(id);
-  } else {
-    selectedVoicemails.add(id);
-  }
-}
-
-function selectAll() {
-  const checkboxes = document.querySelectorAll('.voicemail-checkbox');
-  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-  
-  checkboxes.forEach(cb => {
-    cb.checked = !allChecked;
-    const id = parseInt(cb.parentElement.querySelector('.voicemail-info').dataset.id || 
-                       cb.parentElement.innerHTML.match(/playVoicemail\((\d+)\)/)?.[1]);
-    if (cb.checked && id) {
-      selectedVoicemails.add(id);
-    } else if (id) {
-      selectedVoicemails.delete(id);
-    }
-  });
-}
-
-function markAsRead() {
-  selectedVoicemails.forEach(id => {
-    const voicemail = voicemails.find(vm => vm.id === id);
-    if (voicemail && voicemail.status === 'new') {
-      voicemail.status = 'played';
-    }
-  });
-  selectedVoicemails.clear();
-  renderVoicemails(currentFilter);
-}
-
-function deleteSelected() {
-  if (selectedVoicemails.size === 0) {
-    alert('Please select voicemails to delete');
-    return;
-  }
-  
-  if (confirm(`Are you sure you want to delete ${selectedVoicemails.size} voicemail(s)?`)) {
-    voicemails = voicemails.filter(vm => !selectedVoicemails.has(vm.id));
-    selectedVoicemails.clear();
-    renderVoicemails(currentFilter);
-  }
-}
-
-function downloadSelected() {
-  if (selectedVoicemails.size === 0) {
-    alert('Please select voicemails to download');
-    return;
-  }
-  
-  // In actual implementation, this would download the audio files
-  alert(`Downloading ${selectedVoicemails.size} voicemail(s)... (Feature will connect to VOIP.ms API)`);
-}
-
-function filterVoicemails(filter) {
-  currentFilter = filter;
-  renderVoicemails(filter);
-}
-
-function refreshVoicemails() {
-  // In actual implementation, this would fetch fresh data from VOIP.ms API
-  alert('Refreshing voicemails... (Will connect to VOIP.ms API)');
-  renderVoicemails(currentFilter);
-}
-
-function playVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  // Mark as played if it was new
-  if (voicemail.status === 'new') {
-    voicemail.status = 'played';
-    renderVoicemails(currentFilter);
-  }
-  
-  // Show audio player
-  document.getElementById('audioPlayer').style.display = 'block';
-  document.getElementById('playerInfo').textContent = `Playing: ${voicemail.callerName} (${voicemail.callerNumber})`;
-  
-  // In actual implementation, this would load the real audio file from VOIP.ms
-  // For now, we'll simulate audio playback
-  simulateAudioPlayback(voicemail.duration);
-}
-
-function downloadVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  // In actual implementation, this would download the audio file from VOIP.ms
-  alert(`Downloading voicemail from ${voicemail.callerName}... (Will connect to VOIP.ms API)`);
-}
-
-function saveVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  voicemail.status = 'saved';
-  renderVoicemails(currentFilter);
-  alert(`Voicemail from ${voicemail.callerName} has been saved.`);
-}
-
-function deleteVoicemail(id) {
-  const voicemail = voicemails.find(vm => vm.id === id);
-  if (!voicemail) return;
-  
-  if (confirm(`Are you sure you want to delete the voicemail from ${voicemail.callerName}?`)) {
-    voicemails = voicemails.filter(vm => vm.id !== id);
-    renderVoicemails(currentFilter);
-  }
-}
-
-// Audio Player Functions
-let isPlaying = false;
-let currentDuration = 0;
-let currentTime = 0;
-let audioInterval;
-
-function togglePlayPause() {
-  const btn = document.getElementById('playPauseBtn');
-  const audioElement = document.getElementById('audioElement');
-  
-  if (isPlaying) {
-    btn.textContent = '▶';
-    isPlaying = false;
-    clearInterval(audioInterval);
-  } else {
-    btn.textContent = '⏸';
-    isPlaying = true;
-    startAudioSimulation();
-  }
-}
-
-function simulateAudioPlayback(duration) {
-  const [minutes, seconds] = duration.split(':').map(Number);
-  currentDuration = minutes * 60 + seconds;
-  currentTime = 0;
-  
-  document.getElementById('timeDisplay').textContent = `0:00 / ${duration}`;
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('playPauseBtn').textContent = '▶';
-  isPlaying = false;
-}
-
-function startAudioSimulation() {
-  audioInterval = setInterval(() => {
-    currentTime++;
-    updateProgress();
-    
-    if (currentTime >= currentDuration) {
-      onAudioEnd();
-    }
-  }, 1000);
-}
-
-function updateProgress() {
-  if (currentDuration > 0) {
-    const progress = (currentTime / currentDuration) * 100;
-    document.getElementById('progressFill').style.width = `${progress}%`;
-    
-    const currentMin = Math.floor(currentTime / 60);
-    const currentSec = currentTime % 60;
-    const totalMin = Math.floor(currentDuration / 60);
-    const totalSec = currentDuration % 60;
-    
-    document.getElementById('timeDisplay').textContent = 
-      `${currentMin}:${currentSec.toString().padStart(2, '0')} / ${totalMin}:${totalSec.toString().padStart(2, '0')}`;
-  }
-}
-
-function seekTo(event) {
-  const progressBar = event.currentTarget;
-  const rect = progressBar.getBoundingClientRect();
-  const clickX = event.clientX - rect.left;
-  const progressPercent = clickX / rect.width;
-  
-  currentTime = Math.floor(progressPercent * currentDuration);
-  updateProgress();
-}
-
-function onAudioEnd() {
-  document.getElementById('playPauseBtn').textContent = '▶';
-  isPlaying = false;
-  clearInterval(audioInterval);
-  currentTime = 0;
-  updateProgress();
-}
-
-function closePlayer() {
-  document.getElementById('audioPlayer').style.display = 'none';
-  if (isPlaying) {
-    togglePlayPause();
-  }
-}
-
-// Initialize voicemail list on page load
-document.addEventListener('DOMContentLoaded', function() {
-  renderVoicemails();
-});
-
-/* ────────── VOIP.MS API INTEGRATION STUBS ────────── */
-
-// These functions will be implemented to connect with VOIP.ms API
-function fetchVoicemailsFromAPI() {
-  // API call to VOIP.ms to get voicemail list
-  // GET https://voip.ms/api/v1/rest.php?api_username=xxx&api_password=xxx&method=getVoiceMails
-  console.log('API: Fetching voicemails from VOIP.ms...');
-}
-
-function getVoicemailAudioURL(voicemailId) {
-  // API call to get the audio file URL for a specific voicemail
-  // This would return the actual audio file URL from VOIP.ms
-  console.log(`API: Getting audio URL for voicemail ${voicemailId}`);
-  return '#'; // Placeholder
-}
-
-function deleteVoicemailViaAPI(voicemailId) {
-  // API call to delete voicemail from VOIP.ms servers
-  // DELETE request to VOIP.ms API
-  console.log(`API: Deleting voicemail ${voicemailId} from VOIP.ms`);
-}
-
-function getVoicemailTranscription(voicemailId) {
-  // If VOIP.ms supports transcription, get it via API
-  // Otherwise, integrate with a transcription service
-  console.log(`API: Getting transcription for voicemail ${voicemailId}`);
-}
+</script>
+</body>
+</html>
