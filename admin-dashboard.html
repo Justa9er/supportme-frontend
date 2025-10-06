@@ -653,17 +653,21 @@
       font-size:16px;
       font-weight:bold;
     }
-	.team-row {
+.team-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
   align-items: center;
   text-align: center;
-  margin-top: 4px;
+  margin-top: 2px;
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
-  border-bottom: 1px solid #0021F7; /* single blue line under column names */
-  padding-bottom: 4px; /* tiny bit of breathing room */
+}
+
+.team-row.header {
+  border-bottom: 1px solid #0021F7;
+  margin-bottom: 2px; /* keeps it tight but readable */
+  padding-bottom: 0;
 }
 .status-buttons {
   display: flex;
