@@ -1,4 +1,3 @@
-<!-- File: aigent.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,48 +8,107 @@
     /* ===== Base Layout (unchanged pieces cleaned up) ===== */
     :root { --brand-blue:#0021F7; --lime:#5EDC1F; --ink:#1F2937; --panel:#F4F6F8; --line:#E6ECF2; --shadow:#91959E; }
     * { box-sizing: border-box; }
-    body {
+  
+   body {
       margin:0; background:var(--panel); font-family:'Open Sans',sans-serif; color:var(--ink); width:1600px; height:950px; overflow:hidden;
     }
-    .dashboard { display:flex; height:100%; border:2px solid var(--brand-blue); }
-    .sidebar { width:185px; background:var(--panel); border-right:2px solid var(--line); display:flex; flex-direction:column; justify-content:space-between; 
+
+    .dashboard { 
+	display:flex; height:100%; border:2px solid var(--brand-blue); 
+}
+ 
+   .sidebar { 
+ 	 width:185px;
+  	background:#F4F6F8;
+  	border-right:2px solid #E6ECF2;
+  	display:flex;
+  	flex-direction:column;
+  	justify-content:space-between;
 }
 
-.sidebar-static {
-  width: calc(100% - 20px);
-  padding: 6px 8px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px
-  font-weight:bold;
-  border: 1px solid #E6ECF2;
-  border-radius: 0px;
-  background: #f4f6f8;
-  color: #1F2937;
-  margin: 0 10px 10px 10px;
+  .sidebar-static, .sidebar-input {
+  	width: calc(100% - 28px);
+  	margin: 0 8px 10px 8px;
+  	padding: 6px 8px;
+  	border: 1px solid #1F2937;
+  	background: #F4F6F8;
+  	color: #1F2937;
+  	font-family: 'Open Sans', sans-serif;
+ 	font-size: 14px;
+  	border-radius: 0;
+  	box-sizing: border-box;
 }
 
-    .sidebar-label { display:block; font-family:'Agency FB',sans-serif; font-size:13px; color:var(--brand-blue); margin-top:12px; margin-bottom:4px; padding:0 10px; }
-    .sidebar-input { width:calc(100% - 20px); padding:6px 8px; font-size:13px; border:1px solid var(--line); border-radius:4px; background:var(--panel); color:var(--ink); margin:0 10px; }
-    .logo-box { height:125px; display:flex; align-items:center; justify-content:center; border-bottom:2px solid var(--line); }
-    .branding { height:152px; border-top:0px solid var(--line); font-size:10px; padding:5px; display:flex; flex-direction:column; text-align:center; }
-    .logo-container { flex:1; display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
-    .branding img { height:45px; width:150px; }
-    .bottom-content { display:flex; flex-direction:column; gap:4px; }
-    .branding .links { font-size:10px;
- }
+.sidebar-label {
+  display: block;
+  font-family: 'Agency FB', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #0021F7; /* brand blue */
+  margin-top: 12px;
+  margin-bottom: 4px;
+  padding: 0 10px;
+}
+	  
+.logo-box {
+  height:125px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:2px solid #E6ECF2;
+}
 
+.branding {
+  height:152px;
+  border-top:2px solid #E6ECF2;
+  font-size:12px;
+  font-weight: bold;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+}
+
+.logo-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px; /* exact height of your logo */
+  line-height: 0; /* kills any font-line gap ghosts */
+}
+.menu { 
+  flex:1; 
+  padding:10px; 
+}
+
+/* Menu items */
 .menu-item {
   display: block;
   margin: 12px 0;
   font-family: 'Open Sans', sans-serif;
-  color: ##000529;
-  font-size: 16px;
+  color: #0021F7;
+  font-size: 15px;
   font-weight: bold;
   text-transform: uppercase;
   text-decoration: none;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 0px;
   transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+/* Little red dot */
+.menu-item::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #F50000;
+  border-radius: 50%;
+  margin-left: 4px;
+  vertical-align: super;
 }
 
 /* Hover effect */
@@ -59,33 +117,222 @@
   color: #3157B8;
 }
 
-/* Active page = lime green button with blue text */
+/* Active page = lime green button with dark blue text */
 .menu-item.active {
-  background: #5EDC1F;      /* Lime Green */
-  color: #1F2937;           /* Dark Blue text for accessibility */
+  background: #5EDC1F;  /* Lime Green */
+  color: #1F2937;       /* Dark Blue */
   box-shadow: 0 0 6px rgba(94, 220, 31, 0.6);
 }
-    .menu-item::after { content:''; display:inline-block; width:7px; height:7px; background:#F50000; border-radius:50%; margin-left:4px; vertical-align:super; }
-    .placeholders { margin-top:40px; font-size:12px; }
-    .main { flex:1; display:flex; flex-direction:column; padding:10px; gap:10px; width:1405px; }
-    .header { background:var(--lime); border:2px solid var(--brand-blue); height:57px; display:flex; justify-content:center; align-items:center; font-family:'Agency FB',sans-serif; font-size:36px; color:var(--brand-blue); font-weight:700; text-transform:uppercase; position:relative; }
-    .tenant-number { position:absolute; right:70px; top:15px; font-family:'Agency FB',sans-serif; font-size:12px; }
-    .plan-badge { position:absolute; right:10px; top:5px; width:37px; height:47px; }
-    .time-banner { height:67px; background:var(--panel); border:2px solid var(--brand-blue); display:flex; justify-content:space-between; align-items:center; padding:0 20px; font-family:'Agency FB',sans-serif; font-size:16px; font-weight:700; }
+.placeholders { margin-top:40px; font-size:12px; }
+    .main {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      gap:10px;
+      width:1405px;
+      box-sizing:border-box;
+    }
+    .header {
+      background:#5EDC1F;
+      border:2px solid #0021F7;
+      height:57px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:'Agency FB', sans-serif;
+      font-size:36px;
+      color:#0021F7;
+      font-weight: bold;
+      text-transform:uppercase;
+      position:relative;
+    }
+    .customer-number {
+      position:absolute;
+      right:70px;
+      top:15px;
+      font-family:'Agency FB', sans-serif;
+      font-size: 12px;
+    }
+    .plan-badge {
+      position:absolute;
+      right:10px;
+      top:5px;
+      width:37px;
+      height:47px;
+    }
+    .time-banner {
+      height:67px;
+      background:#F4F6F8;
+      border:2px solid #0021F7;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 20px;
+      font-family:'Agency FB', sans-serif;
+      font-size:20px;
+      font-weight: bold;
+    }
     .time-banner .right { display:flex; flex-direction:column; align-items:flex-end; }
     .time-banner .top { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
-    .time-banner button { font-family:'Agency FB',sans-serif; font-size:16px; font-weight:700; padding:5px 13px; margin-left:8px; border:none; border-radius:4px; cursor:pointer; background:var(--brand-blue); color:#fff; }
-    .time-banner button:hover { background:#3157B8; }
-    .alert { height:37px; border:2px solid var(--brand-blue); background:var(--panel); display:flex; align-items:center; justify-content:space-between; padding:0 10px; font-size:14px; }
-    .content { border:2px solid var(--brand-blue); background:var(--panel); padding:10px; overflow:hidden; }
-    .footer { height:149px; display:flex; border:2px solid var(--brand-blue); width:calc(100% - 4px); }
-    .team { width:33%; padding:6px; background:var(--lime); font-family:'Agency FB',sans-serif; font-size:16px; font-weight:700; }
-    .team .cols { display:flex; justify-content:space-between; border-bottom:1px solid var(--shadow); margin-bottom:4px; }
-    .chat { flex:1; background:var(--lime); display:flex; flex-direction:column; padding:6px; }
-    .chat-window { flex:1; background:#fff; border:1px solid var(--shadow); margin-bottom:6px; }
-    .chat-inputs { display:flex; gap:4px; }
-    .chat-inputs input { border:1px solid var(--shadow); padding:2px 4px; font-size:14px; }
-    .chat-inputs button { background:var(--brand-blue); color:#fff; font-size:14px; border:none; padding:2px 6px; cursor:pointer; }
+    .time-banner button {
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+      padding:6px 14px;
+      margin-left:8px;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      background:#0021F7;
+      color:#fff;
+    }
+    .time-banner button:hover { background:#5edc1f; }
+	  
+.alert {
+  height: 37px;
+  border: 2px solid #0021F7;
+  background: #F4F6F8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+.alert span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alert img.alert-icon {
+  width: 38px;
+  height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.content { 
+   flex:1; 
+   border:2px solid #0021F7;  
+   background:#f4f6f8; 
+   padding: 5px; 
+}
+    .footer {
+      height:149px;
+      display:flex;
+      border:2px solid #0021F7;
+      width:calc(100% - 0px);
+      box-sizing:border-box;
+    }
+    .team {
+      width:33%;
+      padding:6px;
+      background:#5EDC1F;
+      font-family:'Agency FB', sans-serif;
+      font-size:16px;
+      font-weight:bold;
+    }
+.team-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  align-items: center;
+  text-align: center;
+  margin-top: 0px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+}
+
+.team-row.header {
+  border-bottom: 0px;
+  background: none;
+  padding: 0px;
+  margin: 0px;
+}
+.status-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.status-buttons input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #1F2937;
+  cursor: pointer;
+}
+
+/* Green = Available */
+.status-buttons input[value="A"] {
+  background: #28a745;
+}
+
+/* Red = Busy */
+.status-buttons input[value="B"] {
+  background: #dc3545;
+}
+
+/* Yellow = After Call */
+.status-buttons input[value="AC"] {
+  background: #ffc107;
+}
+
+/* Optional hover glow */
+.status-buttons input[type="radio"]:hover {
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+	.hidden { display: none; }
+ 
+.chat {
+  flex: 1;
+  background: #5EDC1F;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+}
+
+.chat-window {
+  flex: 1;
+  background: #f4f6f8;
+  border: 1px solid #91959E;
+  margin-bottom: 6px;
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-input-row input#chatIdInput {
+  width: 90px;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.chat-input-row input#chatMessageInput {
+  flex: 1;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.chat-input-row button#sendButton {
+  padding: 6px 12px;
+  background: #0021F7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input-row button#sendButton:hover {
+  background: #5edc1f;
+}
 
     /* ===== Grid Header ===== */
     .grid-header { background:linear-gradient(90deg, var(--lime) 0%, var(--brand-blue) 100%); color:var(--brand-blue); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; min-height:60px; border-bottom:1px solid var(--shadow); width:100%; margin:0; }
@@ -96,120 +343,86 @@
     .add-docs-btn { background:#5EDC1F; border:1px solid var(--shadow); color:#1f2937; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:12px; font-weight:700; transition:all .3s ease; margin-left:10px; }
     .add-docs-btn:hover { background:var(--brand-blue); color:var(--panel); }
 
-    /* ===== Demo surface ===== */
-  .aigent-video {
-  width: 1366px;        /* matches your container */
-  height: 477px;        /* matches your banner height */
-  border: 0px solid #91959E;
-  border-radius: 0px;
+.aigent-video {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  background: #000;     /* fallback if video fails */
+  background: #000;
 }
+
 .aigent-video video {
   width: 100%;
   height: 100%;
-  object-fit: cover;    /* scales video nicely */
+  object-fit: cover;
+  display: block;
 }
-
-    /* ===== Chat Phase (updated for bottom-up stacking) ===== */
-    .chat-phase {
-      position:absolute; inset:0; padding:20px; color:#f0faff; font-family:'Open Sans',sans-serif; background:#0a0f2b linear-gradient(45deg,#0a0f2b 0%,#1a1f3b 100%);
-      display:flex; flex-direction:column; justify-content:flex-end; gap:12px; transition:opacity .8s ease-in-out; overflow:hidden;
-    }
-    .hidden { opacity:0; pointer-events:none; }
-
-    /* Stream wraps messages and sticks to the bottom */
-    .chat-stream { display:flex; flex-direction:column; gap:12px; max-height:100%; overflow:hidden; }
-
-    /* ===== Bubbles (created dynamically) ===== */
-    .chat-bubble {
-      margin:0; padding:10px 14px; border-radius:16px; max-width:40%; display:flex; align-items:flex-start; gap:8px; font-size:15px;
-      box-shadow:0 0 12px rgba(0,255,170,.35); opacity:0; transform:translateY(18px);
-      animation: bubbleIn .35s ease-out forwards;
-    }
-    @keyframes bubbleIn { to { opacity:1; transform:translateY(0); } }
-
-    .chat-bubble.customer { background:rgba(20,20,40,.9); border:1px solid var(--lime); flex-direction:row; margin-left:0; }
-    .chat-bubble.ai { background:rgba(0,33,247,.8); border:1px solid var(--lime); flex-direction:row-reverse; text-align:right; margin-left:auto; }
-    .avatar { border-radius:50%; width:32px; height:32px; border:2px solid var(--lime); flex-shrink:0; }
-    .bubble-text { display:block; line-height:1.35; }
-    .scan-line { font-family:"Courier New",monospace; font-size:12px; color:var(--lime); margin-top:6px; opacity:.85; }
-
-    /* ===== Typing indicator bubble ===== */
-    .typing { opacity:1; transform:none; animation:none; }
-    .typing-dots { display:inline-flex; gap:4px; }
-    .dot { width:6px; height:6px; border-radius:50%; background:#c6ffd8; opacity:.25; }
-    @keyframes blink { 0%{opacity:.2} 20%{opacity:1} 100%{opacity:.2} }
-    .dot:nth-child(1){ animation:blink 1.2s infinite .0s; }
-    .dot:nth-child(2){ animation:blink 1.2s infinite .2s; }
-    .dot:nth-child(3){ animation:blink 1.2s infinite .4s; }
-   </style>
+</style>
 </head>
 <body>
 <div class="dashboard">
   <div class="sidebar">
     <div>
-      <div class="logo-box">
-        <img class="app-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" alt="SupportME Logo" />
+    <div class="logo-box" onclick="window.location.href='https://app.getsupportme.com/admin-dashboard.html'">
+<img class="app-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/supportme-logo.png" alt="SupportME Logo">
       </div>
-     <div class="menu">
-  <a href="https://app.getsupportme.com/admin-dashboard.html" class="menu-item">Tickets</a>
- <a href="https://app.getsupportme.com/aigent.html" class="menu-item active">Real AiGent</a>
-  <a href="https://app.getsupportme.com/chat.html" class="menu-item">Chat</a>
+<div class="menu">
+<a href="https://app.getsupportme.com/admin-dashboard" class="menu-item">Tickets</a>
+  <a href="https://app.getsupportme.com/aigent.html" class="menu-item active">Real AiGent</a>
+  <a href="https://app.getsupportme.com/chat.html" class="menu-item">Live Chat</a>
   <a href="https://app.getsupportme.com/sms-mms.html" class="menu-item">SMS/MMS</a>
   <a href="https://app.getsupportme.com/voicemail.html" class="menu-item">Voicemail</a>
-  <a href="https://portal.ringzu.pro/site" target="_blank" class="menu-item">VoIP Phone</a>
+  <a href="https://portal.ringzu.pro/site" target="_blank" class="menu-item">VOIP Phone</a>
   <a href="https://app.getsupportme.com/team.html" class="menu-item">My Team</a>
   <a href="https://getsupportme.com/contact" target="_blank" class="menu-item">Get Help</a>
-  </div>
-      <div style="margin-top:2em">
-       <label class="sidebar-label">Your Business Phone Number:</label>
-<div class="sidebar-static">503-555-1212</div>
+</div>
+      <div style="margin-top: 2em;">
+      <label class="sidebar-label">Your Business Phone Number:</label>
+<div class="sidebar-static">503-555-5555</div>
+
 <label class="sidebar-label">Next Billing Date:</label>
-<div class="sidebar-static">03/01/2025</div>
+<div class="sidebar-static">01/01/2222</div>
 
       </div>
     </div>
     <div class="branding">
-      <div class="logo-container">
-        <img class="ringzu-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/wide-ringzu-logo.png" alt="RingzU Telecom Logo" />
+     <div class="logo-container" onclick="window.location.href='https://ringzu.com'"><img class="ringzu-logo" src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/wide-ringzu-logo.png" alt="RingzU Telecom Logo">
       </div>
       <div class="bottom-content">
         <div>© 2025 RingzU Telecom Corp.</div>
-        <div>supportME! is built on the <a href="https://www.ringzu.com" target="_blank" style="color:var(--brand-blue); text-decoration:none;"><strong>RingzU Telecom Imagination Platform™</strong></a></div>
+        <div>supportME! is built on the <a href="https://www.ringzu.com" target="_blank" style="color:#0021F7; text-decoration:none;">
+          <strong>RingzU Telecom Imagination Platform™</strong></a></div>
         <div class="links">
-          <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:var(--brand-blue); text-decoration:none;">Privacy</a> |
-          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:var(--brand-blue); text-decoration:none;">TOS</a> |
-          <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:var(--brand-blue); text-decoration:none;">Billing</a>
+          <a href="https://www.getsupportme.com/privacy" target="_blank" style="color:#0021F7; text-decoration:none;">Privacy</a> | 
+          <a href="https://www.getsupportme.com/tos" target="_blank" style="color:#0021F7; text-decoration:none;">TOS</a> | 
+          <a href="https://www.getsupportme.com/refund-policy" target="_blank" style="color:#0021F7; text-decoration:none;">Billing</a>
         </div>
       </div>
     </div>
   </div>
   <div class="main">
-    <div class="header">
-      CUSTOMER SUPPORT REAL AiGENT DASHBOARD
-      <div class="customer-number"></div>
+  <div class="header">
+REAL AIGENT ADMIN DASHBOARD
+  <div class="customer-number">000000000000</div>
   <!-- Badge image starts blank, will be filled dynamically -->
   <img id="planBadge" class="plan-badge" src="" alt="Plan Badge">
 </div>
     <div class="time-banner">
-      <div>supportME! official server time: <span id="dateTime"></span></div>
+      <div>supportME! Official Server Timestamp is: <span id="dateTime"></span></div>
       <div class="right">
-        <div class="top"><img id="avatarImg" src="https://i.pravatar.cc/30" alt="avatar" /> Welcome Back, <span id="welcomeName"></span></div>
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar">Welcome Back!</div>
         <div>
-              <button onclick="upgradeUser()">UPGRADE</button>
-         <button onclick="window.location.href='https://app.getsupportme.com/customer-dashboard?new-ticket=true'">+NEW TICKET</button>
+              <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE</button>
+           <button onclick="window.open('https://app.getsupportme.com/customer-dashboard.html?new-ticket=true')">+NEW TICKET</button>
+        </div>
       </div>
-</div>
     </div>
     <div class="alert">
       <span>
-        <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" alt="Alert" class="alert-icon" width="38" height="30" style="vertical-align:middle; margin-right:6px;" />
-        supportME! deletes all cloud data and history on subscription non-renewal.
+      <img src="https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/alert-icon.png" alt="Alert" class="alert-icon">
+        supportME! deletes all customer cloud data and history upon subscription non-renewal.
       </span>
       <span>X</span>
     </div>
-
     <div class="content">
       <div class="grid-container">
         <div class="grid-header">
@@ -228,295 +441,171 @@
   </video>
 </div>
     </div>
-
-    <div class="footer" style="background:var(--lime); padding:12px; display:flex; gap:12px;">
-      <div class="team" style="width:33%;">
-        <div class="cols"><span>Chat ID</span><span>Name</span><span>Status</span><span>My Status</span></div>
-        <div>Support Staff #1</div>
-      </div>
-      <div style="flex:1; display:flex; flex-direction:column;">
-        <div class="chat-window" style="background:#f4f6f8; border:1px solid #ccc; height:90px; margin-bottom:8px;">
-          <div class="inbox" id="chatInbox" style="padding:6px; font-size:12px; color:var(--ink);">[Chat transcript here]</div>
-        </div>
-        <div class="chat-input-row" style="display:flex; align-items:center; gap:8px;">
-          <input type="text" id="chatIdInput" placeholder="ID or 9999 for All" style="width:120px; padding:6px; font-size:12px;" />
-          <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex:1; padding:6px; font-size:12px;" />
-          <button id="sendButton" style="padding:6px 12px; background:var(--brand-blue); color:#fff; border:none; border-radius:4px; cursor:pointer;">SEND MSG</button>
-        </div>
-      </div>
-    </div>
+    <div class="footer">
+     <div class="team">
+  TEAM ONLINE
+ <div class="team-row header">
+  <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
+</div>
+<div class="team-row">
+  <span>Alex</span><span>1001</span><span>A</span>
+  <div class="status-buttons">
+    <input type="radio" name="status-Alex" value="A">
+    <input type="radio" name="status-Alex" value="B">
+    <input type="radio" name="status-Alex" value="AC">
   </div>
 </div>
 
+  <!-- Example: other users -->
+  <div class="team-row" data-user="Sam">
+    <span>Sam</span>
+    <span>1002</span>
+    <span id="statusDisplay-Sam">B</span>
+    <div class="status-buttons hidden"></div>
+  </div>
+</div>
+      <div class="chat">
+        <div class="chat-window">
+          <div id="chatInbox"></div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatIdInput" placeholder="Chat ID">
+          <input type="text" id="chatMessageInput" placeholder="Type your message...">
+          <button id="sendButton">SEND MSG</button>
+        </div>
+      </div>
+    </div>
 <script>
-  /* ===== DOM refs ===== */
-  const intro = document.getElementById("answertronIntro");
-  const chatPhase = document.getElementById("answertronChat");
-  const stream = document.getElementById("chatStream");
-
-  /* ===== Utilities & timing knobs (tweak here to slow/speed) ===== */
-  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
-  const rand = (min, max) => Math.random() * (max - min) + min;
-  const rangeMs = ([min, max], f = 1) => rand(min, max) * f;
-
-  // Global slowdown multiplier: higher = slower overall
-  const SPEED = 1.6; // e.g. 1.0 normal, 1.6 slower, 2.0 very slow
-
-  // Stagger grows slightly each message so alternating feels slower
-  const TIMING = {
-    alternateSlowdown: 1.12,
-    ai: {
-      scan: [2600, 5200],   // AI "research" duration window
-      compose: [550, 1100], // brief compose after scan before revealing text
-      postPause: [950, 1600],
-      charMs: 48            // not used heavily now but kept for future
-    },
-    customer: {
-      preTyping: [900, 2000],
-      postPause: [1100, 1800],
-      charMs: 65
-    }
-  };
-
-  /* ===== Typing indicator (used for customer only now) ===== */
-  function showTyping(side) {
-    const bubble = document.createElement("div");
-    bubble.className = `chat-bubble ${side} typing`;
-    bubble.innerHTML = `
-      <img class="avatar" src="${side === 'ai' ? 'https://i.pravatar.cc/40?img=55' : 'https://i.pravatar.cc/40?img=12'}" alt="avatar" />
-      <span class="bubble-text"><span class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span>
-    `;
-    stream.appendChild(bubble);
-    keepBottom();
-    return bubble;
+/* ───────── SERVER TIME (24-hour Pacific) ───────── */
+(function startServerClock(){
+  const tz = "America/Los_Angeles";
+  function updateServerTime() {
+    const now = new Date();
+    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm  = String(now.getMonth()+1).padStart(2,"0");
+    const dd  = String(now.getDate()).padStart(2,"0");
+    const yyyy = now.getFullYear();
+    const hh  = String(now.getHours()).padStart(2,"0");
+    const mi  = String(now.getMinutes()).padStart(2,"0");
+    const ss  = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("dateTime").textContent =
+      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
   }
-
-  /* ===== AI bubble with scan-first then reveal reply ===== */
-  function addAiScanBubble({ text, scanMessages }) {
-    const bubble = document.createElement("div");
-    bubble.className = `chat-bubble ai`;
-
-    const avatar = document.createElement("img");
-    avatar.className = "avatar";
-    avatar.src = 'https://i.pravatar.cc/40?img=55';
-    avatar.alt = 'avatar';
-
-    const content = document.createElement("div");
-
-    const textSpan = document.createElement("span");
-    textSpan.className = 'bubble-text';
-    textSpan.textContent = '';
-    textSpan.style.display = 'none'; // reveal later
-
-    const scan = document.createElement('div');
-    scan.className = 'scan-line';
-    scan.textContent = (scanMessages && scanMessages.length) ? scanMessages[0] : 'Consulting knowledge base…';
-
-    content.appendChild(textSpan);
-    content.appendChild(scan);
-
-    bubble.appendChild(avatar);
-    bubble.appendChild(content);
-
-    stream.appendChild(bubble);
-    keepBottom();
-
-    let idx = 1;
-    const scanTimer = setInterval(() => {
-      if (scanMessages && scanMessages.length) {
-        scan.textContent = scanMessages[idx % scanMessages.length];
-        idx += 1;
-      }
-    }, 900);
-
-    return { bubble, textSpan, scan, stopScan: () => clearInterval(scanTimer) };
+  updateServerTime();
+  setInterval(updateServerTime,1000);
+})();
+</script>
+<script>
+/* ───────── TEAM CHAT PLACEHOLDER ───────── */
+document.getElementById("sendButton").addEventListener("click",()=>{
+  const chatId = document.getElementById("chatIdInput").value;
+  const msg = document.getElementById("chatMessageInput").value;
+  if(msg.trim()){
+    const inbox = document.getElementById("chatInbox");
+    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
+    document.getElementById("chatMessageInput").value = "";
   }
+});
+</script>
+<script>
+/* ───────── SIDEBAR ROUTER ───────── */
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const target = item.getAttribute('data-target');
 
-  /* ===== Simple bubble (no scanning) ===== */
-  function addBubble({ side, text }) {
-    const bubble = document.createElement("div");
-    bubble.className = `chat-bubble ${side}`;
-
-    const avatar = document.createElement("img");
-    avatar.className = "avatar";
-    avatar.src = side === 'ai' ? 'https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/aigent-logo.png' : 'https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/aigent-logo.png';
-    avatar.alt = 'avatar';
-
-    const content = document.createElement("div");
-    const span = document.createElement("span");
-    span.className = 'bubble-text';
-    span.textContent = text;
-    content.appendChild(span);
-
-    bubble.appendChild(avatar);
-    bubble.appendChild(content);
-
-    stream.appendChild(bubble);
-    keepBottom();
-    return bubble;
-  }
-
-  /* ===== Scroll helper ===== */
-  function keepBottom() { chatPhase.scrollTop = chatPhase.scrollHeight; }
-
-  /* ===== Conversation script ===== */
-  const SCRIPT = [
-    { side: 'customer', text: 'Can I talk to a Manager?' },
-    { side: 'ai', text: 'Yep, you sure can! Let me connect you right now.', scanMessages: ['Match found!', 'Composing reply…'] },
-    { side: 'customer', text: 'So, my delivery is damaged. What do I do?' },
-    { side: 'ai', text: 'Dang it! I'm sorry to hear that.  Are you local? Or should I send a return label now?', scanMessages: ['Searching policies…', 'Composing reply…'] },
-   ];
-
-  // Duplicate/lengthen conversation without copying: increase this
-  const REPEAT_TIMES = 1; // set to 2 or 3 to loop the script
-  function repeatScript(script, times = 1) {
-    const out = [];
-    for (let i = 0; i < times; i++) out.push(...script);
-    return out;
-  }
-
-  /* ===== Sequenced playback with slower, more natural alternation ===== */
-  async function playChat(script = SCRIPT) {
-    const activeStops = [];
-
-    for (let i = 0; i < script.length; i++) {
-      const step = script[i];
-      const seqFactor = Math.pow(TIMING.alternateSlowdown, i) * SPEED; // grows a bit each turn
-
-      if (step.side === 'ai') {
-        // 1) Show scan bubble first (researching)
-        const scanBubble = addAiScanBubble(step);
-        activeStops.push(scanBubble.stopScan);
-
-        // Let scanning run a while
-        await sleep(rangeMs(TIMING.ai.scan, seqFactor));
-
-        // Optional tiny compose delay to feel like it's switching from research to writing
-        await sleep(rangeMs(TIMING.ai.compose, seqFactor));
-
-        // 2) Reveal the actual reply text and remove scan line
-        scanBubble.stopScan();
-        scanBubble.scan.remove();
-        scanBubble.textSpan.textContent = step.text;
-        scanBubble.textSpan.style.display = 'inline';
-        keepBottom();
-
-        // Pause before the other side responds
-        await sleep(rangeMs(TIMING.ai.postPause, seqFactor));
-      } else {
-        // CUSTOMER message: slower typing indicator, then bubble
-        const tBubble = showTyping('customer');
-        await sleep(rangeMs(TIMING.customer.preTyping, seqFactor));
-        tBubble.remove();
-        addBubble(step);
-        await sleep(rangeMs(TIMING.customer.postPause, seqFactor));
-      }
-    }
-
-    // Cleanup any leftover scan timers
-    activeStops.forEach(fn => { try { fn(); } catch(_){} });
-  }
-
-  /* ===== Phase transitions ===== */
-  async function showChat() {
-    intro.classList.add('hidden');
-    await sleep(300 * SPEED);
-    chatPhase.classList.remove('hidden');
-    chatPhase.classList.add('flicker');
-    await sleep(1200 * SPEED);
-    chatPhase.classList.remove('flicker');
-  }
-
-  async function resetChat() {
-    while (stream.firstChild) stream.removeChild(stream.firstChild);
-    chatPhase.classList.add('hidden');
-    await sleep(300 * SPEED);
-    intro.classList.remove('hidden');
-    intro.classList.add('flicker');
-    await sleep(1200 * SPEED);
-    intro.classList.remove('flicker');
-  }
-
-  /* ===== Demo loop (banner → chat → repeat) ===== */
-  (async function runDemo() {
-    await sleep(1800 * SPEED);
-    while (true) {
-      await showChat();
-      await playChat(repeatScript(SCRIPT, REPEAT_TIMES));
-      await sleep(1800 * SPEED);
-      await resetChat();
-      await sleep(2000 * SPEED);
-    }
-  })();
-
-  /* ===== Ancillary: server time / tenant info (unchanged behavior) ===== */
-  async function loadPlanBadge() {
-    const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0";
-    try {
-      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
-      const data = await response.json();
-      document.getElementById("planBadge").src = data.badge_url || '';
-      document.querySelector(".customer-number").textContent = data.customer_number || '';
-    } catch (err) { console.error("Error loading badge:", err); }
-  }
-  loadPlanBadge();
-
-  async function loadCustomerInfo() {
-    try {
-      const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
-      const data = await response.json();
-      const numberEl = document.querySelector(".customer-number");
-      if (numberEl && data.masked_id) numberEl.textContent = data.masked_id;
-      const badgeEl = document.querySelector(".plan-badge");
-      if (badgeEl && data.badge_url) badgeEl.src = data.badge_url;
-    } catch (err) { console.error("Error loading customer info:", err); }
-  }
-  loadCustomerInfo();
-
-  async function updateHeader() {
-    try {
-      const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0";
-      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
-      const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
-      const avatarImg = document.getElementById("avatarImg");
-      if (avatarImg) avatarImg.src = avatarUrl;
-      const siteName = data.site_name || "";
-      document.getElementById("welcomeName").innerText = siteName || "User";
-    } catch (err) { console.error("Header update failed:", err); }
-  }
-  updateHeader();
-
-  (function startServerClock(){
-    const tz = "America/Los_Angeles";
-    function updateServerTime(){
-      const now = new Date();
-      const dow = now.toLocaleDateString("en-US", { weekday:"long", timeZone:tz });
-      const mm = String(now.getMonth()+1).padStart(2,"0");
-      const dd = String(now.getDate()).padStart(2,"0");
-      const yyyy = now.getFullYear();
-      const hh = String(now.getHours()).padStart(2,"0");
-      const mi = String(now.getMinutes()).padStart(2,"0");
-      const ss = String(now.getSeconds()).padStart(2,"0");
-      document.getElementById("dateTime").textContent = `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
-    }
-    updateServerTime();
-    setInterval(updateServerTime, 1000);
-  })();
-
-  // Team chat (unchanged)
-  document.getElementById("sendButton").addEventListener("click", () => {
-    const chatId = document.getElementById("chatIdInput").value;
-    const msg = document.getElementById("chatMessageInput").value;
-    if (msg.trim()) {
-      const inbox = document.getElementById("chatInbox");
-      inbox.textContent += `
-[${chatId || 'Anon'}]: ${msg}`;
-      document.getElementById("chatMessageInput").value = "";
+    // Outbound links
+    if (target === "voip-link") {
+      window.open("https://portal.ringzu.pro/site", "_blank"); //(Ultimate plan only)
+    } else if (target === "gethelp-link") {
+      window.open("https://www.getsupportme.com/contact", "_blank"); // SupportME contact form
+    } 
+    
+    // Internal dashboard pages
+    else if (target) {
+      window.location.href = target;
     }
   });
+});
+async function loadPlanBadge() {
+  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
+  try {
+    const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
+    const data = await response.json();
+    document.getElementById("planBadge").src = data.badge_url;
+    document.querySelector(".customer-number").textContent = data.customer_number;
+  } catch (err) {
+    console.error("Error loading badge:", err);
+  }
+}
+loadPlanBadge();
+</script>
+<script>
+async function loadCustomerInfo() {
+  try {
+    const response = await fetch("https://ringzu-voip-proxy.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const data = await response.json();
+
+    // Update number in header
+    const numberEl = document.querySelector(".customer-number");
+    if (numberEl && data.masked_id) {
+      numberEl.textContent = data.masked_id;
+    }
+
+    // Update plan badge
+    const badgeEl = document.querySelector(".plan-badge");
+    if (badgeEl && data.badge_url) {
+      badgeEl.src = data.badge_url;
+    }
+  } catch (err) {
+    console.error("Error loading customer info:", err);
+  }
+}
+
+loadCustomerInfo();
+</script>
+<script>
+  async function updateHeader() {
+    try {
+      const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // replace with actual
+      const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
+      const data = await response.json();
+
+      if (data.error) throw new Error(data.error);
+
+      // Avatar
+      const avatarUrl = data.avatar_url || "https://static.wixstatic.com/media/default-avatar.png";
+      document.getElementById("avatarImg").src = avatarUrl;
+
+      // Welcome text
+      const siteName = data.site_name || "";
+      document.getElementById("welcomeName").innerText = siteName || "User";
+    } catch (err) {
+      console.error("Header update failed:", err);
+    }
+  }
+
+  updateHeader();
+</script>
+<script>
+function upgradeUser() {
+  // Example: if you're storing instanceId locally after login
+  const instanceId = localStorage.getItem("wixInstanceId");
+  const url = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
+  window.location.href = url;
+}
+</script>
+	  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.status-buttons input[type="radio"]').forEach(input => {
+    input.addEventListener('change', e => {
+      const user = e.target.name.replace('status-', '');
+      const display = document.getElementById(`statusDisplay-${user}`);
+      if (display) {
+        display.textContent = e.target.value;
+      }
+    });
+  });
+});
 </script>
 </body>
 </html>
