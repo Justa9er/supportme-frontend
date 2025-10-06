@@ -1433,24 +1433,17 @@
        <div class="footer">
      <div class="team">
   TEAM IN APP
-  <div class="team-row header">
-    <span>NAME</span>
-    <span>CHAT ID</span>
-    <span>STATUS</span>
-    <span>UPDATE</span>
+ <div class="team-row header">
+  <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
+</div>
+<div class="team-row">
+  <span>Alex</span><span>1001</span><span>A</span>
+  <div class="status-buttons">
+    <input type="radio" name="status-Alex" value="A">
+    <input type="radio" name="status-Alex" value="B">
+    <input type="radio" name="status-Alex" value="AC">
   </div>
-
-  <!-- Example: Alex (the current logged-in user) -->
-  <div class="team-row" data-user="Alex">
-    <span>Alex</span>
-    <span>1001</span>
-    <span id="statusDisplay-Alex">A</span>
-    <div class="status-buttons">
-      <label><input type="radio" name="status-Alex" value="A" checked></label>
-      <label><input type="radio" name="status-Alex" value="B"></label>
-      <label><input type="radio" name="status-Alex" value="AC"></label>
-    </div>
-  </div>
+</div>
 
   <!-- Example: other users -->
   <div class="team-row" data-user="Sam">
