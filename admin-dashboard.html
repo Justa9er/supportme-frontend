@@ -809,7 +809,8 @@
       <div class="right">
         <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar">Welcome Back!</div>
         <div>
-              <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE</button>
+             <button onclick="openSubscriptionManager()">MANAGE PLAN</button>
+
            <button onclick="window.open('https://app.getsupportme.com/customer-dashboard.html?new-ticket=true')">+NEW TICKET</button>
         </div>
       </div>
@@ -1486,15 +1487,57 @@
   setInterval(updateServerTime,1000);
 })();
 
-/* ───────── TEAM CHAT PLACEHOLDER ───────── */
-document.getElementById("sendButton").addEventListener("click",()=>{
-  const chatId = document.getElementById("chatIdInput").value;
-  const msg = document.getElementById("chatMessageInput").value;
-  if(msg.trim()){
-    const inbox = document.getElementById("chatInbox");
-    inbox.textContent += `\n[${chatId||"Anon"}]: ${msg}`;
-    document.getElementById("chatMessageInput").value = "";
-  }
+<script>
+/* ───────── TEAM CHAT PLACEHOLDER (Improved UX) ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const chatInbox = document.getElementById("chatInbox");
+  const sendBtn = document.getElementById("sendButton");
+  const chatIdInput = document.getElementById("chatIdInput");
+  const msgInput = document.getElementById("chatMessageInput");
+
+  // Local memory for chat
+  let teamMembers = [
+    { chatId: "1001", name: "Alex" },
+    { chatId: "1002", name: "Sam" },
+    { chatId: "999", name: "ALL (Broadcast)" } // universal broadcast
+  ];
+
+  sendBtn.addEventListener("click", () => {
+    const chatId = chatIdInput.value.trim();
+    const msg = msgInput.value.trim();
+
+    if (!msg) return;
+
+    const member = teamMembers.find(m => m.chatId === chatId) || { name: "Unknown" };
+    const nameDisplay = member.name === "ALL (Broadcast)" ? "📢 Broadcast" : member.name;
+
+    // Format the message visually
+    const messageLine = document.createElement("div");
+    messageLine.style.padding = "3px 0";
+    messageLine.style.fontSize = "12px";
+    messageLine.style.fontFamily = "'Open Sans', sans-serif";
+    messageLine.style.borderBottom = "1px solid #e6ecf2";
+	messageLine.style.background = member.chatId === "999" ? "#e0f2ff" : "#f9fafb";
+	messageLine.style.borderRadius = "4px";
+	messageLine.style.padding = "4px 8px";  
+    messageLine.innerHTML = `<strong>${nameDisplay}:</strong> ${msg}`;
+
+    chatInbox.appendChild(messageLine);
+    chatInbox.scrollTop = chatInbox.scrollHeight; // auto-scroll to newest message
+
+    msgInput.value = "";
+
+    // If it's a broadcast, also duplicate for all (for local effect only)
+    if (chatId === "999") {
+      teamMembers
+        .filter(m => m.chatId !== "999")
+        .forEach(m => {
+          const copy = messageLine.cloneNode(true);
+          copy.innerHTML = `<strong>${nameDisplay} ➜ ${m.name}:</strong> ${msg}`;
+          chatInbox.appendChild(copy);
+        });
+    }
+  });
 });
 </script>
 <script>
@@ -1518,11 +1561,25 @@ document.querySelectorAll('.menu-item').forEach(item => {
 });
 </script>
 <script>
-function upgradeUser() {
-  // Example: if you're storing instanceId locally after login
-  const instanceId = localStorage.getItem("wixInstanceId");
-  const url = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
-  window.location.href = url;
+async function upgradeUser() {
+  try {
+    // ✅ Try to open Wix App Market subscription manager
+    if (window.wixBilling) {
+      const { url } = await wixBilling.getBillingPortalUrl();
+      window.open(url, "_blank");
+      console.log("✅ Redirecting to Wix billing portal...");
+    } else {
+      // ⚠️ Fallback for environments without wixBilling (e.g., preview or static hosting)
+      const instanceId = localStorage.getItem("wixInstanceId") || "";
+      const fallbackUrl = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
+      window.open(fallbackUrl, "_blank");
+      console.warn("⚠️ wixBilling unavailable, used fallback link:", fallbackUrl);
+    }
+  } catch (error) {
+    console.error("❌ upgradeUser() failed:", error);
+    const fallbackUrl = "https://manage.wix.com/app-market";
+    window.open(fallbackUrl, "_blank");
+  }
 }
 </script>
 	  <script>
@@ -1538,6 +1595,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-<script src="https://app.getsupportme.com/js/supportme-api-client.js"></script>
   </body>
 </html>
