@@ -3,28 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>supportME! Admin Dashboard</title>
-  <script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'es,fr,de,pt,it,nl,pl,ru,ja,zh-CN,ko,ar,hi',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-  }, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<style>
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-body { top: 0px !important; }
-
-/* Style the translate dropdown */
-#google_translate_element select {
-  background: white;
-  border: 1px solid #ddd;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 14px;
-}
     body {
       margin:0;
       background:#F4F6F8;
@@ -932,6 +910,235 @@ body { top: 0px !important; }
             </div>
         </div>
     </div>
+/* ===========================================================
+   SECTION 6: TENANT INFO & INITIALIZATION
+   Add this at the TOP of your <script> section
+   =========================================================== */
+
+<script type="module">
+  // === SUPABASE CLIENT INITIALIZATION ===
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const SUPABASE_URL = "https://ucekalsakfxczmaxfpkq.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZWthbHNha2Z4Y3ptYXhmcGtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMTUzNTUsImV4cCI6MjA2OTc5MTM1NX0.ONjltg1JIFhN480rHl-kObkCwqUgy3W34_YLS5aBqpQ";
+
+  // Initialize Supabase client
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  
+  // Make globally accessible for other functions
+  window.supabase = supabase;
+
+  console.log('🔧 Supabase client initialized');
+
+  // === GET ACTIVE SESSION & TENANT ID ===
+  async function initializeTenant() {
+    try {
+      // Get current session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError) {
+        console.error('❌ Session error:', sessionError);
+        return null;
+      }
+
+      const user = session?.user || null;
+      
+      if (!user) {
+        console.warn('⚠️ No authenticated user - using fallback tenant ID');
+        // Fallback for testing without auth
+        window.currentTenantId = 'd23635f6-3b0a-475a-a4e5-7959b5091aa0';
+        await loadTenantData(window.currentTenantId);
+        return window.currentTenantId;
+      }
+
+      // Try to get tenant_id from user metadata
+      let tenantId = user.user_metadata?.tenant_id || null;
+
+      // Fallback: query profiles table
+      if (!tenantId) {
+        console.log('🔍 Tenant ID not in metadata, checking profiles table...');
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('tenant_id')
+          .eq('id', user.id)
+          .single();
+
+        if (profileError) {
+          console.error('❌ Profile query error:', profileError);
+          return null;
+        }
+
+        tenantId = profile?.tenant_id || null;
+      }
+
+      if (!tenantId) {
+        console.error('❌ No tenant_id found for user');
+        return null;
+      }
+
+      // Store globally
+      window.currentTenantId = tenantId;
+      window.currentUser = user;
+      
+      console.log('✅ Tenant ID loaded:', tenantId);
+      console.log('✅ User:', user.email);
+
+      // Load tenant data
+      await loadTenantData(tenantId);
+
+      return tenantId;
+
+    } catch (error) {
+      console.error('❌ Initialization error:', error);
+      return null;
+    }
+  }
+
+  // === LOAD TENANT DATA ===
+  async function loadTenantData(tenantId) {
+    try {
+      console.log('📊 Loading tenant data for:', tenantId);
+
+      // Query tenants table
+      const { data: tenant, error: tenantError } = await supabase
+        .from('tenants')
+        .select('*')
+        .eq('id', tenantId)
+        .single();
+
+      if (tenantError) {
+        console.error('❌ Tenant query error:', tenantError);
+        return;
+      }
+
+      if (!tenant) {
+        console.error('❌ Tenant not found');
+        return;
+      }
+
+      console.log('✅ Tenant data:', tenant);
+
+      // Get phone number if Ultimate plan
+      let phoneNumber = null;
+      if (tenant.plan === 'ultimate') {
+        const { data: telephony, error: phoneError } = await supabase
+          .from('telephony')
+          .select('did_number')
+          .eq('tenant_id', tenantId)
+          .single();
+
+        if (!phoneError && telephony) {
+          phoneNumber = telephony.did_number;
+          console.log('✅ Phone number:', phoneNumber);
+        }
+      }
+
+      // Build tenant data object
+      const tenantData = {
+        id: tenant.id,
+        customer_number: tenant.customer_number,
+        plan: tenant.plan,
+        phone_number: phoneNumber,
+        billing_date: tenant.next_billing_date || tenant.created_at,
+        status: tenant.status,
+        created_at: tenant.created_at
+      };
+
+      // Store in sessionStorage
+      sessionStorage.setItem('tenantData', JSON.stringify(tenantData));
+      sessionStorage.setItem('userPlan', tenant.plan);
+
+      // Update UI
+      updateDashboardUI(tenantData);
+
+      console.log('✅ Tenant data loaded and UI updated');
+
+      return tenantData;
+
+    } catch (error) {
+      console.error('❌ Load tenant data error:', error);
+    }
+  }
+
+  // === UPDATE DASHBOARD UI ===
+  function updateDashboardUI(data) {
+    // Update customer number in header
+    const customerNumberEl = document.querySelector('.customer-number');
+    if (customerNumberEl) {
+      customerNumberEl.textContent = data.customer_number;
+      console.log('✅ Customer number updated:', data.customer_number);
+    }
+
+    // Update plan badge
+    const badgeEl = document.getElementById('planBadge');
+    if (badgeEl) {
+      badgeEl.src = getBadgeUrl(data.plan);
+      badgeEl.alt = `${data.plan} plan badge`;
+      console.log('✅ Plan badge updated:', data.plan);
+    }
+
+    // Update phone number in sidebar
+    const phoneEls = document.querySelectorAll('.sidebar-static');
+    if (phoneEls.length > 0) {
+      if (data.phone_number) {
+        phoneEls[0].textContent = formatPhoneNumber(data.phone_number);
+        console.log('✅ Phone number updated:', data.phone_number);
+      } else {
+        phoneEls[0].textContent = 'No phone assigned';
+      }
+    }
+
+    // Update billing date in sidebar
+    if (phoneEls.length > 1) {
+      const billingDate = new Date(data.billing_date).toLocaleDateString('en-US');
+      phoneEls[1].textContent = billingDate;
+      console.log('✅ Billing date updated:', billingDate);
+    }
+
+    // Hide upgrade button if Ultimate plan
+    const upgradeBtns = document.querySelectorAll('button[onclick*="UPGRADE"]');
+    upgradeBtns.forEach(btn => {
+      if (data.plan === 'ultimate') {
+        btn.style.display = 'none';
+      }
+    });
+
+    console.log('✅ Dashboard UI updated');
+  }
+
+  // === HELPER: GET BADGE URL ===
+  function getBadgeUrl(plan) {
+    const badges = {
+      'starter': 'https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/starter-badge.png',
+      'pro': 'https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/pro-badge.png',
+      'ultimate': 'https://ucekalsakfxczmaxfpkq.supabase.co/storage/v1/object/public/assets/ultimate-badge.png'
+    };
+    return badges[plan] || badges['starter'];
+  }
+
+  // === HELPER: FORMAT PHONE NUMBER ===
+  function formatPhoneNumber(phone) {
+    // Remove +1 and format as (XXX) XXX-XXXX
+    const cleaned = phone.replace(/\D/g, '');
+    if (cleaned.length === 11 && cleaned.startsWith('1')) {
+      const number = cleaned.substring(1);
+      return `(${number.substring(0,3)}) ${number.substring(3,6)}-${number.substring(6)}`;
+    } else if (cleaned.length === 10) {
+      return `(${cleaned.substring(0,3)}) ${cleaned.substring(3,6)}-${cleaned.substring(6)}`;
+    }
+    return phone; // Return as-is if format unknown
+  }
+
+  // === INITIALIZE ON PAGE LOAD ===
+  initializeTenant();
+
+  // Make functions globally accessible for other sections
+  window.loadTenantData = loadTenantData;
+  window.currentTenantId = null; // Will be set by initializeTenant
+
+</script>
+
+
 
     <script>
         // Issue categories that determine priority (customer-selected)
