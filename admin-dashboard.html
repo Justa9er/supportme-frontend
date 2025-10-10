@@ -706,7 +706,7 @@
 .status-buttons input[type="radio"]:hover {
   box-shadow: 0 0 4px rgba(0,0,0,0.3);
 }
-	.hidden { display: none; }
+.hidden { display: none; }
  
 .chat {
   flex: 1;
@@ -752,6 +752,42 @@
 
 .chat-input-row button#sendButton:hover {
   background: #5edc1f;
+}
+.chat-bubble {
+  max-width: 75%;
+  margin: 6px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #F4F6F8;
+  color: #1F2937;
+  line-height: 1.3;
+}
+.chat-bubble.right {
+  background: #0021F7;
+  color: #fff;
+  margin-left: auto;
+}
+.chat-bubble.left {
+  background: #E5E7EB;
+  color: #111;
+  margin-right: auto;
+}
+.sender {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+.timestamp {
+  font-size: 10px;
+  color: #888;
+  text-align: right;
+}
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
 }
   </style>
 </head>
@@ -1488,6 +1524,134 @@
 })();
 
 <script>
+import { getTeamMembers } from 'backend/team.jsw';
+import { fetchMessages, sendMessage } from 'backend/chat.jsw';
+
+$w.onReady(async function () {
+  await loadTeamRoster();
+  await loadMessages();
+
+  // Poll for new messages every 5 seconds
+import { getTeamMembers } from 'backend/team.jsw';
+import { fetchMessages, sendMessage } from 'backend/chat.jsw';
+import { supabase } from 'backend/supabase-client.jsw';
+
+$w.onReady(async () => {
+  await renderTeamRoster();
+  await renderMessages();
+
+  // 🟢 Set up real-time listener for new chat messages
+  enableRealtimeChat();
+
+  // 🟩 Send message
+  $w('#sendButton').onClick(async () => {
+    const msg = $w('#chatInput').value.trim();
+    if (!msg) return;
+
+    await sendMessage('admin', 'Admin', msg);
+    $w('#chatInput').value = '';
+  });
+});
+
+// === TEAM ROSTER ===
+async function renderTeamRoster() {
+  const team = await getTeamMembers();
+  const roster = $w('#teamRoster');
+  roster.html = '';
+
+  team.forEach(member => {
+    const color = member.status === 'online' ? '#5EDC1F' : '#F44336';
+    roster.html += `
+      <div class="team-member">
+        <span class="status-dot" style="background:${color}"></span>
+        <span>${member.name}</span>
+      </div>`;
+  });
+}
+
+// === INITIAL LOAD ===
+async function renderMessages() {
+  const messages = await fetchMessages();
+  const chat = $w('#chatMessages');
+  chat.html = '';
+
+  messages.forEach(msg => appendMessage(msg));
+  chat.scrollToBottom();
+}
+
+// === REAL-TIME SUBSCRIPTION ===
+function enableRealtimeChat() {
+  console.log('🔌 Real-time chat listener enabled.');
+
+  supabase
+    .channel('chat_messages_channel')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'chat_messages' }, payload => {
+      if (payload.eventType === 'INSERT') {
+        appendMessage(payload.new);
+        $w('#chatMessages').scrollToBottom();
+      }
+    })
+    .subscribe();
+}
+
+// === APPEND NEW MESSAGE ===
+function appendMessage(msg) {
+  const chat = $w('#chatMessages');
+  const align = msg.sender_name === 'Admin' ? 'right' : 'left';
+  const html = `
+    <div class="chat-bubble ${align}">
+      <div class="sender">${msg.sender_name}</div>
+      <div class="message">${msg.message}</div>
+      <div class="timestamp">${new Date(msg.created_at).toLocaleTimeString()}</div>
+    </div>`;
+  chat.html += html;
+}
+  // Send button click
+  $w('#sendButton').onClick(async () => {
+    const input = $w('#chatInput').value.trim();
+    if (!input) return;
+    await sendMessage('admin', 'Admin', input);
+    $w('#chatInput').value = '';
+    await loadMessages();
+  });
+});
+
+// === LOAD TEAM ROSTER ===
+async function loadTeamRoster() {
+  const team = await getTeamMembers();
+  const rosterBox = $w('#teamRoster');
+  rosterBox.html = '';
+
+  team.forEach(member => {
+    const statusColor = member.status === 'online' ? '#5EDC1F' : '#F44336';
+    rosterBox.html += `
+      <div class="team-member">
+        <span class="status-dot" style="background:${statusColor};"></span>
+        <span>${member.name}</span>
+      </div>`;
+  });
+}
+
+// === LOAD MESSAGES ===
+async function loadMessages() {
+  const messages = await fetchMessages();
+  const chatBox = $w('#chatMessages');
+  chatBox.html = '';
+
+  messages.forEach(msg => {
+    const side = msg.sender_name === 'Admin' ? 'right' : 'left';
+    chatBox.html += `
+      <div class="chat-bubble ${side}">
+        <div class="sender">${msg.sender_name}</div>
+        <div class="message">${msg.message}</div>
+        <div class="timestamp">${new Date(msg.created_at).toLocaleTimeString()}</div>
+      </div>`;
+  });
+
+  chatBox.scrollToBottom();
+}
+</script>
+<script>
 /* ───────── TEAM CHAT PLACEHOLDER (Improved UX) ───────── */
 document.addEventListener("DOMContentLoaded", () => {
   const chatInbox = document.getElementById("chatInbox");
@@ -1582,6 +1746,17 @@ async function upgradeUser() {
   }
 }
 </script>
+<script>
+	async function openSubscriptionManager() {
+  try {
+    const { url } = await wixBilling.getBillingPortalUrl(); // if using Velo backend
+    window.open(url, "_blank");
+  } catch (err) {
+    console.error("Could not open subscription manager:", err);
+    window.open("https://manage.wix.com/app-market", "_blank");
+  }
+}
+</script>
 	  <script>
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.status-buttons input[type="radio"]').forEach(input => {
@@ -1595,5 +1770,53 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+	  <script>
+// === AUTO-RENEW SUBSCRIPTIONS ===
+async function autoRenewSubscriptions() {
+  try {
+    console.log("🕓 Running auto-renew check…");
+
+    // 1️⃣ Get all active subscriptions
+    const { data: subs, error } = await supabase
+      .from('subscriptions')
+      .select('id, tenant_id, next_billing_date, status, plan')
+      .eq('status', 'active');
+
+    if (error) throw error;
+    if (!subs || subs.length === 0) return console.log("No active subs found.");
+
+    const now = new Date();
+
+    for (const sub of subs) {
+      const nextBill = new Date(sub.next_billing_date);
+
+      // 2️⃣ If billing date has arrived or passed → renew
+      if (now >= nextBill) {
+        const newDate = new Date(nextBill);
+        newDate.setDate(newDate.getDate() + 30); // move forward 30 days
+
+        const { error: updateErr } = await supabase
+          .from('subscriptions')
+          .update({
+            next_billing_date: newDate.toISOString(),
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', sub.id);
+
+        if (updateErr) console.error(`❌ Update failed → ${sub.id}`, updateErr);
+        else console.log(`✅ Renewed → ${sub.plan} for tenant ${sub.tenant_id}`);
+      }
+    }
+  } catch (err) {
+    console.error("❌ Auto-renew process failed:", err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  autoRenewSubscriptions();
+  // Optional → run once every 24 hours
+  setInterval(autoRenewSubscriptions, 24 * 60 * 60 * 1000);
+});
+  </script>
   </body>
 </html>
