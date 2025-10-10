@@ -1472,186 +1472,74 @@
     </div>
        <div class="footer">
      <div class="team">
-  TEAM ONLINE
- <div class="team-row header">
-  <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
-</div>
-<div class="team-row">
-  <span>Alex</span><span>1001</span><span>A</span>
-  <div class="status-buttons">
-    <input type="radio" name="status-Alex" value="A">
-    <input type="radio" name="status-Alex" value="B">
-    <input type="radio" name="status-Alex" value="AC">
+  <h3>TEAM ONLINE</h3>
+
+  <div class="team-row header">
+    <span>NAME</span><span>CHAT ID</span><span>STATUS</span><span>UPDATE</span>
+  </div>
+
+  <div class="team-row" data-user="Alex">
+    <span>Alex</span><span>1001</span><span id="statusDisplay-Alex">A</span>
+    <div class="status-buttons">
+      <input type="radio" name="status-Alex" value="A">
+      <input type="radio" name="status-Alex" value="B">
+      <input type="radio" name="status-Alex" value="AC">
+    </div>
+  </div>
+
+  <div class="team-row" data-user="Sam">
+    <span>Sam</span><span>1002</span><span id="statusDisplay-Sam">B</span>
+    <div class="status-buttons">
+      <input type="radio" name="status-Sam" value="A">
+      <input type="radio" name="status-Sam" value="B">
+      <input type="radio" name="status-Sam" value="AC">
+    </div>
   </div>
 </div>
 
- <div class="team-row" data-user="Sam">
-    <span>Sam</span>
-    <span>1002</span>
-    <span id="statusDisplay-Sam">B</span>
-    <div class="status-buttons hidden"></div>
+<!-- === CHAT WINDOW === -->
+<div class="chat">
+  <div class="chat-window">
+    <div id="chatInbox"></div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatIdInput" placeholder="Chat ID">
+    <input type="text" id="chatMessageInput" placeholder="Type your message...">
+    <button id="sendButton">SEND MSG</button>
   </div>
 </div>
-      <div class="chat">
-        <div class="chat-window">
-          <div id="chatInbox"></div>
-        </div>
-        <div class="chat-input-row">
-          <input type="text" id="chatIdInput" placeholder="Chat ID">
-          <input type="text" id="chatMessageInput" placeholder="Type your message...">
-          <button id="sendButton">SEND MSG</button>
-        </div>
-      </div>
-    </div>
+
 <script>
 /* ───────── SERVER TIME (24-hour Pacific) ───────── */
 (function startServerClock(){
   const tz = "America/Los_Angeles";
   function updateServerTime() {
     const now = new Date();
-    const dow = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
-    const mm  = String(now.getMonth()+1).padStart(2,"0");
-    const dd  = String(now.getDate()).padStart(2,"0");
+    const dow  = now.toLocaleDateString("en-US", { weekday: "long", timeZone: tz });
+    const mm   = String(now.getMonth()+1).padStart(2,"0");
+    const dd   = String(now.getDate()).padStart(2,"0");
     const yyyy = now.getFullYear();
-    const hh  = String(now.getHours()).padStart(2,"0");
-    const mi  = String(now.getMinutes()).padStart(2,"0");
-    const ss  = String(now.getSeconds()).padStart(2,"0");
-    document.getElementById("dateTime").textContent =
-      `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
+    const hh   = String(now.getHours()).padStart(2,"0");
+    const mi   = String(now.getMinutes()).padStart(2,"0");
+    const ss   = String(now.getSeconds()).padStart(2,"0");
+    const el = document.getElementById("dateTime");
+    if (el) el.textContent = `${dow} ${mm}/${dd}/${yyyy} ${hh}:${mi}:${ss} PT`;
   }
   updateServerTime();
   setInterval(updateServerTime,1000);
 })();
 
-<script>
-import { getTeamMembers } from 'backend/team.jsw';
-import { fetchMessages, sendMessage } from 'backend/chat.jsw';
-
-$w.onReady(async function () {
-  await loadTeamRoster();
-  await loadMessages();
-
-  // Poll for new messages every 5 seconds
-import { getTeamMembers } from 'backend/team.jsw';
-import { fetchMessages, sendMessage } from 'backend/chat.jsw';
-import { supabase } from 'backend/supabase-client.jsw';
-
-$w.onReady(async () => {
-  await renderTeamRoster();
-  await renderMessages();
-
-  // 🟢 Set up real-time listener for new chat messages
-  enableRealtimeChat();
-
-  // 🟩 Send message
-  $w('#sendButton').onClick(async () => {
-    const msg = $w('#chatInput').value.trim();
-    if (!msg) return;
-
-    await sendMessage('admin', 'Admin', msg);
-    $w('#chatInput').value = '';
+/* ───────── TEAM STATUS BUTTONS ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.status-buttons input[type="radio"]').forEach(input => {
+    input.addEventListener('change', e => {
+      const user = e.target.name.replace('status-', '');
+      const display = document.getElementById(`statusDisplay-${user}`);
+      if (display) display.textContent = e.target.value;
+    });
   });
 });
 
-// === TEAM ROSTER ===
-async function renderTeamRoster() {
-  const team = await getTeamMembers();
-  const roster = $w('#teamRoster');
-  roster.html = '';
-
-  team.forEach(member => {
-    const color = member.status === 'online' ? '#5EDC1F' : '#F44336';
-    roster.html += `
-      <div class="team-member">
-        <span class="status-dot" style="background:${color}"></span>
-        <span>${member.name}</span>
-      </div>`;
-  });
-}
-
-// === INITIAL LOAD ===
-async function renderMessages() {
-  const messages = await fetchMessages();
-  const chat = $w('#chatMessages');
-  chat.html = '';
-
-  messages.forEach(msg => appendMessage(msg));
-  chat.scrollToBottom();
-}
-
-// === REAL-TIME SUBSCRIPTION ===
-function enableRealtimeChat() {
-  console.log('🔌 Real-time chat listener enabled.');
-
-  supabase
-    .channel('chat_messages_channel')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'chat_messages' }, payload => {
-      if (payload.eventType === 'INSERT') {
-        appendMessage(payload.new);
-        $w('#chatMessages').scrollToBottom();
-      }
-    })
-    .subscribe();
-}
-
-// === APPEND NEW MESSAGE ===
-function appendMessage(msg) {
-  const chat = $w('#chatMessages');
-  const align = msg.sender_name === 'Admin' ? 'right' : 'left';
-  const html = `
-    <div class="chat-bubble ${align}">
-      <div class="sender">${msg.sender_name}</div>
-      <div class="message">${msg.message}</div>
-      <div class="timestamp">${new Date(msg.created_at).toLocaleTimeString()}</div>
-    </div>`;
-  chat.html += html;
-}
-  // Send button click
-  $w('#sendButton').onClick(async () => {
-    const input = $w('#chatInput').value.trim();
-    if (!input) return;
-    await sendMessage('admin', 'Admin', input);
-    $w('#chatInput').value = '';
-    await loadMessages();
-  });
-});
-
-// === LOAD TEAM ROSTER ===
-async function loadTeamRoster() {
-  const team = await getTeamMembers();
-  const rosterBox = $w('#teamRoster');
-  rosterBox.html = '';
-
-  team.forEach(member => {
-    const statusColor = member.status === 'online' ? '#5EDC1F' : '#F44336';
-    rosterBox.html += `
-      <div class="team-member">
-        <span class="status-dot" style="background:${statusColor};"></span>
-        <span>${member.name}</span>
-      </div>`;
-  });
-}
-
-// === LOAD MESSAGES ===
-async function loadMessages() {
-  const messages = await fetchMessages();
-  const chatBox = $w('#chatMessages');
-  chatBox.html = '';
-
-  messages.forEach(msg => {
-    const side = msg.sender_name === 'Admin' ? 'right' : 'left';
-    chatBox.html += `
-      <div class="chat-bubble ${side}">
-        <div class="sender">${msg.sender_name}</div>
-        <div class="message">${msg.message}</div>
-        <div class="timestamp">${new Date(msg.created_at).toLocaleTimeString()}</div>
-      </div>`;
-  });
-
-  chatBox.scrollToBottom();
-}
-</script>
-<script>
 /* ───────── TEAM CHAT PLACEHOLDER (Improved UX) ───────── */
 document.addEventListener("DOMContentLoaded", () => {
   const chatInbox = document.getElementById("chatInbox");
@@ -1659,81 +1547,68 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatIdInput = document.getElementById("chatIdInput");
   const msgInput = document.getElementById("chatMessageInput");
 
-  // Local memory for chat
-  let teamMembers = [
+  const teamMembers = [
     { chatId: "1001", name: "Alex" },
     { chatId: "1002", name: "Sam" },
-    { chatId: "999", name: "ALL (Broadcast)" } // universal broadcast
+    { chatId: "999", name: "ALL (Broadcast)" }
   ];
 
   sendBtn.addEventListener("click", () => {
     const chatId = chatIdInput.value.trim();
     const msg = msgInput.value.trim();
-
     if (!msg) return;
 
     const member = teamMembers.find(m => m.chatId === chatId) || { name: "Unknown" };
     const nameDisplay = member.name === "ALL (Broadcast)" ? "📢 Broadcast" : member.name;
 
-    // Format the message visually
     const messageLine = document.createElement("div");
-    messageLine.style.padding = "3px 0";
-    messageLine.style.fontSize = "12px";
-    messageLine.style.fontFamily = "'Open Sans', sans-serif";
-    messageLine.style.borderBottom = "1px solid #e6ecf2";
-	messageLine.style.background = member.chatId === "999" ? "#e0f2ff" : "#f9fafb";
-	messageLine.style.borderRadius = "4px";
-	messageLine.style.padding = "4px 8px";  
+    messageLine.className = "chat-line";
     messageLine.innerHTML = `<strong>${nameDisplay}:</strong> ${msg}`;
+    messageLine.style.cssText = `
+      padding:4px 8px; font-size:12px; font-family:'Open Sans',sans-serif;
+      border-bottom:1px solid #e6ecf2; border-radius:4px;
+      background:${member.chatId==="999" ? "#e0f2ff" : "#f9fafb"};
+      margin-bottom:2px;
+    `;
 
     chatInbox.appendChild(messageLine);
-    chatInbox.scrollTop = chatInbox.scrollHeight; // auto-scroll to newest message
-
+    chatInbox.scrollTop = chatInbox.scrollHeight;
     msgInput.value = "";
 
-    // If it's a broadcast, also duplicate for all (for local effect only)
     if (chatId === "999") {
-      teamMembers
-        .filter(m => m.chatId !== "999")
-        .forEach(m => {
-          const copy = messageLine.cloneNode(true);
-          copy.innerHTML = `<strong>${nameDisplay} ➜ ${m.name}:</strong> ${msg}`;
-          chatInbox.appendChild(copy);
-        });
+      teamMembers.filter(m => m.chatId !== "999").forEach(m => {
+        const copy = messageLine.cloneNode(true);
+        copy.innerHTML = `<strong>${nameDisplay} ➜ ${m.name}:</strong> ${msg}`;
+        chatInbox.appendChild(copy);
+      });
     }
   });
 });
-</script>
-<script>
-/* ───────── SIDEBAR ROUTER ───────── */
-document.querySelectorAll('.menu-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const target = item.getAttribute('data-target');
 
-    // Outbound links
-    if (target === "voip-link") {
-      window.open("https://portal.ringzu.pro/site", "_blank"); //(Ultimate plan only)
-    } else if (target === "gethelp-link") {
-      window.open("https://www.getsupportme.com/contact", "_blank"); // SupportME contact form
-    } 
-    
-    // Internal dashboard pages
-    else if (target) {
-      window.location.href = target;
-    }
+/* ───────── SIDEBAR ROUTER ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const target = item.getAttribute('data-target');
+      if (target === "voip-link") {
+        window.open("https://portal.ringzu.pro/site", "_blank");
+      } else if (target === "gethelp-link") {
+        window.open("https://www.getsupportme.com/contact", "_blank");
+      } else if (target) {
+        window.location.href = target;
+      }
+    });
   });
 });
-</script>
-<script>
+
+/* ───────── UPGRADE USER (Wix Billing) ───────── */
 async function upgradeUser() {
   try {
-    // ✅ Try to open Wix App Market subscription manager
     if (window.wixBilling) {
       const { url } = await wixBilling.getBillingPortalUrl();
       window.open(url, "_blank");
       console.log("✅ Redirecting to Wix billing portal...");
     } else {
-      // ⚠️ Fallback for environments without wixBilling (e.g., preview or static hosting)
       const instanceId = localStorage.getItem("wixInstanceId") || "";
       const fallbackUrl = `https://getsupportme.com/pricing-plans/smapp?instance=${instanceId}`;
       window.open(fallbackUrl, "_blank");
@@ -1741,60 +1616,28 @@ async function upgradeUser() {
     }
   } catch (error) {
     console.error("❌ upgradeUser() failed:", error);
-    const fallbackUrl = "https://manage.wix.com/app-market";
-    window.open(fallbackUrl, "_blank");
-  }
-}
-</script>
-<script>
-	async function openSubscriptionManager() {
-  try {
-    const { url } = await wixBilling.getBillingPortalUrl(); // if using Velo backend
-    window.open(url, "_blank");
-  } catch (err) {
-    console.error("Could not open subscription manager:", err);
     window.open("https://manage.wix.com/app-market", "_blank");
   }
 }
-</script>
-	  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('.status-buttons input[type="radio"]').forEach(input => {
-    input.addEventListener('change', e => {
-      const user = e.target.name.replace('status-', '');
-      const display = document.getElementById(`statusDisplay-${user}`);
-      if (display) {
-        display.textContent = e.target.value;
-      }
-    });
-  });
-});
-</script>
-	  <script>
-// === AUTO-RENEW SUBSCRIPTIONS ===
+
+/* ───────── AUTO-RENEW SUBSCRIPTIONS ───────── */
 async function autoRenewSubscriptions() {
   try {
     console.log("🕓 Running auto-renew check…");
-
-    // 1️⃣ Get all active subscriptions
     const { data: subs, error } = await supabase
       .from('subscriptions')
       .select('id, tenant_id, next_billing_date, status, plan')
       .eq('status', 'active');
 
     if (error) throw error;
-    if (!subs || subs.length === 0) return console.log("No active subs found.");
+    if (!subs?.length) return console.log("No active subs found.");
 
     const now = new Date();
-
     for (const sub of subs) {
       const nextBill = new Date(sub.next_billing_date);
-
-      // 2️⃣ If billing date has arrived or passed → renew
       if (now >= nextBill) {
         const newDate = new Date(nextBill);
-        newDate.setDate(newDate.getDate() + 30); // move forward 30 days
-
+        newDate.setDate(newDate.getDate() + 30);
         const { error: updateErr } = await supabase
           .from('subscriptions')
           .update({
@@ -1802,7 +1645,6 @@ async function autoRenewSubscriptions() {
             updated_at: new Date().toISOString()
           })
           .eq('id', sub.id);
-
         if (updateErr) console.error(`❌ Update failed → ${sub.id}`, updateErr);
         else console.log(`✅ Renewed → ${sub.plan} for tenant ${sub.tenant_id}`);
       }
@@ -1814,9 +1656,8 @@ async function autoRenewSubscriptions() {
 
 document.addEventListener('DOMContentLoaded', () => {
   autoRenewSubscriptions();
-  // Optional → run once every 24 hours
   setInterval(autoRenewSubscriptions, 24 * 60 * 60 * 1000);
 });
-  </script>
+</script>
   </body>
 </html>
