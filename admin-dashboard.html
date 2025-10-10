@@ -3,7 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>supportME! Admin Dashboard</title>
-  <style>
+  <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'es,fr,de,pt,it,nl,pl,ru,ja,zh-CN,ko,ar,hi',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0px !important; }
+
+/* Style the translate dropdown */
+#google_translate_element select {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+}
     body {
       margin:0;
       background:#F4F6F8;
@@ -756,6 +777,7 @@
   </style>
 </head>
 <body>
+<div id="google_translate_element" style="position: absolute; top: 15px; right: 15px; z-index: 9999;"></div>
 <div class="dashboard">
   <div class="sidebar">
     <div>
@@ -774,10 +796,10 @@
 </div>
       <div style="margin-top: 2em;">
       <label class="sidebar-label">Your Business Phone Number:</label>
-<div class="sidebar-static">503-555-1212</div>
+<div class="sidebar-static">503-555-5555</div>
 
 <label class="sidebar-label">Next Billing Date:</label>
-<div class="sidebar-static">03/01/2025</div>
+<div class="sidebar-static">01/01/2222</div>
 
       </div>
     </div>
@@ -806,7 +828,7 @@
     <div class="time-banner">
       <div>supportME! Official Server Timestamp is: <span id="dateTime"></span></div>
       <div class="right">
-        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar"> Welcome Back! <span id="welcomeName"></span></div>
+        <div class="top"><img src="https://i.pravatar.cc/30" alt="avatar">Welcome Back!</div>
         <div>
               <button onclick="window.open('https://www.getsupportme.com/pricing-plans/smapp')">UPGRADE</button>
            <button onclick="window.open('https://app.getsupportme.com/customer-dashboard.html?new-ticket=true')">+NEW TICKET</button>
@@ -1520,7 +1542,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
 async function loadPlanBadge() {
   const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
   try {
-    const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+    const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
     const data = await response.json();
     document.getElementById("planBadge").src = data.badge_url;
     document.querySelector(".customer-number").textContent = data.customer_number;
@@ -1533,7 +1555,7 @@ loadPlanBadge();
 <script>
 async function loadCustomerInfo() {
   try {
-    const response = await fetch("https://supportme-api.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
+    const response = await fetch("https://ringzu-voip-proxy.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
     const data = await response.json();
 
     // Update number in header
@@ -1558,7 +1580,7 @@ loadCustomerInfo();
   async function updateHeader() {
     try {
       const tenantId = d23635f6-3b0a-475a-a4e5-7959b5091aa0; // replace with actual
-      const response = await fetch(`https://supportme-api.onrender.com/tenant-info/${tenantId}`);
+      const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
       const data = await response.json();
 
       if (data.error) throw new Error(data.error);
