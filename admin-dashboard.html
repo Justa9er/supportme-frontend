@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>supportME! Admin Dashboard</title>
-    body {
+  <style>
+	  body {
       margin:0;
       background:#F4F6F8;
       font-family:'Open Sans', sans-serif;
@@ -910,10 +911,6 @@
             </div>
         </div>
     </div>
-/* ===========================================================
-   SECTION 6: TENANT INFO & INITIALIZATION
-   Add this at the TOP of your <script> section
-   =========================================================== */
 
 <script type="module">
   // === SUPABASE CLIENT INITIALIZATION ===
@@ -1677,8 +1674,7 @@
   </div>
 </div>
 
-  <!-- Example: other users -->
-  <div class="team-row" data-user="Sam">
+ <div class="team-row" data-user="Sam">
     <span>Sam</span>
     <span>1002</span>
     <span id="statusDisplay-Sam">B</span>
@@ -1746,47 +1742,11 @@ document.querySelectorAll('.menu-item').forEach(item => {
     }
   });
 });
-async function loadPlanBadge() {
-  const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0"; // test ID
-  try {
-    const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
-    const data = await response.json();
-    document.getElementById("planBadge").src = data.badge_url;
-    document.querySelector(".customer-number").textContent = data.customer_number;
-  } catch (err) {
-    console.error("Error loading badge:", err);
-  }
-}
-loadPlanBadge();
 </script>
-<script>
-async function loadCustomerInfo() {
-  try {
-    const response = await fetch("https://ringzu-voip-proxy.onrender.com/tenant-info/d23635f6-3b0a-475a-a4e5-7959b5091aa0");
-    const data = await response.json();
-
-    // Update number in header
-    const numberEl = document.querySelector(".customer-number");
-    if (numberEl && data.masked_id) {
-      numberEl.textContent = data.masked_id;
-    }
-
-    // Update plan badge
-    const badgeEl = document.querySelector(".plan-badge");
-    if (badgeEl && data.badge_url) {
-      badgeEl.src = data.badge_url;
-    }
-  } catch (err) {
-    console.error("Error loading customer info:", err);
-  }
-}
-
-loadCustomerInfo();
-</script>
-<script>
+	<script>
   async function updateHeader() {
     try {
-      const tenantId = d23635f6-3b0a-475a-a4e5-7959b5091aa0; // replace with actual
+    const tenantId = "d23635f6-3b0a-475a-a4e5-7959b5091aa0";
       const response = await fetch(`https://ringzu-voip-proxy.onrender.com/tenant-info/${tenantId}`);
       const data = await response.json();
 
